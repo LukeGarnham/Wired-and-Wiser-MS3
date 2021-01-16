@@ -18,9 +18,8 @@ mongo = PyMongo(app)
 
 
 @app.route("/")
-@app.route("/get_meter_installs")
-def get_meter_installs():
-    return "Hello world"
+def base():
+    return render_template("base.html")
 
 
 if __name__ == "__main__":
