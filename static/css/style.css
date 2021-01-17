@@ -1,6 +1,6 @@
-.navbar {
-    border-bottom: 1px solid #fff;
-}
+/*----------------------------------------------------------------------------------------------------------General rules*/
+
+/*------------------------------------------------Button styles*/
 
 .button {
     text-align: center;
@@ -20,4 +20,44 @@
 .orange {
     background-color: #F3A712;
     color: #fff;
+}
+
+.underline {
+    text-decoration: underline;
+}
+
+/*----------------------------------------------------------------------------------------------------------Header*/
+
+.navbar {
+    border-bottom: 1px solid #fff;
+}
+
+/*----------------------------------------------------------------------------------------------------------Footer*/
+
+footer {
+    color: #fff;
+    border-top: 2px solid #fff;
+}
+
+.social-media-link {
+    font-size: xx-large;
+    text-decoration: none;
+}
+
+.social-media-link:hover {
+    text-decoration: none;
+}
+
+@media screen and (min-width: 992px) {
+
+    #footer-col-2 {
+        border-right: 1px solid #fff;
+    }
+}
+
+@media screen and (min-width: 768px) {
+
+    #footer-col-1 {
+        border-right: 1px solid #fff;
+    }
 }
