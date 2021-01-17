@@ -17,7 +17,9 @@
     <header>
         <!-- The original code for the below navbar was copied from: https://getbootstrap.com/docs/4.5/components/navbar/#toggler -->
         <nav class="navbar navbar-expand-lg">
-            <a class="navbar-brand p-1" href="#">Logo here</a>
+            <a class="navbar-brand" href="#">
+                <i class="fas fa-lightbulb mr-2"></i>Wired & Wiser
+            </a>
             <button class="navbar-toggler border-white" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo02" aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
                 <i class="fas fa-bars text-white"></i>
             </button>
@@ -25,7 +27,7 @@
             <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
                 <ul class="navbar-nav mx-auto mt-2 mt-lg-0">
                     <li class="nav-item active">
-                        <a class="nav-link px-3" href="{{ url_for('base') }}">Home</a>
+                        <a class="nav-link px-3" href="{{ url_for('home') }}">Home</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link px-3" href="#">About</a>

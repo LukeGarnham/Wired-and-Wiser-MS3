@@ -37,11 +37,15 @@
     border-bottom: 1px solid #fff;
 }
 
+.navbar-brand i {
+    color: #F3A712;
+}
+
 /*----------------------------------------------------------------------------------------------------------Footer*/
 
 footer {
     color: #fff;
-    border-top: 2px solid #fff;
+    border-top: 1px solid #fff;
 }
 
 .social-media-link {
@@ -65,4 +69,11 @@ footer {
     #footer-col-1 {
         border-right: 1px solid #fff;
     }
+}
+
+/*----------------------------------------------------------------------------------------------------------Jumbotron*/
+
+.jumbotron {
+    background-image: url('https://unsplash.com/photos/yETqkLnhsUI');
+    height: 600px;
 }
