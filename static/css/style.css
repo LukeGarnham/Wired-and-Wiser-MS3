@@ -1,0 +1,23 @@
+.navbar {
+    border-bottom: 1px solid #fff;
+}
+
+.button {
+    text-align: center;
+    vertical-align: middle;
+    font-weight: 400;
+    font-size: 0.9375rem;
+    border: 1px solid transparent;
+    line-height: 1.5;
+    border-radius: 0.25rem;
+}
+
+.green {
+    background-color: #198754;
+    color: #fff;
+}
+
+.orange {
+    background-color: #F3A712;
+    color: #fff;
+}

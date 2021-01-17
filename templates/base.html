@@ -5,6 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- Link to Bootswatch v4.5 CSS CDN: https://www.bootstrapcdn.com/bootswatch/ -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootswatch/4.5.2/slate/bootstrap.min.css" type="text/css">
+    <!-- Link to FontAwesome v4.7 CDN: https://fontawesome.com/account/cdn -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.1/css/all.css" integrity="sha384-vp86vTRFVJgpjF9jiIGPEEqYqlDwgyBgEF109VFjmqGmIY/Y4HV4d3Gp2irVfcrp" crossorigin="anonymous">
     <!-- Link to project CSS file -->
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}" type="text/css">
     {% block styles %}
@@ -14,24 +16,66 @@
 <body>
     <header>
         <!-- The original code for the below navbar was copied from: https://getbootstrap.com/docs/4.5/components/navbar/#toggler -->
-        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <nav class="navbar navbar-expand-lg">
             <a class="navbar-brand" href="#">Logo here</a>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo02" aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
+            <button class="navbar-toggler border-white" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo02" aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
+                <i class="fas fa-bars text-white"></i>
             </button>
 
             <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
-                <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+                <ul class="navbar-nav mx-auto mt-2 mt-lg-0">
                     <li class="nav-item active">
-                        <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+                        <a class="nav-link px-3" href="{{ url_for('base') }}">Home</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Link</a>
+                        <a class="nav-link px-3" href="#">About</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
+                        <a class="nav-link px-3" href="#" >What</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link px-3" href="#" >Why</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link px-3" href="#" >How</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link px-3" href="#" >Account</a>
+                    </li>
+                    <li class="nav-item d-lg-none">
+                        <a class="nav-link px-3" href="#" >Sign In</a>
+                    </li>
+                    <li class="nav-item d-lg-none">
+                        <a class="nav-link px-3" href="#" >Sign Up</a>
+                    </li>
+                    <li class="nav-item d-lg-none">
+                        <a class="nav-link px-3" href="#" >Book Install</a>
+                    </li>
+                    <li class="nav-item d-lg-none">
+                        <a class="nav-link px-3" href="#" >Sign Out</a>
                     </li>
                 </ul>
+
+                <a class="px-2 d-none d-lg-block" href="#" >
+                    <button type="button" class="button green px-3 py-1">
+                        Sign In
+                    </button>
+                </a>
+                <a class="px-2 d-none d-lg-block" href="#" >
+                    <button type="button" class="button green px-3 py-1">
+                        Sign Up
+                    </button>
+                </a>
+                <a class="px-2 d-none d-lg-block" href="#" >
+                    <button type="button" class="button green px-3 py-1">
+                        Book Install
+                    </button>
+                </a>
+                <a class="px-2 d-none d-lg-block" href="#" >
+                    <button type="button" class="button orange px-3 py-1">
+                        Sign Out
+                    </button>
+                </a>
             </div>
         </nav>
     </header>
