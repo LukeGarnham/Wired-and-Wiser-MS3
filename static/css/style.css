@@ -50,25 +50,10 @@ footer {
 
 .social-media-link {
     font-size: xx-large;
-    text-decoration: none;
 }
 
 .social-media-link:hover {
     text-decoration: none;
-}
-
-@media screen and (min-width: 992px) {
-
-    #footer-col-2 {
-        border-right: 1px solid #fff;
-    }
-}
-
-@media screen and (min-width: 768px) {
-
-    #footer-col-1 {
-        border-right: 1px solid #fff;
-    }
 }
 
 /*----------------------------------------------------------------------------------------------------------Jumbotron*/
@@ -76,15 +61,44 @@ footer {
 .jumbotron {
     background-image: url('https://raw.githubusercontent.com/LukeGarnham/Wired-and-Wiser-MS3/master/static/images/jumbotron-image.jpg');
     height: 600px;
+    width: 100%;
     background-size: cover;
     background-repeat: no-repeat;
-    background-position: center bottom;
     background-attachment: fixed;
+    background-position: bottom;
 }
 
 .mask {
     background-color: rgba(0, 0, 0, 0.3);
-    height: 600px;
+    height: 100%;
     width: 100%;
     
 }
+
+/*----------------------------------------------------------------------------------------------------------Media Queries*/
+
+/*------------------------------------------------Screens 992px plus*/
+
+@media screen and (min-width: 992px) {
+
+    /* Apply right border to column 2 of 3 in footer */
+    #footer-col-2 {
+        border-right: 1px solid #fff;
+    }
+}
+
+/*------------------------------------------------Screens 768px plus*/
+
+@media screen and (min-width: 768px) {
+
+    /* Apply right border to column 1 of 3 in footer */
+    #footer-col-1 {
+        border-right: 1px solid #fff;
+    }
+    
+    /* Make jumbotron bigger on large screens */
+    .jumbotron {
+        height: 800px;
+    }
+}
+
