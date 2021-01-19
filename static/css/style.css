@@ -1,5 +1,9 @@
 /*----------------------------------------------------------------------------------------------------------General rules*/
 
+body {
+    padding-top: 56px;
+}
+
 /*------------------------------------------------Button styles*/
 
 .button {
@@ -34,7 +38,9 @@
 /*----------------------------------------------------------------------------------------------------------Header*/
 
 .navbar {
-    border-bottom: 1px solid #fff;
+    border-bottom: 1px solid #fff;    
+    background-color: #272b30;
+    /* height: 56px; */
 }
 
 .navbar-brand i {
@@ -60,19 +66,29 @@ footer {
 
 .jumbotron {
     background-image: url('https://raw.githubusercontent.com/LukeGarnham/Wired-and-Wiser-MS3/master/static/images/jumbotron-image.jpg');
-    height: 600px;
+    height: 90vh;
     width: 100%;
     background-size: cover;
     background-repeat: no-repeat;
     background-attachment: fixed;
     background-position: bottom;
+    border: none;
 }
 
 .mask {
     background-color: rgba(0, 0, 0, 0.3);
     height: 100%;
     width: 100%;
-    
+    position: relative;
+}
+
+/* The below positions the sign-in button to the bottom of the jumbotron. */
+/* The solution was achieved by referring to:  https://medium.com/front-end-weekly/absolute-centering-in-css-ea3a9d0ad72e */
+.jumbo-bottom {
+    position: absolute;
+    bottom: 10px;
+    left: 50%;
+    transform: translate(-50%, 0);
 }
 
 /*----------------------------------------------------------------------------------------------------------Media Queries*/
@@ -96,9 +112,5 @@ footer {
         border-right: 1px solid #fff;
     }
     
-    /* Make jumbotron bigger on large screens */
-    .jumbotron {
-        height: 800px;
-    }
 }
 
