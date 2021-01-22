@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+    <div class="jumbotron jumbotron-fluid text-center text-white p-0 mb-0" id="signup-background">
+        <div class="mask">
+            <div class="container py-4">
+                <div>
+                    <h1 class="display-4 my-3">Sign Up</h1>
+                </div>
+                <div class="card white">
+                    <div class="card-body">
+                        <form>
+                            <div class="row">
+                                <div class="col-12 col-md-6">
+                                    <label for="email">Email Address *</label>
+                                </div>
+                                <div class="col-12 col-md-6">
+                                    <input type="email">
+                                </div>
+                            </div>
+                            <input type="text"><input type="submit" value="Submit">
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

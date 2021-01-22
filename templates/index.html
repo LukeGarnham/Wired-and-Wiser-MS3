@@ -2,14 +2,14 @@
 
 {% block content %}
 
-    <div class="jumbotron jumbotron-fluid text-center text-white p-0 mb-0">
+    <div class="jumbotron jumbotron-fluid text-center text-white p-0 mb-0" id="home-background">
         <div class="mask">
             <div class="container py-4">
                 <div>
                     <h1 class="display-4 my-3">Join the Smart Meter Revolution</h1>
                     <p class="lead">Wired & Wiser are installing smart meters nationwide.</p>
                     <p>Book your smart meter installation today!</p>
-                    <a href="#" >
+                    <a href="{{ url_for('signup') }}" >
                         <button type="button" class="button green px-3 py-1"><i class="fas fa-user mr-2"></i>Sign Up</button>
                     </a>
                 </div>
@@ -54,7 +54,7 @@
                         We will give you an in home display which shows your electricity consumption in real-time to help you identify cost and energy saving measures that benefit you and the environment.
                     </p>
                     <p>
-                        Sign up today to book your smart meter installation and you really will be wired & wiser!  Already booked your install? Log in to check the details.
+                        <strong><a href="{{ url_for('signup') }}" class="underline">Sign up</a></strong> today to book your smart meter installation and you really will be wired & wiser!  Already booked your install? Log in to check the details.
                     </p>
                 </div>
             </div>
@@ -129,7 +129,7 @@
                         Appointments usually take an hour and you will be without electricity for approximately 45 minutes.  Please consider this before booking - businesses may need to shutdown servers and other IT equipment before the appointment.
                     </p>
                     <p>
-                        All set?  Simply sign up and then from your Account dashboard, book your smart meter installation.  Select a date and time to suit your needs.
+                        All set?  Simply <strong><a href="{{ url_for('signup') }}" class="underline">sign up</a></strong> and then from your Account dashboard, book your smart meter installation.  Select a date and time to suit your needs.
                     </p>
                     <p class="m-0">
                         What if something changes?  Don't worry - if you need to amend details of your booking, simply sign in and update or cancel your booking.

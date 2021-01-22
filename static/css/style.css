@@ -21,6 +21,25 @@ a:hover {
     color: #F3A712;
 }
 
+.background-container {
+    height: 90vh;
+    width: 100%;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-position: center;
+    border: none;
+}
+
+
+.mask {
+    background-color: rgba(0, 0, 0, 0.3);
+    height: 100%;
+    width: 100%;
+    position: relative;
+}
+
+
 /*------------------------------------------------Button styles*/
 
 .button {
@@ -84,7 +103,6 @@ footer {
 /*------------------------------------------------Jumbotron*/
 
 .jumbotron {
-    background-image: url('https://raw.githubusercontent.com/LukeGarnham/Wired-and-Wiser-MS3/master/static/images/jumbotron-image.jpg');
     height: 90vh;
     width: 100%;
     background-size: cover;
@@ -94,15 +112,12 @@ footer {
     border: none;
 }
 
-.jumbotron h1 {
-    font-weight: 100;
+#home-background {
+    background-image: url('https://raw.githubusercontent.com/LukeGarnham/Wired-and-Wiser-MS3/master/static/images/jumbotron-image.jpg');
 }
 
-.mask {
-    background-color: rgba(0, 0, 0, 0.3);
-    height: 100%;
-    width: 100%;
-    position: relative;
+.display-4 {
+    font-weight: 100;
 }
 
 /*------------------------------------------------Icons*/
@@ -138,6 +153,10 @@ footer {
 
 #image-tile-4 {
     background-image: url('https://raw.githubusercontent.com/LukeGarnham/Wired-and-Wiser-MS3/master/static/images/light-bulb.jpg');
+}
+
+#signup-background {
+    background-image: url('https://raw.githubusercontent.com/LukeGarnham/Wired-and-Wiser-MS3/master/static/images/wind-turbines.jpg');
 }
 
 
