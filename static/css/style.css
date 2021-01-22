@@ -1,8 +1,20 @@
+/*Import fonts from Google Fonts: Open Sans font for body, Noto Sans JP for headers */
+
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,600;0,700;0,800;1,300;1,400;1,600;1,700;1,800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@100;300;400;500;700;900&display=swap');
+
 /*----------------------------------------------------------------------------------------------------------General rules*/
 
 body {
     padding-top: 56px;
     color: #fff;
+    font-family: 'Open Sans', sans-serif;
+}
+
+h1,h2,h3,h4,h5,h6 {
+    font-family: 'Noto Sans JP', sans-serif;
+    font-weight: 300;
+    text-shadow: none;
 }
 
 /*------------------------------------------------Button styles*/
@@ -75,6 +87,10 @@ footer {
     background-attachment: fixed;
     background-position: bottom;
     border: none;
+}
+
+.jumbotron h1 {
+    font-weight: 100;
 }
 
 .mask {
