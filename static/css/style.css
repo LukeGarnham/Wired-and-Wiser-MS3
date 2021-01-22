@@ -102,14 +102,14 @@ footer {
 
 /*------------------------------------------------Icons*/
 
-#icons {
-    font-size: 500%;
+#icons i {
+    font-size: 600%;
 }
 
 /*------------------------------------------------Home page*/
 
 .image-tile {
-    height: 40vh;
+    min-height: 40vh;
     width: 100%;
     background-size: cover;
     background-repeat: no-repeat;
@@ -120,6 +120,10 @@ footer {
 
 #image-tile-1 {
     background-image: url('https://raw.githubusercontent.com/LukeGarnham/Wired-and-Wiser-MS3/master/static/images/meter.jpg');
+}
+
+#image-tile-2 {
+    background-image: url('https://raw.githubusercontent.com/LukeGarnham/Wired-and-Wiser-MS3/master/static/images/swinging-lights.jpg');
 }
 
 
