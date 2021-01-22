@@ -17,6 +17,10 @@ h1,h2,h3,h4,h5,h6 {
     text-shadow: none;
 }
 
+a:hover {
+    color: #F3A712;
+}
+
 /*------------------------------------------------Button styles*/
 
 .button {
@@ -51,6 +55,7 @@ h1,h2,h3,h4,h5,h6 {
 
 .underline {
     text-decoration: underline;
+    color: inherit;
 }
 
 /*----------------------------------------------------------------------------------------------------------Header*/
@@ -109,7 +114,8 @@ footer {
 /*------------------------------------------------Home page*/
 
 .image-tile {
-    min-height: 40vh;
+    min-height: 50vh;
+    height: 100%;
     width: 100%;
     background-size: cover;
     background-repeat: no-repeat;
@@ -123,7 +129,15 @@ footer {
 }
 
 #image-tile-2 {
-    background-image: url('https://raw.githubusercontent.com/LukeGarnham/Wired-and-Wiser-MS3/master/static/images/swinging-lights.jpg');
+    background-image: url('https://raw.githubusercontent.com/LukeGarnham/Wired-and-Wiser-MS3/master/static/images/earth.jpg');
+}
+
+#image-tile-3 {
+    background-image: url('https://raw.githubusercontent.com/LukeGarnham/Wired-and-Wiser-MS3/master/static/images/solar-panels.jpg');
+}
+
+#image-tile-4 {
+    background-image: url('https://raw.githubusercontent.com/LukeGarnham/Wired-and-Wiser-MS3/master/static/images/light-bulb.jpg');
 }
 
 
