@@ -46,7 +46,7 @@
                         <a class="nav-link px-3" href="#" >Account</a>
                     </li>
                     <li class="nav-item d-lg-none">
-                        <a class="nav-link px-3" href="#" >Sign In</a>
+                        <a class="nav-link px-3" href="{{ url_for('signin') }}" >Sign In</a>
                     </li>
                     <li class="nav-item d-lg-none">
                         <a class="nav-link px-3" href="{{ url_for('register') }}" >Register</a>
@@ -60,17 +60,17 @@
                 </ul>
 
                 <!-- Navigation buttons (right) -->
-                <a class="px-2 d-none d-lg-block" href="#" >
-                    <button type="button" class="button orange px-3 py-1"><i class="fas fa-sign-in-alt mr-2"></i>Sign In</button>
+                <a href="{{ url_for('signin') }}" role="button" class="d-none d-lg-block button orange px-3 py-1 mx-1">
+                    <i class="fas fa-sign-in-alt mr-2"></i>Sign In
                 </a>
-                <a class="px-2 d-none d-lg-block" href="{{ url_for('register') }}" >
-                    <button type="button" class="button green px-3 py-1"><i class="fas fa-user mr-2"></i>Register</button>
+                <a href="{{ url_for('register') }}" role="button" class="d-none d-lg-block button green px-3 py-1 mx-1">
+                    <i class="fas fa-user mr-2"></i>Register
                 </a>
-                <a class="px-2 d-none d-lg-block" href="#" >
-                    <button type="button" class="button green px-3 py-1"><i class="fas fa-book mr-2"></i>Book Install</button>
+                <a href="#" role="button" class="d-none d-lg-block button green px-3 py-1 mx-1">
+                    <i class="fas fa-book mr-2"></i>Book Install
                 </a>
-                <a class="px-2 d-none d-lg-block" href="#" >
-                    <button type="button" class="button orange px-3 py-1"><i class="fas fa-sign-out-alt mr-2"></i>Sign Out</button>
+                <a href="#" role="button" class="d-none d-lg-block button orange px-3 py-1 mx-1" >
+                    <i class="fas fa-sign-out-alt mr-2"></i>Sign Out
                 </a>
             </div>
         </nav>

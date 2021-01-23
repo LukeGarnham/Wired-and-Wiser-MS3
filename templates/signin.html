@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+    <!-- Jumbrotron/background -->
+    <div class="jumbotron jumbotron-fluid text-center text-white p-0 mb-0" id="register-background">
+        <div class="mask"></div>
+        <div class="container py-4">
+            <!-- Flash messages -->
+            {% with messages = get_flashed_messages() %}
+                {% if messages %}
+                    {% for message in messages %}
+                    <div class="flashes position-relative">
+                        <h4 class="my-5">{{ message }}</h4>
+                    </div>
+                    {% endfor %}
+                {% endif %}
+            {% endwith %}
+            <!-- Card containing log in form -->
+            <div class="card m-md-5 p-4">
+                <div class="card-body">
+                    <div>
+                        <h1 class="display-4 mb-5"><i class="fas fa-sign-in-alt mr-2"></i>Sign In</h1>
+                    </div>
+                    <form method="POST" action="{{ url_for('signin') }}">
+                        <div class="form-group form-row">
+                            <label for="email" class="col-form-label col-form-label-sm col-12 col-md-3 offset-md-1 text-md-left">Email Address: *</label>
+                            <div class="col-12 col-md-7">
+                                <input type="email" class="form-control form-control-sm text-center text-md-left" id="email" name="email" placeholder="Email address (required)" required>
+                            </div>
+                        </div>
+                        <div class="form-group form-row">
+                            <label for="password" class="col-form-label col-form-label-sm col-12 col-md-3 offset-md-1 text-md-left">Password: *</label>
+                            <div class="col-12 col-md-7">
+                                <input type="password" class="form-control form-control-sm text-center text-md-left" id="password" name="password" placeholder="Password (required)" minlength="6" maxlength="15" required>
+                            </div>
+                        </div>
+                        <div class="mt-5">
+                            <button type="submit" class="button green px-3 py-1 d-block d-md-inline mx-auto mb-4 mb-md-0 mr-md-4"><i class="fas fa-sign-in-alt mr-2"></i>Sign In</button>
+                            <a href="{{ url_for('home') }}" role="button" class="button red d-md-inline px-3 py-1">
+                                <i class="fas fa-window-close mr-2"></i>Cancel
+                            </a>
+                        </div>
+                    </form>
+                    <div class="mt-5">
+                        <p class="d-md-inline mb-2 mb-md-0 mr-md-2">New here?</p>
+                        <a href="{{ url_for('register') }}" role="button" class="button green px-3 py-1">
+                            <i class="fas fa-user mr-2"></i>Register
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

@@ -10,15 +10,15 @@
                 <h1 class="display-4 my-3">Join the Smart Meter Revolution</h1>
                 <p class="lead">Wired & Wiser are installing smart meters nationwide.</p>
                 <p>Book your smart meter installation today!</p>
-                <a href="{{ url_for('register') }}" >
-                    <button type="button" class="button green px-3 py-1"><i class="fas fa-user mr-2"></i>Register</button>
+                <a href="{{ url_for('register') }}" role="button" class="button green px-3 py-1">
+                    <i class="fas fa-user mr-2"></i>Register
                 </a>
             </div>
         </div>
         <div class="jumbo-bottom">
                 <p class="d-md-inline mb-2 mb-md-0 mr-md-2">Already registered?</p>
-                <a class="d-md-inline" href="#" >
-                    <button type="button" class="button orange px-3 py-1"><i class="fas fa-sign-in-alt mr-2"></i>Sign In</button>
+                <a href="{{ url_for('signin') }}" role="button" class="d-md-inline button orange px-3 py-1">
+                    <i class="fas fa-sign-in-alt mr-2"></i>Sign In
                 </a>
             </div>
     </div>
@@ -56,7 +56,10 @@
                         We will give you an in home display which shows your electricity consumption in real-time to help you identify cost and energy saving measures that benefit you and the environment.
                     </p>
                     <p>
-                        <strong><a href="{{ url_for('register') }}" class="underline">Register</a></strong> today to book your smart meter installation and you really will be wired & wiser!  Already booked your install? Log in to check the details.
+                        <strong><a href="{{ url_for('register') }}" class="underline">Register</a></strong> today to book your smart meter installation and you really will be wired & wiser!
+                    </p>
+                    <p>
+                        Already booked your install? <strong><a href="{{ url_for('signin') }}" class="underline">Sign in</a></strong> to check the details.
                     </p>
                 </div>
             </div>
@@ -137,7 +140,7 @@
                         All set?  Simply <strong><a href="{{ url_for('register') }}" class="underline">register</a></strong> and then from your Account dashboard, book your smart meter installation.  Select a date and time to suit your needs.
                     </p>
                     <p class="m-0">
-                        What if something changes?  Don't worry - if you need to amend details of your booking, simply sign in and update or cancel your booking.
+                        What if something changes?  Don't worry - if you need to amend details of your booking, simply <strong><a href="{{ url_for('signin') }}" class="underline">sign in</a></strong> and update or cancel your booking.
                     </p>
                 </div>
             </div>
