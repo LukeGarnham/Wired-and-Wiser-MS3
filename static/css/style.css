@@ -182,6 +182,23 @@ footer {
     background-image: url('https://raw.githubusercontent.com/LukeGarnham/Wired-and-Wiser-MS3/master/static/images/wind-turbines.jpg');
 }
 
+#signin-background {
+    background-image: url('https://raw.githubusercontent.com/LukeGarnham/Wired-and-Wiser-MS3/master/static/images/wind-turbines-3.jpg');
+}
+
+#account-background {
+    background-image: url('https://raw.githubusercontent.com/LukeGarnham/Wired-and-Wiser-MS3/master/static/images/electricity-pylon-2.jpg');
+}
+
+/*----------------------------------------------------------------------------------------------------------Account Page*/
+
+.tab-container {
+    border-right: 1px solid rgba(0,0,0,0.6);
+    border-bottom: 1px solid rgba(0,0,0,0.6);
+    border-left: 1px solid rgba(0,0,0,0.6);
+    border-bottom-left-radius: 0.25rem;
+    border-bottom-right-radius: 0.25rem;
+}
 
 /*----------------------------------------------------------------------------------------------------------Media Queries*/
 
@@ -204,4 +221,3 @@ footer {
         border-right: 1px solid #fff;
     }
 }
-

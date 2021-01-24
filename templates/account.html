@@ -1,0 +1,114 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+    <!-- Jumbrotron/background -->
+    <div class="jumbotron jumbotron-fluid text-center text-white p-0 mb-0" id="account-background">
+        <div class="mask"></div>
+        <div class="container py-4">
+            <!-- Flash messages -->
+            {% with messages = get_flashed_messages() %}
+                {% if messages %}
+                    {% for message in messages %}
+                    <div class="flashes position-relative">
+                        <h4 class="my-5">{{ message }}</h4>
+                    </div>
+                    {% endfor %}
+                {% endif %}
+            {% endwith %}
+            <!-- Card containing account details -->
+            <div class="card m-md-5 p-4">
+                <div class="card-body">
+                    <div>
+                        <h1 class="display-4 mb-5"><i class="fas fa-user mr-2"></i>Account</h1>
+                    </div>
+                    <!-- The skeleton code for the tabs was copid from Bootstrap: https://getbootstrap.com/docs/4.5/components/navs/#javascript-behavior -->
+                    <ul class="nav nav-tabs nav-fill justify-content-center" id="myTab" role="tablist">
+                        <li class="nav-item" role="presentation">
+                            <a class="nav-link active" id="home-tab" data-toggle="tab" href="#account" role="tab" aria-controls="home" aria-selected="true">
+                                <i class="fas fa-user mr-2"></i><span class="d-none d-md-inline">Manage </span>Account
+                            </a>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                            <a class="nav-link" id="profile-tab" data-toggle="tab" href="#bookings" role="tab" aria-controls="profile" aria-selected="false">
+                                <i class="fas fa-book mr-2"></i><span class="d-none d-md-inline">Manage </span>Bookings
+                            </a>
+                        </li>
+                    </ul>
+                    <div class="tab-content">
+                        <!-- Account tab content -->
+                        <div class="tab-pane " id="account" role="tabpanel" aria-labelledby="home-tab">
+                            <div class="container-fluid tab-container py-5">
+                                <div class="row mb-3">
+                                    <div class="col-form-label col-form-label-sm col-12 col-md-6 font-weight-bold">First Name:</div>
+                                    <div class="col-form-label col-form-label-sm col-12 col-md-6">Luke</div>
+                                </div>
+                                <div class="row mb-3">
+                                    <div class="col-form-label col-form-label-sm col-12 col-md-6 font-weight-bold">Last Name:</div>
+                                    <div class="col-form-label col-form-label-sm col-12 col-md-6">Garnham</div>
+                                </div>
+                                <div class="row mb-3">
+                                    <div class="col-form-label col-form-label-sm col-12 col-md-6 font-weight-bold">Email Addres:</div>
+                                    <div class="col-form-label col-form-label-sm col-12 col-md-6">lukegarnham@msn.com</div>
+                                </div>
+                                <div class="mt-5">
+                                    <a href="#"  class="button green px-3 py-1 d-block d-md-inline mx-auto mb-4 mb-md-0 mr-md-4">
+                                        <i class="fas fa-edit mr-2"></i>Update Details
+                                    </a>
+                                    <a href="#" class="button red d-md-inline px-3 py-1">
+                                        <i class="fas fa-trash mr-2"></i>Delete Account
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Bookings tab content -->
+                        <div class="tab-pane active" id="bookings" role="tabpanel" aria-labelledby="profile-tab">
+                            <div class="container-fluid tab-container py-5">
+                                <table class="table table-striped table-dark">
+                                    <thead class="">
+                                        <tr>
+                                            <th scope="col">Manage</th>
+                                            <th scope="col">Address</th>
+                                            <th scope="col">Postcode</th>
+                                            <th scope="col">Meter ID</th>
+                                            <th scope="col">Install Date</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <th scope="row"><a href="#">View</a></th>
+                                            <td>5 Princes Gardens</td>
+                                            <td>IP8 4PF</td>
+                                            <td>1230004000567</td>
+                                            <td>31/01/2021</td>
+                                        </tr>
+                                        <tr>
+                                            <th scope="row"><a href="#">View</a></th>
+                                            <td>5 Princes Gardens</td>
+                                            <td>IP8 4PF</td>
+                                            <td>1230004000567</td>
+                                            <td>31/01/2021</td>
+                                        </tr>
+                                        <tr>
+                                            <th scope="row"><a href="#">View</a></th>
+                                            <td>5 Princes Gardens</td>
+                                            <td>IP8 4PF</td>
+                                            <td>1230004000567</td>
+                                            <td>31/01/2021</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mt-5">
+                        <a href="#" class="button green px-3 py-1">
+                            <i class="fas fa-book mr-2"></i>Book <span class="d-none d-md-inline">a Smart Meter </span>Install
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
