@@ -38,7 +38,7 @@
                     </ul>
                     <div class="tab-content">
                         <!-- Account tab content -->
-                        <div class="tab-pane " id="account" role="tabpanel" aria-labelledby="home-tab">
+                        <div class="tab-pane fade show active" id="account" role="tabpanel" aria-labelledby="home-tab">
                             <div class="container-fluid tab-container py-5">
                                 <div class="row mb-3">
                                     <div class="col-form-label col-form-label-sm col-12 col-md-6 font-weight-bold">First Name:</div>
@@ -53,9 +53,11 @@
                                     <div class="col-form-label col-form-label-sm col-12 col-md-6">{{  user.user_email_address  }}</div>
                                 </div>
                                 <div class="mt-5">
-                                    <a href="#"  class="button green px-3 py-1 d-block d-md-inline mx-auto mb-4 mb-md-0 mr-md-4">
-                                        <i class="fas fa-edit mr-2"></i>Update Details
-                                    </a>
+                                    <div class="d-block d-md-inline mb-4 mb-md-0 mr-md-4">
+                                        <a href="#"  class="button green px-3 py-1">
+                                            <i class="fas fa-edit mr-2"></i>Update Details
+                                        </a>
+                                    </div>
                                     <a href="#" class="button red d-md-inline px-3 py-1">
                                         <i class="fas fa-trash mr-2"></i>Delete Account
                                     </a>
@@ -63,9 +65,8 @@
                             </div>
                         </div>
                         <!-- Bookings tab content -->
-                        <div class="tab-pane active" id="bookings" role="tabpanel" aria-labelledby="profile-tab">
+                        <div class="tab-pane fade" id="bookings" role="tabpanel" aria-labelledby="profile-tab">
                             <div class="container-fluid tab-container py-5">
-                                <p>Bookings:  {{  bookings  }}</p>
                                 <!-- Check if there are any bookings.  If so, build table. -->
                                 {% if bookings|length > 0 %}
                                     <div class="table-responsive">
@@ -90,20 +91,6 @@
                                                         <td>{{  booking.install_date  }}</td>
                                                     </tr>
                                                 {% endfor %}
-                                                <!-- <tr>
-                                                    <th scope="row"><a href="#"><i class="fas fa-eye mr-2"></i>View</a></th>
-                                                    <td>5 Princes Gardens</td>
-                                                    <td class="d-none d-lg-table-cell">IP8 4PF</td>
-                                                    <td class="d-none d-lg-table-cell">1230004000567</td>
-                                                    <td>31/01/2021</td>
-                                                </tr>
-                                                <tr>
-                                                    <th scope="row"><a href="#"><i class="fas fa-eye mr-2"></i>View</a></th>
-                                                    <td>5 Princes Gardens</td>
-                                                    <td class="d-none d-lg-table-cell">IP8 4PF</td>
-                                                    <td class="d-none d-lg-table-cell">1230004000567</td>
-                                                    <td>31/01/2021</td>
-                                                </tr> -->
                                             </tbody>
                                         </table>
                                     </div>
