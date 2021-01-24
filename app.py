@@ -32,7 +32,7 @@ def register():
             {"user_email_address": request.form.get(
                 "email").lower()})
 
-        # If it doesn, display a flash message informing user that the an account already exists for this email address.
+        # If it doesn't, display a flash message informing user that an account already exists for this email address.
         if existing_user:
             flash("Account already exists for this email address.")
             return redirect(url_for("register"))
@@ -46,9 +46,12 @@ def register():
         }
         mongo.db.users.insert_one(record)
 
-        # Then, put the new users email address into session cookie and display flash success message.
-        session["user"] = request.form.get("email").lower()
+        # Put the new users email address into session cookie and display flash success message using their first name.
+        session["user_email_address"] = request.form.get("email").lower()
         flash("Registration successful")
+        # Redirect to account(username) function where username is the users email address.
+        return redirect(url_for(
+            "account", username=session["user_email_address"]))
 
     # If method is not POST (i.e. GET) render register.html template.
     return render_template("register.html")
@@ -63,14 +66,18 @@ def signin():
             {"user_email_address": request.form.get(
                 "email").lower()})
 
+        # If user exists in database:
         if existing_user:
-            # Ensure hashed password matches password input by user
+            # Ensure hashed password matches password input by user.
             if check_password_hash(
                 existing_user["password"], request.form.get("password")):
-                    # If so, put the new users email address into session cookie and display flash success message.
-                    session["user"] = request.form.get("email").lower()
+                    # If so then put the users email address into session cookie and display flash success message.
+                    session["user_email_address"] = existing_user["user_email_address"].lower()
                     flash("Welcome back {}".format(
                         existing_user["first_name"].capitalize()))
+                    # Redirect to account(username) function where username is the users email address.
+                    return redirect(url_for(
+                        "account", username=session["user_email_address"]))
             else:
                 # If password doesn't match, display flash message informing the user and return them to a blank sign in page.
                 flash("Incorrect Email Address and/or Password")
@@ -85,9 +92,24 @@ def signin():
     return render_template("signin.html")
 
 
-@app.route("/account")
-def account():
-    return render_template("account.html")
+@app.route("/account/<username>", methods=["GET", "POST"])
+def account(username):
+    # Use email address in session storage to search users collection.  Asign email address as username.
+    username = mongo.db.users.find_one(
+        {"user_email_address": session["user_email_address"]})["user_email_address"]
+    # Use email address in session storage to search users collection.  Asign results to user.
+    user = mongo.db.users.find_one(
+        {"user_email_address": session["user_email_address"]})
+    # Use email address in session storage to search meter_installs collection.  Asign results to bookings.  Sort by install date and then address.
+    bookings = list(mongo.db.meter_installs.find(
+        {"user_email_address": session["user_email_address"]}).sort([("install_date", 1),("first_address_line", 1)]))
+
+    # Render template.  Pass through the username, user and bookings variables defined above.
+    return render_template(
+        "account.html", 
+        username=username,
+        user=user,
+        bookings=bookings)
 
 
 if __name__ == "__main__":
