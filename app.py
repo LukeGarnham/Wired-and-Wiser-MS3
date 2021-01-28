@@ -100,16 +100,30 @@ def account(username):
     # Use email address in session storage to search users collection.  Asign results to user.
     user = mongo.db.users.find_one(
         {"user_email_address": session["user_email_address"]})
+    # Remove the users password.  Even though it is hashed, I don't want to pass this through.
+    user.pop("password")
     # Use email address in session storage to search meter_installs collection.  Asign results to bookings.  Sort by install date and then address.
     bookings = list(mongo.db.meter_installs.find(
         {"user_email_address": session["user_email_address"]}).sort([("install_date", 1),("first_address_line", 1)]))
 
-    # Render template.  Pass through the username, user and bookings variables defined above.
-    return render_template(
-        "account.html", 
-        username=username,
-        user=user,
-        bookings=bookings)
+    # Check if there is a user email address saved in session variable, if so render account page.
+    if session["user_email_address"]:
+        # Render template.  Pass through the username, user and bookings variables defined above.
+        return render_template(
+            "account.html", 
+            username=username,
+            user=user,
+            bookings=bookings)
+    # If there is no user email address saved in session variable, redirect user to sign in page.
+    return redirect(url_for("signin"))
+
+
+@app.route("/signout")
+def signout():
+    # Remove the users email address from session cookies.
+    flash("You have been signed out.")
+    session.pop("user_email_address")
+    return redirect(url_for("signin"))
 
 
 if __name__ == "__main__":
