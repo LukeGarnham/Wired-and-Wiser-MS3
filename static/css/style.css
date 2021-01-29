@@ -106,12 +106,6 @@ a:hover {
     border: 1px solid #fff;
 }
 
-/*------------------------------------------------Flash messages*/
-
-.flashes h4 {
-    
-}
-
 /*----------------------------------------------------------------------------------------------------------Header*/
 
 .navbar {
@@ -188,6 +182,10 @@ footer {
 
 #account-background {
     background-image: url('https://raw.githubusercontent.com/LukeGarnham/Wired-and-Wiser-MS3/master/static/images/electricity-pylon-2.jpg');
+}
+
+#book-background {
+    background-image: url('https://raw.githubusercontent.com/LukeGarnham/Wired-and-Wiser-MS3/master/static/images/wind-turbines-5.jpg');
 }
 
 /*----------------------------------------------------------------------------------------------------------Account Page*/

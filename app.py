@@ -126,6 +126,11 @@ def signout():
     return redirect(url_for("signin"))
 
 
+@app.route("/book", methods=["GET", "POST"])
+def book():
+    return render_template("book.html")
+
+
 if __name__ == "__main__":
     app.run(host=os.environ.get("IP"),
             port=int(os.environ.get("PORT")),
