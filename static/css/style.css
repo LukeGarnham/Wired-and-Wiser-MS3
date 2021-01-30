@@ -200,6 +200,8 @@ footer {
     border-left: 1px solid rgba(0,0,0,0.6);
     border-bottom-left-radius: 0.25rem;
     border-bottom-right-radius: 0.25rem;
+    background-color: #FDFFFC;
+    color: #272B30;
 }
 
 /*----------------------------------------------------------------------------------------------------------Modals*/
