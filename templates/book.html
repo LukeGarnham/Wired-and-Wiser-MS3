@@ -25,15 +25,37 @@
                     <form method="POST" action="{{ url_for('book') }}">
                         <div class="fieldset">
                             <div class="form-group form-row">
-                                <label for="meter_id" class="col-form-label col-form-label-sm col-12 col-md-3 offset-md-1 text-md-left">Meter ID: *</label>
+                                <div class="d-none d-md-inline col-form-label col-form-label-sm col-3 col-md-1 text-right">
+                                    <i id="launch-meter-id-modal-1" class="fas fa-info-circle mr-2 modal-button"></i>
+                                </div>
+                                <label for="meter_id" class="col-form-label col-form-label-sm col-12 col-md-3 text-md-left">
+                                    <div class="d-inline d-md-none col-form-label">
+                                        <i id="launch-meter-id-modal-2" class="fas fa-info-circle mr-2 modal-button"></i>
+                                    </div>
+                                    Meter ID: *
+                                </label>
                                 <div class="col-12 col-md-7">
-                                    <input type="text" class="form-control form-control-sm text-center text-md-left" id="meter_id" name="meter_id" placeholder="Meter ID (required)"  minlength="13" maxlength="13" pattern="^[0-9]{13}$" required>
+                                    <input type="text" class="form-control form-control-sm text-center text-md-left" id="meter_id" name="meter_id" placeholder="Meter ID (required)"  aria-describedby="meterIdHelpBlock" minlength="13" maxlength="13" pattern="^[0-9]{13}$" required>
+                                    <small id="meterIdHelpBlock" class="form-text text-muted text-md-left">
+                                        Please provide the 13 numbers from the end of your meter ID.
+                                    </small>
                                 </div>
                             </div>
                             <div class="form-group form-row">
-                                <label for="meter_serial_number" class="col-form-label col-form-label-sm col-12 col-md-3 offset-md-1 text-md-left">Meter Serial Number: *</label>
+                                <div class="d-none d-md-inline col-form-label col-form-label-sm col-3 col-md-1 text-right">
+                                    <i id="launch-msn-modal-1" class="fas fa-info-circle mr-2 modal-button"></i>
+                                </div>
+                                <label for="meter_serial_number" class="col-form-label col-form-label-sm col-12 col-md-3 text-md-left">
+                                    <div class="d-inline d-md-none col-form-label">
+                                        <i id="launch-msn-modal-2" class="fas fa-info-circle mr-2 modal-button"></i>
+                                    </div>
+                                    Meter Serial Number:
+                                </label>
                                 <div class="col-12 col-md-7">
-                                    <input type="text" class="form-control form-control-sm text-center text-md-left" id="meter_serial_number" name="meter_serial_number" placeholder="Meter serial number (required)" required>
+                                    <input type="text" class="form-control form-control-sm text-center text-md-left" id="meter_serial_number" name="meter_serial_number" aria-describedby="msnHelpBlock" placeholder="Meter serial number">
+                                    <small id="msnHelpBlock" class="form-text text-muted text-md-left">
+                                        Please provide if known.
+                                    </small>
                                 </div>
                             </div>
                         </div>
@@ -143,7 +165,10 @@
                             <div class="form-group form-row">
                                 <label for="install_date" class="col-form-label col-form-label-sm col-12 col-md-3 offset-md-1 text-md-left">Installation Date: *</label>
                                 <div class="col-12 col-md-7">
-                                    <input type="date" class="form-control form-control-sm text-center text-md-left" id="install_date" name="install_date" required>
+                                    <input type="date" class="form-control form-control-sm text-center text-md-left" id="install_date" name="install_date" aria-describedby="dateHelpBlock" required>
+                                    <small id="dateHelpBlock" class="form-text text-muted text-md-left">
+                                        Earliest installation date must be 30 days from today.
+                                    </small>
                                 </div>
                             </div>
                         </div>
@@ -154,6 +179,70 @@
                             </a>
                         </div>
                     </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Meter ID Modal -->
+    <div id="meter-id-modal" class="my-modal d-none">
+        <div class="container py-4">
+            <div class="card m-md-5 p-4">
+                <i id="close-meter-id-modal" class="fas fa-window-close text-right modal-button"></i>
+                <div class="card-body">
+                    <div class="row text-center">
+                        <div class="col-10 offset-1">
+                            <h4 class="underline mb-4">What is my meter ID?</h4>
+                            <p>
+                                Every electricity meter has a Meter Point Administration Number (MPAN).  This consists of 21 numbers.  These numbers identify the type of meter, location, time bands and charges that apply to your supply point.
+                            </p>
+                            <p>
+                                The first 8 numbers, known as the top line of the MPAN, can change.  However, the final 13 numbers, known as the core MPAN, are unique to your supply point and will not change, even when we replace your meter.
+                            </p>
+                            <img src="static/images/meter-id.jpg" alt="Image showing what an electricity meter ID looks like." class="img-fluid mb-3">
+                            <p>
+                                <span class="font-weight-bold">Please only provide your core MPAN.</span>  These are the 13 digits in the bottom row and they are unique to your supply point.
+                            </p>
+                            <h4 class="underline mb-4">Where can I find my Meter ID?</h4>
+                            <p>
+                                The easiest place to find on an invoice from your supplier.  Your meter ID (MPAN) is not on your meter.
+                            </p>
+                            <p>
+                                If you don’t have a previous invoice, you can find out your MPAN by calling your Distribution Network Operator (DNO) for your area.
+                            </p>
+                            <img src="static/images/dnos.png" alt="Image of the Distribution Network Operators in Great Britain" class="img-fluid mb-3">
+                            <p class="m-0">
+                                Still unsure who your DNO is?  You can find out by entering your postcode on the <a href="https://www.energynetworks.org/operating-the-networks/whos-my-network-operator" class="underline font-weight-bold" target="_blank">Energy Networks website</a>.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Meter Serial Number (MSN) Modal -->
+    <div id="msn-modal" class="my-modal d-none">
+        <div class="container py-4">
+            <div class="card m-md-5 p-4">
+                <i id="close-msn-modal" class="fas fa-window-close text-right modal-button"></i>
+                <div class="card-body">
+                    <div class="row text-center">
+                        <div class="col-10 offset-1">
+                            <h4 class="underline mb-4">What is my Meter Serial Number?</h4>
+                            <p>
+                                Each meter has a unique alphanumeric code on the front of it.  These can vary in length but are usually 8-10 characters in length.
+                            </p>
+                            <p>
+                                If you can provide this information, this will help our engineer identify the correct meter when they come to replace your meter.
+                            </p>
+                            <img src="static/images/msn.png" alt="Image showing an electricity meter with the meter serial number circled." class="img-fluid mb-3">
+                            <h4 class="underline mb-4">Where can I find my Meter Serial Number?</h4>
+                            <p class="m-0">
+                                You can find your Meter Serial Number on an invoice from your supplier and also on the front of your meter.
+                            </p>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
