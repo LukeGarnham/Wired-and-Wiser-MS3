@@ -1,5 +1,5 @@
 import os
-from datetime import date
+from datetime import datetime
 from flask import (
     Flask, flash, render_template,
     redirect, request, session, url_for)
@@ -158,8 +158,8 @@ def book():
                 "supplier_acc_no": request.form.get("supplier_acc_no"),
                 "meter_read_reg_1": request.form.get("meter_read_reg_1"),
                 "meter_read_reg_2": request.form.get("meter_read_reg_2"),
-                "install_date": request.form.get("install_date"),
-                "application_date": date.today().strftime("%d/%m/%Y"),
+                "install_date": datetime.strptime(request.form.get("install_date"), "%Y-%m-%d"),
+                "application_date": datetime.now(),
                 "installation_complete": False
             }
             # Insert the booking dictionary into the meter_installs collection.
@@ -171,6 +171,12 @@ def book():
                 "account", username=session["user_email_address"]))
 
     return render_template("book.html")
+
+
+@app.route("/view_booking/<booking_id>")
+def view_booking(booking_id):
+    booking = mongo.db.meter_installs.find_one({"_id": ObjectId(booking_id)})
+    return render_template("view_booking.html", booking=booking)
 
 
 if __name__ == "__main__":
