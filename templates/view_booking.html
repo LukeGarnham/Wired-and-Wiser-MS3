@@ -97,7 +97,7 @@
                                 <i class="fas fa-edit mr-2"></i>Update Booking
                             </a>
                             <div class="d-md-none"></div>
-                            <div id="lanch-delete-modal" class="button red d-inline-block px-3 py-1">
+                            <div id="launch-delete-modal" class="button red d-inline-block px-3 py-1">
                                 <i class="fas fa-trash mr-2"></i>Delete Booking
                             </div>
                         </div>
@@ -113,7 +113,7 @@
     </div>
 
     <!-- Delete Booking Modal -->
-    <div id="delete-booking-modal" class="my-modal d-none">
+    <div id="delete-booking-modal" class="my-modal">
         <div class="container py-4">
             <div class="card m-md-5 p-4">
                 <div class="card-body">
@@ -121,11 +121,12 @@
                         <div class="col-10 offset-1">
                             <h4 class="mb-4">Are you sure you wish to cancel and delete your booking?</h4>
                             <div class="mt-5">
-                                <a href="{{ url_for('delete_booking', booking_id=booking._id) }}" class="button red px-3 py-1 d-inline-block d-md-inline mx-auto mb-4 mb-md-0 mr-md-4">
-                                    <i class="fas fa-trash mr-2"></i>Yes - Cancel My Booking
-                                </a>
-                                <div class="d-md-none"></div>
-                                <div id="close-delete-booking-modal" class="button orange d-inline-block px-3 py-1">
+                                <div class="mb-4">
+                                    <a href="{{ url_for('delete_booking', booking_id=booking._id) }}" class="button red px-3 py-1">
+                                        <i class="fas fa-trash mr-2"></i>Yes - Cancel My Booking
+                                    </a>
+                                </div>
+                                <div id="close-delete-modal" class="button orange px-3 py-1 d-inline-block">
                                     <i class="fas fa-edit mr-2"></i>No - Do Not Cancel
                                 </div>
                             </div>
