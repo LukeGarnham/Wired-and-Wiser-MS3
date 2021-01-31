@@ -16,28 +16,6 @@
 //     });
 // });
 
-// ----------------------------------------------------------------------------------------------------------Booking form date picker
-// Enforce a minimum date on the Booking form date picker.  Earliest booking date must be made 30 days in advance of today.
-// Solution found here:  https://stackoverflow.com/questions/32378590/set-date-input-fields-max-date-to-today
-// And here: https://stackoverflow.com/questions/44827066/add-30-days-to-a-current-date-js
-
-
-// if (document.getElementById("install_date")) {
-//     let today = new Date();
-//     today.setDate(today.getDate() + 30)
-//     let day = today.getDate();
-//     if (day < 10) {
-//         day = "0" + day;
-//     }
-//     let month = today.getMonth()+1;
-//     if (month < 10) {
-//         month = "0" + month;
-//     }
-//     let year = today.getFullYear();
-//     today = year+"-"+month+"-"+day;
-//     document.getElementById("install_date").setAttribute("min", today);
-// };
-
 // ----------------------------------------------------------------------------------------------------------Modals
 
 $(document).ready(function() {
@@ -62,10 +40,6 @@ $(document).ready(function() {
         $("#msn-modal").fadeOut();
     });
 
-    // Set up the install date with a datepicker widget using jQuery UI:  https://api.jqueryui.com/datepicker/
-    // $("#install_date" ).datepicker();
-    // $.datepicker.formatDate("dd/mm/yyyy");
-
     // ------------------------------------------------Delete Booking Modal
     // Open Delete Booking modal when button with id launch-delete-modal is clicked.
     $("#launch-delete-modal").click(function() {
@@ -74,6 +48,13 @@ $(document).ready(function() {
     // Close Delete Booking modal when icon with id close-delete-modal is clicked.
     $("#close-delete-modal").click(function() {
         $("#delete-booking-modal").fadeOut();
+    });
+
+    // ----------------------------------------------------------------------------------------------------------Booking form date picker
+    // Set up the install date with a datepicker widget using jQuery UI:  https://api.jqueryui.com/datepicker/
+    $("#install_date" ).datepicker({
+        dateFormat: "dd/mm/yy",
+        minDate: 30,
     });
 
 });
