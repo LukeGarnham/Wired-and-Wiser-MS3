@@ -28,7 +28,7 @@
                                 <div class="d-none d-md-inline col-form-label col-form-label-sm col-3 col-md-1 text-right">
                                     <i id="launch-meter-id-modal-1" class="fas fa-info-circle mr-2 modal-button"></i>
                                 </div>
-                                <label for="meter_id" class="col-form-label col-form-label-sm col-12 col-md-3 text-md-left">
+                                <label for="meter_id" class="col-form-label col-form-label-sm col-12 col-md-3 text-md-left font-weight-bold">
                                     <div class="d-inline d-md-none col-form-label">
                                         <i id="launch-meter-id-modal-2" class="fas fa-info-circle mr-2 modal-button"></i>
                                     </div>
@@ -45,11 +45,11 @@
                                 <div class="d-none d-md-inline col-form-label col-form-label-sm col-3 col-md-1 text-right">
                                     <i id="launch-msn-modal-1" class="fas fa-info-circle mr-2 modal-button"></i>
                                 </div>
-                                <label for="meter_serial_number" class="col-form-label col-form-label-sm col-12 col-md-3 text-md-left">
+                                <label for="meter_serial_number" class="col-form-label col-form-label-sm col-12 col-md-3 text-md-left font-weight-bold">
                                     <div class="d-inline d-md-none col-form-label">
                                         <i id="launch-msn-modal-2" class="fas fa-info-circle mr-2 modal-button"></i>
                                     </div>
-                                    Meter Serial Number:
+                                    Meter <span class="d-md-none d-lg-inline">Serial </span>Number:
                                 </label>
                                 <div class="col-12 col-md-7">
                                     <input type="text" class="form-control form-control-sm text-center text-md-left" id="meter_serial_number" name="meter_serial_number" aria-describedby="msnHelpBlock" maxlength="12" placeholder="Meter serial number">
@@ -61,7 +61,7 @@
                         </div>
                         <div class="fieldset">
                             <div class="form-group form-row">
-                                <label for="enter_postcode" class="col-form-label col-form-label-sm col-12 col-md-3 offset-md-1 text-md-left">Enter Postcode: *</label>
+                                <label for="enter_postcode" class="col-form-label col-form-label-sm col-12 col-md-3 offset-md-1 text-md-left font-weight-bold">Enter Postcode: *</label>
                                 <div id="postcode-lookup" class="justify-content-between col-12 col-md-7">
                                     <input type="text" id="opc_input" class="form-control form-control-sm text-center text-md-left" name="enter_postcode">
                                     <button type="button" id="enter_postcode" class="button green px-3 py-1"><i class="fas fa-search-location mr-2"></i>Search</button>
@@ -69,55 +69,55 @@
                                 </div>
                             </div>
                             <div class="form-group form-row">
-                                <label for="first_address_line" class="col-form-label col-form-label-sm col-12 col-md-3 offset-md-1 text-md-left">First Address Line: *</label>
-                                <div class="col-12 col-md-7">
+                                <label for="first_address_line" class="col-form-label col-form-label-sm col-12 col-lg-3 offset-md-1 text-md-left font-weight-bold">First Address Line: *</label>
+                                <div class="col-12 col-md-10 offset-md-1 col-lg-7 offset-lg-0">
                                     <input type="text" class="form-control form-control-sm text-center text-md-left" id="first_address_line" name="first_address_line" required>
                                 </div>
                             </div>
                             <div class="form-group form-row">
-                                <label for="second_address_line" class="col-form-label col-form-label-sm col-12 col-md-3 offset-md-1 text-md-left">Second Address Line:</label>
-                                <div class="col-12 col-md-7">
+                                <label for="second_address_line" class="col-form-label col-form-label-sm col-12 col-lg-3 offset-md-1 text-md-left font-weight-bold">Second Address Line:</label>
+                                <div class="col-12 col-md-10 offset-md-1 col-lg-7 offset-lg-0">
                                     <input type="text" class="form-control form-control-sm text-center text-md-left" id="second_address_line" name="second_address_line">
                                 </div>
                             </div>
                             <div class="form-group form-row">
-                                <label for="third_address_line" class="col-form-label col-form-label-sm col-12 col-md-3 offset-md-1 text-md-left">Third Address Line:</label>
-                                <div class="col-12 col-md-7">
+                                <label for="third_address_line" class="col-form-label col-form-label-sm col-12 col-lg-3 offset-md-1 text-md-left font-weight-bold">Third Address Line:</label>
+                                <div class="col-12 col-md-10 offset-md-1 col-lg-7 offset-lg-0">
                                     <input type="text" class="form-control form-control-sm text-center text-md-left" id="third_address_line" name="third_address_line">
                                 </div>
                             </div>
                             <div class="form-group form-row">
-                                <label for="town" class="col-form-label col-form-label-sm col-12 col-md-3 offset-md-1 text-md-left">Town: *</label>
+                                <label for="town" class="col-form-label col-form-label-sm col-12 col-md-3 offset-md-1 text-md-left font-weight-bold">Town / City: *</label>
                                 <div class="col-12 col-md-7">
                                     <input type="text" class="form-control form-control-sm text-center text-md-left" id="town" name="town" required>
                                 </div>
                             </div>
                             <div class="form-group form-row">
-                                <label for="county" class="col-form-label col-form-label-sm col-12 col-md-3 offset-md-1 text-md-left">County: *</label>
+                                <label for="county" class="col-form-label col-form-label-sm col-12 col-md-3 offset-md-1 text-md-left font-weight-bold">County: *</label>
                                 <div class="col-12 col-md-7">
                                     <input type="text" class="form-control form-control-sm text-center text-md-left" id="county" name="county" required>
                                 </div>
                             </div>
                             <div class="form-group form-row">
-                                <label for="postcode" class="col-form-label col-form-label-sm col-12 col-md-3 offset-md-1 text-md-left">Postcode: *</label>
+                                <label for="postcode" class="col-form-label col-form-label-sm col-12 col-md-3 offset-md-1 text-md-left font-weight-bold">Postcode: *</label>
                                 <div class="col-12 col-md-7">
                                     <input type="text" class="form-control form-control-sm text-center text-md-left" id="postcode" name="postcode" required>
                                 </div>
                             </div>
                             <div class="form-group form-row">
-                                <label for="meter_location" class="col-form-label col-form-label-sm col-12 col-md-10 offset-md-1 text-md-left">Meter Location: *</label>
+                                <label for="meter_location" class="col-form-label col-form-label-sm col-12 col-md-10 offset-md-1 text-md-left font-weight-bold">Meter Location: *</label>
                                 <div class="col-12 col-md-10 offset-md-1">
                                     <textarea class="form-control form-control-sm text-left" id="meter_location" name="meter_location" cols="30" rows="2" placeholder="Where in the property is the meter located? (required)" required></textarea>
                                 </div>
                             </div>
                             <div class="form-group form-row">
-                                <label for="access_instructions" class="col-form-label col-form-label-sm col-12 col-md-10 offset-md-1 text-md-left">Access Instructions (if applicable):</label>
+                                <label for="access_instructions" class="col-form-label col-form-label-sm col-12 col-md-10 offset-md-1 text-md-left font-weight-bold">Access Instructions (if applicable):</label>
                                 <div class="col-12 col-md-10 offset-md-1">
                                     <textarea class="form-control form-control-sm text-left" id="access_instructions" name="access_instructions" cols="30" rows="2" placeholder="Are there any instructions for accessing the property?"></textarea>
                                 </div>
                             </div>
                             <div class="form-group form-row">
-                                <label for="parking_on_site" class="col-form-label col-form-label-sm col-12 col-sm-6 offset-md-1 text-sm-left">Parking Available On Site?: *</label>
+                                <label for="parking_on_site" class="col-form-label col-form-label-sm col-12 col-sm-6 offset-md-1 text-sm-left font-weight-bold">Parking Available On Site?: *</label>
                                 <div class="col-12 col-sm-6 col-md-4">
                                     <select name="parking_on_site" class="custom-select custom-select-sm text-center text-md-left" id="parking_on_site" required>
                                         <option value="" selected disabled>Select (required)</option>
@@ -127,7 +127,7 @@
                                 </div>
                             </div>
                             <div class="form-group form-row">
-                                <label for="property_type" class="col-form-label col-form-label-sm col-12 col-sm-6 offset-md-1 text-sm-left">Property Type: *</label>
+                                <label for="property_type" class="col-form-label col-form-label-sm col-12 col-sm-6 offset-md-1 text-sm-left font-weight-bold">Property Type: *</label>
                                 <div class="col-12 col-sm-6 col-md-4">
                                     <select name="property_type" class="custom-select custom-select-sm text-center text-md-left" id="property_type" required>
                                         <option value="" selected disabled>Select (required)</option>
@@ -139,31 +139,31 @@
                         </div>
                         <div class="fieldset">
                             <div class="form-group form-row">
-                                <label for="supplier" class="col-form-label col-form-label-sm col-12 col-md-3 offset-md-1 text-md-left">Supplier: *</label>
+                                <label for="supplier" class="col-form-label col-form-label-sm col-12 col-md-3 offset-md-1 text-md-left font-weight-bold">Supplier: *</label>
                                 <div class="col-12 col-md-7">
                                     <input type="text" class="form-control form-control-sm text-center text-md-left" id="supplier" name="supplier" maxlength="30" placeholder="Name of current supplier" required>
                                 </div>
                             </div>
                             <div class="form-group form-row">
-                                <label for="supplier_acc_no" class="col-form-label col-form-label-sm col-12 col-md-5 offset-md-1 text-md-left">Supplier Account Number:</label>
+                                <label for="supplier_acc_no" class="col-form-label col-form-label-sm col-12 col-md-5 offset-md-1 text-md-left font-weight-bold">Supplier Account Number:</label>
                                 <div class="col-12 col-md-5">
                                     <input type="text" class="form-control form-control-sm text-center text-md-left" id="supplier_acc_no" name="supplier_acc_no" maxlength="20" placeholder="Account number (if known)">
                                 </div>
                             </div>
                             <div class="form-group form-row">
-                                <label for="meter_read_reg_1" class="col-form-label col-form-label-sm col-12 col-md-5 offset-md-1 text-md-left">Meter Read (Register 1):</label>
+                                <label for="meter_read_reg_1" class="col-form-label col-form-label-sm col-12 col-md-5 offset-md-1 text-md-left font-weight-bold">Meter Read (Register 1):</label>
                                 <div class="col-12 col-md-5">
                                     <input type="text" class="form-control form-control-sm text-center text-md-left" id="meter_read_reg_1" name="meter_read_reg_1" maxlength="8" pattern="^[0-9]{0-8}$" placeholder="Register 1 read (if known)">
                                 </div>
                             </div>
                             <div class="form-group form-row">
-                                <label for="meter_read_reg_2" class="col-form-label col-form-label-sm col-12 col-md-5 offset-md-1 text-md-left">Meter Read (Register 2):</label>
+                                <label for="meter_read_reg_2" class="col-form-label col-form-label-sm col-12 col-md-5 offset-md-1 text-md-left font-weight-bold">Meter Read (Register 2):</label>
                                 <div class="col-12 col-md-5">
                                     <input type="text" class="form-control form-control-sm text-center text-md-left" id="meter_read_reg_2" name="meter_read_reg_2" maxlength="8" pattern="^[0-9]{0-8}$" placeholder="Register 2 read (if known)">
                                 </div>
                             </div>
                             <div class="form-group form-row">
-                                <label for="install_date" class="col-form-label col-form-label-sm col-12 col-md-3 offset-md-1 text-md-left">Installation Date: *</label>
+                                <label for="install_date" class="col-form-label col-form-label-sm col-12 col-md-3 offset-md-1 text-md-left font-weight-bold">Installation Date: *</label>
                                 <div class="col-12 col-md-7">
                                     <input type="date" class="form-control form-control-sm text-center text-md-left" id="install_date" name="install_date" aria-describedby="dateHelpBlock" required>
                                     <small id="dateHelpBlock" class="form-text text-muted text-md-left">

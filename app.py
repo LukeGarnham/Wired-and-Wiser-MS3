@@ -179,6 +179,14 @@ def view_booking(booking_id):
     return render_template("view_booking.html", booking=booking)
 
 
+@app.route("/delete_booking/<booking_id>")
+def delete_booking(booking_id):
+    # Find the booking in the meter_installs collection with the booking id that's been passed through and delete it.
+    mongo.db.meter_installs.delete_one({"_id": ObjectId(booking_id)})
+    return redirect(url_for(
+        "account", username=session["user_email_address"]))
+
+
 if __name__ == "__main__":
     app.run(host=os.environ.get("IP"),
             port=int(os.environ.get("PORT")),
