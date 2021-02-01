@@ -197,6 +197,10 @@ footer {
     background-image: url('https://raw.githubusercontent.com/LukeGarnham/Wired-and-Wiser-MS3/master/static/images/wind-turbines-5.jpg');
 }
 
+#view-background {
+    background-image: url('https://raw.githubusercontent.com/LukeGarnham/Wired-and-Wiser-MS3/master/static/images/wind-turbines-2.jpg');
+}
+
 /*----------------------------------------------------------------------------------------------------------Account Page*/
 
 .tab-container {

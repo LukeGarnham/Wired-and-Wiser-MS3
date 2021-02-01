@@ -64,6 +64,8 @@ $(document).ready(function() {
         }
     });
 
+    // Enable and disable the submit form button when the user checks/unchecks the authorisation checkbox.
+    // Below solution reached with the aid of:  https://stackoverflow.com/questions/7031226/jquery-checkbox-change-and-click-event
     $("#supplier_authorisation").change(function() {
         if ($("#supplier_authorisation").is(":checked")) {
             $("#submit-button").prop("disabled", false)

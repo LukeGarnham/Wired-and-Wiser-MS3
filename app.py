@@ -179,6 +179,7 @@ def book():
 
 @app.route("/view_booking/<booking_id>")
 def view_booking(booking_id):
+    # Find the record with the corresponding booking ID in the meter_installs collection.
     booking = mongo.db.meter_installs.find_one({"_id": ObjectId(booking_id)})
     return render_template("view_booking.html", booking=booking)
 
@@ -187,8 +188,18 @@ def view_booking(booking_id):
 def delete_booking(booking_id):
     # Find the booking in the meter_installs collection with the booking id that's been passed through and delete it.
     mongo.db.meter_installs.delete_one({"_id": ObjectId(booking_id)})
+    # Display a flash message informing user that the booking has been deleted.
+    flash("Your meter install booking has been deleted")
+    # Redirect the user back to the account page.
     return redirect(url_for(
         "account", username=session["user_email_address"]))
+
+
+@app.route("/update_booking/<booking_id>")
+def update_booking(booking_id):
+    # Find the record with the corresponding booking ID in the meter_installs collection.
+    booking = mongo.db.meter_installs.find_one({"_id": ObjectId(booking_id)})
+    return render_template("update_booking.html", booking=booking)
 
 
 if __name__ == "__main__":

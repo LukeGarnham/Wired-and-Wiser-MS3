@@ -3,7 +3,7 @@
 {% block content %}
 
     <!-- Jumbrotron/background -->
-    <div class="jumbotron jumbotron-fluid text-center text-white p-0 mb-0" id="book-background">
+    <div class="jumbotron jumbotron-fluid text-center text-white p-0 mb-0" id="view-background">
         <div class="mask"></div>
         <div class="container py-4">
             <!-- Flash messages -->
@@ -93,7 +93,7 @@
                             <div class="col-form-label col-form-label-sm col-12 col-md-6">{{ booking.install_date.strftime('%d/%m/%Y') }}</div>
                         </div>
                         <div class="mt-5">
-                            <a href="#" class="button orange px-3 py-1 d-inline-block d-md-inline mx-auto mb-4 mb-md-0 mr-md-4">
+                            <a href="{{ url_for('update_booking', booking_id=booking._id) }}" class="button orange px-3 py-1 d-inline-block d-md-inline mx-auto mb-4 mb-md-0 mr-md-4">
                                 <i class="fas fa-edit mr-2"></i>Update Booking
                             </a>
                             <div class="d-md-none"></div>
