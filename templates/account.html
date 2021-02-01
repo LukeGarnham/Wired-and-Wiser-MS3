@@ -16,14 +16,15 @@
                     {% endfor %}
                 {% endif %}
             {% endwith %}
-            <!-- Card containing account details -->
+            <!-- Card containing account & booking details -->
             <div class="card m-md-5 p-4">
                 <div class="card-body">
                     <div>
                         <h1 class="display-4 mb-3"><i class="fas fa-user mr-2"></i>Account</h1>
                         <h4 class="mb-5">Welcome {{  user.first_name|capitalize  }}</h4>
                     </div>
-                    <!-- The skeleton code for the tabs was copid from Bootstrap: https://getbootstrap.com/docs/4.5/components/navs/#javascript-behavior -->
+                    <!-- Account and Booking - tabbed content -->
+                    <!-- The skeleton code for the tabs was copied from Bootstrap: https://getbootstrap.com/docs/4.5/components/navs/#javascript-behavior -->
                     <ul class="nav nav-tabs nav-fill justify-content-center" id="myTab" role="tablist">
                         <li class="nav-item" role="presentation">
                             <a class="nav-link active" id="home-tab" data-toggle="tab" href="#account" role="tab" aria-controls="home" aria-selected="true">

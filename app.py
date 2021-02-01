@@ -140,6 +140,9 @@ def book():
             flash("A smart meter installation has already been booked for Meter ID "+ request.form.get("meter_id"))
         # Else extract data from form and assign to keys in the booking dictionary.
         else:
+            # Check whether the supplier authorisation is selected and asign True if so, False if not.
+            authorised = True if request.form.get(
+                "supplier_authorisation")=="on" else False
             booking = {
                 "user_email_address": session["user_email_address"],
                 "meter_id": request.form.get("meter_id"),
@@ -158,7 +161,8 @@ def book():
                 "supplier_acc_no": request.form.get("supplier_acc_no"),
                 "meter_read_reg_1": request.form.get("meter_read_reg_1"),
                 "meter_read_reg_2": request.form.get("meter_read_reg_2"),
-                "install_date": datetime.strptime(request.form.get("install_date"), "%Y-%m-%d"),
+                "install_date": datetime.strptime(request.form.get("install_date"), "%d/%m/%Y"),
+                "supplier_authorisation": authorised,
                 "application_date": datetime.now(),
                 "installation_complete": False
             }

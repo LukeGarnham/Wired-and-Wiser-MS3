@@ -61,14 +61,6 @@
                         </div>
                         <div class="fieldset">
                             <div class="form-group form-row">
-                                <label for="enter_postcode" class="col-form-label col-form-label-sm col-12 col-md-3 offset-md-1 text-md-left font-weight-bold">Enter Postcode: *</label>
-                                <div id="postcode-lookup" class="justify-content-between col-12 col-md-7">
-                                    <input type="text" id="opc_input" class="form-control form-control-sm text-center text-md-left" name="enter_postcode">
-                                    <button type="button" id="enter_postcode" class="button green px-3 py-1"><i class="fas fa-search-location mr-2"></i>Search</button>
-                                    <select></select>
-                                </div>
-                            </div>
-                            <div class="form-group form-row">
                                 <label for="first_address_line" class="col-form-label col-form-label-sm col-12 col-lg-3 offset-md-1 text-md-left font-weight-bold">First Address Line: *</label>
                                 <div class="col-12 col-md-10 offset-md-1 col-lg-7 offset-lg-0">
                                     <input type="text" class="form-control form-control-sm text-center text-md-left" id="first_address_line" name="first_address_line" required>
@@ -165,15 +157,23 @@
                             <div class="form-group form-row">
                                 <label for="install_date" class="col-form-label col-form-label-sm col-12 col-md-5 offset-md-1 text-md-left font-weight-bold">Installation Date: *</label>
                                 <div class="col-12 col-md-5">
-                                    <input type="text" class="form-control form-control-sm text-center text-md-left" id="install_date" name="install_date" aria-describedby="dateHelpBlock" placeholder="dd/mm/yyyy" required>
+                                    <input type="text" class="form-control form-control-sm text-center text-md-left" id="install_date" name="install_date" aria-describedby="dateHelpBlock" placeholder="dd/mm/yyyy" readonly="true" required>
                                     <small id="dateHelpBlock" class="form-text text-muted text-md-left">
                                         Earliest installation date must be 30 days from today.
                                     </small>
                                 </div>
                             </div>
+                            <div class="form-check form-row">
+                                <div class="col-12 col-md-10 offset-md-1">
+                                    <input type="checkbox" class="form-check-input mt-2"  value="on" id="supplier_authorisation" name="supplier_authorisation">
+                                    <label class="form-check-label col-form-label col-form-label-sm" for="supplier_authorisation">
+                                        I authorise Wired & Wiser to conduct a smart meter installation at my presmises. I understand that Wired & Wiser may contact my supplier to pass on information about the meter installation and pass on meter read(s).
+                                    </label>
+                                </div>
+                            </div>
                         </div>
                         <div class="mt-5">
-                            <button type="submit" class="button green px-3 py-1 d-block d-md-inline mx-auto mb-4 mb-md-0 mr-md-4"><i class="fas fa-book mr-2"></i>Book</button>
+                            <button type="submit" id="submit-button" class="button green px-3 py-1 d-block d-md-inline mx-auto mb-4 mb-md-0 mr-md-4" disabled><i class="fas fa-book mr-2"></i>Book</button>
                             <a href="{{ url_for('account', username=session['user_email_address']) }}" class="button red d-md-inline px-3 py-1">
                                 <i class="fas fa-window-close mr-2"></i>Cancel
                             </a>
@@ -247,12 +247,5 @@
             </div>
         </div>
     </div>
-
-{% endblock %}
-
-{% block scripts %}
-
-    <!-- Script for Address Lookup:  https://getaddress.io/ -->
-    <script src="https://cdn.getaddress.io/scripts/jquery.getAddress-4.0.0.min.js"></script>
 
 {% endblock %}

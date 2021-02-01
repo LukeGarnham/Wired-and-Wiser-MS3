@@ -55,6 +55,21 @@ $(document).ready(function() {
     $("#install_date" ).datepicker({
         dateFormat: "dd/mm/yy",
         minDate: 30,
+        maxDate: "+2y",
+        firstDay: 1,
+        // Below solution for preventing Sundays taken from: https://stackoverflow.com/questions/31770976/disable-specific-days-in-jquery-ui-datepicker
+        beforeShowDay: function(date) {
+            let day = date.getDay();
+            return [(day != 0)];
+        }
     });
 
+    $("#supplier_authorisation").change(function() {
+        if ($("#supplier_authorisation").is(":checked")) {
+            $("#submit-button").prop("disabled", false)
+        } else {
+            $("#submit-button").prop("disabled", true)
+        }
+    })
+    
 });

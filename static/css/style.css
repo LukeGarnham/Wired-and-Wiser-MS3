@@ -104,6 +104,11 @@ a:hover {
     text-decoration: none;
 }
 
+.button:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+}
+
 /*------------------------------------------------Cards*/
 
 .card {
@@ -202,6 +207,12 @@ footer {
     border-bottom-right-radius: 0.25rem;
     background-color: #FDFFFC;
     color: #272B30;
+}
+
+/*----------------------------------------------------------------------------------------------------------Booking form*/
+
+#install_date {
+    background-color: #fff;
 }
 
 /*----------------------------------------------------------------------------------------------------------Modals*/
