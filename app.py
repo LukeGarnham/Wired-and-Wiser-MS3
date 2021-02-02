@@ -195,8 +195,65 @@ def delete_booking(booking_id):
         "account", username=session["user_email_address"]))
 
 
-@app.route("/update_booking/<booking_id>")
+@app.route("/update_booking/<booking_id>", methods=["GET", "POST"])
 def update_booking(booking_id):
+    # If method is POST (i.e. form submitted), update the data in the meter_installs collection.
+    if request.method == "POST":
+        # Retrieve the original booking from the meter_installs collection.
+        original_booking = mongo.db.meter_installs.find_one({"_id": ObjectId(booking_id)})
+        # Check whether the supplier authorisation is selected and asign True if so, False if not.
+        authorised = True if request.form.get(
+            "supplier_authorisation")=="on" else False
+        # Asign form elements to keys in update dict.
+        update = {
+            "user_email_address": session["user_email_address"],
+            "meter_id": request.form.get("meter_id"),
+            "meter_serial_number": request.form.get("meter_serial_number"),
+            "first_address_line": request.form.get("first_address_line"),
+            "second_address_line": request.form.get("second_address_line"),
+            "third_address_line": request.form.get("third_address_line"),
+            "town": request.form.get("town"),
+            "county": request.form.get("county"),
+            "postcode": request.form.get("postcode"),
+            "meter_location": request.form.get("meter_location"),
+            "access_instructions": request.form.get("access_instructions"),
+            "parking_on_site": request.form.get("parking_on_site"),
+            "property_type": request.form.get("property_type"),
+            "supplier": request.form.get("supplier"),
+            "supplier_acc_no": request.form.get("supplier_acc_no"),
+            "meter_read_reg_1": request.form.get("meter_read_reg_1"),
+            "meter_read_reg_2": request.form.get("meter_read_reg_2"),
+            "install_date": datetime.strptime(request.form.get("install_date"), "%d/%m/%Y"),
+            "supplier_authorisation": authorised,
+            "application_date": original_booking["application_date"],
+            "installation_complete": False
+        }
+         # Check whether the meter_id has changed.
+        if original_booking["meter_id"] != update["meter_id"]:
+            # If so, check the meter_installs collection to see if another booking has been made with the updated meter_id.
+            existing_booking = mongo.db.meter_installs.find_one(
+                {"meter_id": update["meter_id"]})
+            # If there is another meter found in the meter_installs collection.
+            if existing_booking:
+                # Display a flash message to the user advising them that there is an existing booking for the updated meter_id.
+                flash("A smart meter installation has already been booked for Meter ID "+ request.form.get("meter_id"))
+            else:
+                # Otherwise, update the booking in the meter_installs collection.
+                mongo.db.meter_installs.update({"_id": ObjectId(booking_id)}, update)
+                # Display a flash message informing user that booking has been successfully updated.
+                flash("Meter install booking updated")
+                # Redirect to account(username) function where username is the users email address.
+                return redirect(url_for(
+                    "account", username=session["user_email_address"]))
+        else:
+            # If meter_id has not changed, then update  the booking in the meter_installs collection.
+            mongo.db.meter_installs.update({"_id": ObjectId(booking_id)}, update)
+            # Display a flash message informing user that booking has been successfully updated.
+            flash("Meter install booking updated")
+            # Redirect to account(username) function where username is the users email address.
+            return redirect(url_for(
+                "account", username=session["user_email_address"]))
+
     # Find the record with the corresponding booking ID in the meter_installs collection.
     booking = mongo.db.meter_installs.find_one({"_id": ObjectId(booking_id)})
     return render_template("update_booking.html", booking=booking)

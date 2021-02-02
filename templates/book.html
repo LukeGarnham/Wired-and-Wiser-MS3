@@ -96,7 +96,7 @@
                             <div class="form-group form-row">
                                 <label for="postcode" class="col-form-label col-form-label-sm col-12 col-md-3 offset-md-1 text-md-left font-weight-bold">Postcode: *</label>
                                 <div class="col-12 col-md-7">
-                                    <input type="text" class="form-control form-control-sm text-center text-md-left" id="postcode" name="postcode" maxlength="8" pattern="^[a-zA-Z0-9- ]$" required>
+                                    <input type="text" class="form-control form-control-sm text-center text-md-left" id="postcode" name="postcode" minlength="6" maxlength="8" required>
                                 </div>
                             </div>
                             <div class="form-group form-row">
@@ -178,7 +178,9 @@
                         </div>
                         <!-- Form buttons -->
                         <div class="mt-5">
-                            <button type="submit" id="submit-button" class="button green px-3 py-1 d-block d-md-inline mx-auto mb-4 mb-md-0 mr-md-4" disabled><i class="fas fa-book mr-2"></i>Book</button>
+                            <button type="submit" id="submit-button" class="button green px-3 py-1 d-block d-md-inline mx-auto mb-4 mb-md-0 mr-md-4" disabled>
+                                <i class="fas fa-book mr-2"></i>Book
+                            </button>
                             <a href="{{ url_for('account', username=session['user_email_address']) }}" class="button red d-md-inline px-3 py-1">
                                 <i class="fas fa-window-close mr-2"></i>Cancel
                             </a>

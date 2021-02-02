@@ -75,7 +75,8 @@
                                             <thead class="">
                                                 <caption class="pl-3">List of install bookings</caption>
                                                 <tr>
-                                                    <th scope="col">Manage</th>
+                                                    <th scope="col">View</th>
+                                                    <th scope="col">Update</th>
                                                     <th scope="col">Address</th>
                                                     <th scope="col" class="d-none d-lg-table-cell">Postcode</th>
                                                     <th scope="col" class="d-none d-lg-table-cell">Meter ID</th>
@@ -85,7 +86,12 @@
                                             <tbody>
                                                 {% for booking in bookings %}
                                                     <tr>
-                                                        <th scope="row"><a href="{{ url_for('view_booking', booking_id=booking._id) }}"><i class="fas fa-eye mr-2"></i>View</a></th>
+                                                        <th scope="row"><a href="{{ url_for('view_booking', booking_id=booking._id) }}">
+                                                            <i class="fas fa-eye mr-2"></i><span class="d-none d-md-inline">View</span>
+                                                        </a></th>
+                                                        <td ><a href="{{ url_for('update_booking', booking_id=booking._id) }}">
+                                                            <i class="fas fa-edit mr-2"></i><span class="d-none d-md-inline">Update</span>
+                                                        </a></td>
                                                         <td>{{  booking.first_address_line|title  }}</td>
                                                         <td class="d-none d-lg-table-cell">{{  booking.postcode|upper  }}</td>
                                                         <td class="d-none d-lg-table-cell">{{  booking.meter_id  }}</td>

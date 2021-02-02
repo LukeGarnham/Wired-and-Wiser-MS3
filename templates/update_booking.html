@@ -24,7 +24,7 @@
                         <h4 class="mb-5">{{ booking.meter_id }}</h4>
                     </div>
                     <!-- FORM -->
-                    <form method="POST" action="{{ url_for('book') }}">
+                    <form method="POST" action="{{ url_for('update_booking', booking_id=booking._id) }}">
                         <!-- First group contains meter details -->
                         <div class="fieldset">
                             <div class="form-group form-row">
@@ -103,7 +103,7 @@
                             <div class="form-group form-row">
                                 <label for="postcode" class="col-form-label col-form-label-sm col-12 col-md-3 offset-md-1 text-md-left font-weight-bold">Postcode: *</label>
                                 <div class="col-12 col-md-7">
-                                    <input type="text" class="form-control form-control-sm text-center text-md-left" id="postcode" name="postcode" maxlength="8" pattern="^[a-zA-Z0-9- ]$" value="{{ booking.postcode}}" required>
+                                    <input type="text" class="form-control form-control-sm text-center text-md-left" id="postcode" name="postcode" minlength="6" maxlength="8" value="{{ booking.postcode }}" required>
                                 </div>
                             </div>
                             <div class="form-group form-row">
@@ -198,7 +198,7 @@
                                 <div class="col-12 col-md-5">
                                     <input type="text" class="form-control form-control-sm text-center text-md-left" id="install_date" name="install_date" aria-describedby="dateHelpBlock" value="{{ booking.install_date.strftime('%d/%m/%Y') }}" readonly="true" required>
                                     <small id="dateHelpBlock" class="form-text text-muted text-md-left">
-                                        Earliest installation date must be 30 days from today.
+                                        You can keep your original install date but if you wish to change it, the earliest new installation date will be 30 days from today.
                                     </small>
                                 </div>
                             </div>
@@ -213,10 +213,43 @@
                         </div>
                         <!-- Form buttons -->
                         <div class="mt-5">
-                            <button type="submit" id="submit-button" class="button green px-3 py-1 d-block d-md-inline mx-auto mb-4 mb-md-0 mr-md-4" disabled><i class="fas fa-book mr-2"></i>Book</button>
-                            <a href="{{ url_for('account', username=session['user_email_address']) }}" class="button red d-md-inline px-3 py-1">
-                                <i class="fas fa-window-close mr-2"></i>Cancel
+                            <button type="button" id="submit-button" class="button orange px-3 py-1 d-inline-block d-md-inline mx-auto mb-4 mb-md-0 mr-md-4" disabled>
+                                <i class="far fa-save mr-2"></i>Save Changes
+                            </button>
+                            <div class="d-md-none"></div>
+                            <div id="launch-delete-modal" class="button red d-inline-block px-3 py-1">
+                                <i class="fas fa-trash mr-2"></i>Delete Booking
+                            </div>
+                        </div>
+                        <div class="mt-5">
+                            <a href="{{ url_for('account', username=session['user_email_address']) }}" class="button green d-md-inline px-3 py-1">
+                                <i class="fas fa-user mr-2"></i>Back To Account
                             </a>
+                        </div>
+
+                            <!-- Update Booking Modal -->
+                        <div id="update-booking-modal" class="my-modal">
+                            <div class="container py-4">
+                                <div class="card m-md-5 p-4">
+                                    <div class="card-body">
+                                        <div class="row text-center">
+                                            <div class="col-10 offset-1">
+                                                <h4 class="mb-4">Save changes to your booking?</h4>
+                                                <div class="mt-5">
+                                                    <div class="mb-4">
+                                                        <button type="submit" class="button orange px-3 py-1">
+                                                            <i class="far fa-save mr-2"></i>Yes - Update My Booking
+                                                        </button>
+                                                    </div>
+                                                    <div id="close-update-modal" class="button red px-3 py-1 d-inline-block">
+                                                        <i class="fas fa-edit mr-2"></i>No - Continue Editing
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </form>
                 </div>
@@ -281,6 +314,31 @@
                             <p class="m-0">
                                 You can find your Meter Serial Number on an invoice from your supplier and also on the front of your meter.
                             </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Delete Booking Modal -->
+    <div id="delete-booking-modal" class="my-modal">
+        <div class="container py-4">
+            <div class="card m-md-5 p-4">
+                <div class="card-body">
+                    <div class="row text-center">
+                        <div class="col-10 offset-1">
+                            <h4 class="mb-4">Are you sure you wish to cancel and delete your booking?</h4>
+                            <div class="mt-5">
+                                <div class="mb-4">
+                                    <a href="{{ url_for('delete_booking', booking_id=booking._id) }}" class="button red px-3 py-1">
+                                        <i class="fas fa-trash mr-2"></i>Yes - Cancel My Booking
+                                    </a>
+                                </div>
+                                <div id="close-delete-modal" class="button orange px-3 py-1 d-inline-block">
+                                    <i class="fas fa-edit mr-2"></i>No - Do Not Cancel
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
