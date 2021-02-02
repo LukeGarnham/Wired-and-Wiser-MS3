@@ -27,46 +27,19 @@
                     <!-- The skeleton code for the tabs was copied from Bootstrap: https://getbootstrap.com/docs/4.5/components/navs/#javascript-behavior -->
                     <ul class="nav nav-tabs nav-fill justify-content-center" id="myTab" role="tablist">
                         <li class="nav-item" role="presentation">
-                            <a class="nav-link active" id="home-tab" data-toggle="tab" href="#account" role="tab" aria-controls="home" aria-selected="true">
-                                <i class="fas fa-user mr-2"></i><span class="d-none d-md-inline">Manage </span>Account
+                            <a class="nav-link active" id="bookings-tab" data-toggle="tab" href="#account" role="tab" aria-controls="home" aria-selected="true">
+                                <i class="fas fa-book mr-2"></i><span class="d-none d-md-inline">Manage </span>Bookings ({{  bookings|length  }})
                             </a>
                         </li>
                         <li class="nav-item" role="presentation">
-                            <a class="nav-link" id="profile-tab" data-toggle="tab" href="#bookings" role="tab" aria-controls="profile" aria-selected="false">
-                                <i class="fas fa-book mr-2"></i><span class="d-none d-md-inline">Manage </span>Bookings ({{  bookings|length  }})
+                            <a class="nav-link" id="account-tab" data-toggle="tab" href="#bookings" role="tab" aria-controls="profile" aria-selected="false">
+                                <i class="fas fa-user mr-2"></i><span class="d-none d-md-inline">Manage </span>Account
                             </a>
                         </li>
                     </ul>
                     <div class="tab-content">
-                        <!-- Account tab content -->
-                        <div class="tab-pane fade show active" id="account" role="tabpanel" aria-labelledby="home-tab">
-                            <div class="container-fluid tab-container py-5">
-                                <div class="row mb-3">
-                                    <div class="col-form-label col-form-label-sm col-12 col-md-6 font-weight-bold">First Name:</div>
-                                    <div class="col-form-label col-form-label-sm col-12 col-md-6">{{  user.first_name|capitalize  }}</div>
-                                </div>
-                                <div class="row mb-3">
-                                    <div class="col-form-label col-form-label-sm col-12 col-md-6 font-weight-bold">Last Name:</div>
-                                    <div class="col-form-label col-form-label-sm col-12 col-md-6">{{  user.last_name|capitalize  }}</div>
-                                </div>
-                                <div class="row mb-3">
-                                    <div class="col-form-label col-form-label-sm col-12 col-md-6 font-weight-bold">Email Addres:</div>
-                                    <div class="col-form-label col-form-label-sm col-12 col-md-6">{{  user.user_email_address  }}</div>
-                                </div>
-                                <div class="mt-5 text-white">
-                                    <div class="d-block d-md-inline mb-4 mb-md-0 mr-md-4">
-                                        <a href="#"  class="button green px-3 py-1">
-                                            <i class="fas fa-edit mr-2"></i>Update Details
-                                        </a>
-                                    </div>
-                                    <a href="#" class="button red d-md-inline px-3 py-1">
-                                        <i class="fas fa-trash mr-2"></i>Delete Account
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
                         <!-- Bookings tab content -->
-                        <div class="tab-pane fade" id="bookings" role="tabpanel" aria-labelledby="profile-tab">
+                        <div class="tab-pane fade show active" id="account" role="tabpanel" aria-labelledby="bookings-tab">
                             <div class="container-fluid tab-container py-5">
                                 <!-- Check if there are any bookings.  If so, build table. -->
                                 {% if bookings|length > 0 %}
@@ -104,6 +77,33 @@
                                 {% else %}
                                     <h4 class="my-5">You don't currently have any meter installations booked.</h4>
                                 {% endif %}
+                            </div>
+                        </div>
+                        <!-- Account tab content -->
+                        <div class="tab-pane fade" id="bookings" role="tabpanel" aria-labelledby="account-tab">
+                            <div class="container-fluid tab-container py-5">
+                                <div class="row mb-3">
+                                    <div class="col-form-label col-form-label-sm col-12 col-md-6 font-weight-bold">First Name:</div>
+                                    <div class="col-form-label col-form-label-sm col-12 col-md-6">{{  user.first_name|capitalize  }}</div>
+                                </div>
+                                <div class="row mb-3">
+                                    <div class="col-form-label col-form-label-sm col-12 col-md-6 font-weight-bold">Last Name:</div>
+                                    <div class="col-form-label col-form-label-sm col-12 col-md-6">{{  user.last_name|capitalize  }}</div>
+                                </div>
+                                <div class="row mb-3">
+                                    <div class="col-form-label col-form-label-sm col-12 col-md-6 font-weight-bold">Email Addres:</div>
+                                    <div class="col-form-label col-form-label-sm col-12 col-md-6">{{  user.user_email_address  }}</div>
+                                </div>
+                                <div class="mt-5 text-white">
+                                    <div class="d-block d-md-inline mb-4 mb-md-0 mr-md-4">
+                                        <a href="#"  class="button green px-3 py-1">
+                                            <i class="fas fa-edit mr-2"></i>Update Details
+                                        </a>
+                                    </div>
+                                    <a href="#" class="button red d-md-inline px-3 py-1">
+                                        <i class="fas fa-trash mr-2"></i>Delete Account
+                                    </a>
+                                </div>
                             </div>
                         </div>
                     </div>
