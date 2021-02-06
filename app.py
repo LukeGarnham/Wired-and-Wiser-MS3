@@ -316,9 +316,8 @@ def update_account(username):
 
 @app.route("/delete_account/<username>", methods=["POST"])
 def delete_account(username):
-    user = mongo.db.users.find_one({
-        "username": username
-    })
+    user = mongo.db.users.find_one(
+        {"user_email_address": username})
     # Check whether the user has provided the correct password.
     if check_password_hash(
             user["password"], request.form.get("password")):
