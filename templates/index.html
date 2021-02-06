@@ -10,17 +10,26 @@
                 <h1 class="display-4 my-3">Join the Smart Meter Revolution</h1>
                 <p class="lead">Wired & Wiser are installing smart meters nationwide.</p>
                 <p>Book your smart meter installation today!</p>
-                <a href="{{ url_for('register') }}" class="button green px-3 py-1">
-                    <i class="fas fa-user mr-2"></i>Register
-                </a>
+                
+                {% if session.user_email_address %}
+                    <a href="{{ url_for('book') }}" class="button green px-3 py-1">
+                        <i class="fas fa-book mr-2"></i>Book Install
+                    </a>
+                {% else %}
+                    <a href="{{ url_for('register') }}" class="button green px-3 py-1">
+                        <i class="fas fa-user mr-2"></i>Register
+                    </a>
+                {% endif %}
             </div>
         </div>
-        <div class="jumbo-bottom">
+        {% if not session.user_email_address %}
+            <div class="jumbo-bottom">
                 <p class="d-md-inline mb-2 mb-md-0 mr-md-2">Already registered?</p>
                 <a href="{{ url_for('signin') }}" class="d-md-inline button orange px-3 py-1">
                     <i class="fas fa-sign-in-alt mr-2"></i>Sign In
                 </a>
             </div>
+        {% endif %}
     </div>
 
     <!-- Home page content -->
@@ -55,12 +64,21 @@
                     <p>
                         We will give you an in home display which shows your electricity consumption in real-time to help you identify cost and energy saving measures that benefit you and the environment.
                     </p>
-                    <p>
-                        <a href="{{ url_for('register') }}" class="underline font-weight-bold">Register</a> today to book your smart meter installation and you really will be wired & wiser!
-                    </p>
-                    <p>
-                        Already booked your install? <a href="{{ url_for('signin') }}" class="underline font-weight-bold">Sign in</a> to check the details.
-                    </p>
+                    {% if session.user_email_address %}
+                        <p>
+                            Now you've registered you are ready to <a href="{{ url_for('book') }}" class="underline font-weight-bold">Book</a> your smart meter installation today!
+                        </p>
+                        <p>
+                            Already booked your install? Manage your booking from the <a href="{{ url_for('account', username=session['user_email_address']) }}" class="underline font-weight-bold">Account</a> page.
+                        </p>
+                    {% else %}
+                        <p>
+                            <a href="{{ url_for('register') }}" class="underline font-weight-bold">Register</a> today to book your smart meter installation and you really will be wired & wiser!
+                        </p>
+                        <p>
+                            Already booked your install? <a href="{{ url_for('signin') }}" class="underline font-weight-bold">Sign in</a> to check the details.
+                        </p>
+                    {% endif %}
                 </div>
             </div>
         </section>
@@ -128,12 +146,21 @@
                     <p>
                         Appointments usually take an hour and you will be without electricity for approximately 45 minutes.  Please consider this before booking - businesses may need to shutdown servers and other IT equipment before the appointment.
                     </p>
-                    <p>
-                        All set?  Simply <a href="{{ url_for('register') }}" class="underline font-weight-bold">register</a> and then from your Account dashboard, book your smart meter installation.  Select a date and time to suit your needs.
-                    </p>
-                    <p class="m-0">
-                        What if something changes?  Don't worry - if you need to amend details of your booking, simply <a href="{{ url_for('signin') }}" class="underline font-weight-bold">sign in</a> and update or cancel your booking.
-                    </p>
+                    {% if session.user_email_address %}
+                        <p>
+                            All set?  Now you've registered you can simply <a href="{{ url_for('book') }}" class="underline font-weight-bold">book</a> your smart meter installation.  Select a date and time to suit your needs.
+                        </p>
+                        <p class="m-0">
+                            What if something changes?  Don't worry - if you need to amend details of your booking, you can manage all of your bookings from the <a href="{{ url_for('account', username=session['user_email_address']) }}" class="underline font-weight-bold">account</a> page where you can view, update or cancel your bookings.
+                        </p>
+                    {% else %}
+                        <p>
+                            All set?  Simply <a href="{{ url_for('register') }}" class="underline font-weight-bold">register</a> and then from your Account dashboard, book your smart meter installation.  Select a date and time to suit your needs.
+                        </p>
+                        <p class="m-0">
+                            What if something changes?  Don't worry - if you need to amend details of your booking, simply <a href="{{ url_for('signin') }}" class="underline font-weight-bold">sign in</a> and update or cancel your booking.
+                        </p>
+                    {% endif %}
                 </div>
             </div>
         </section>

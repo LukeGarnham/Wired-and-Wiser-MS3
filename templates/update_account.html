@@ -60,15 +60,49 @@
                             <button type="submit" class="button orange px-3 py-1 d-block d-md-inline mx-auto mb-4 mb-md-0 mr-md-4">
                                 <i class="fas fa-edit mr-2"></i>Update Details
                             </button>
-                            <a href="#" class="button red d-md-inline px-3 py-1">
+                            <div id="launch-delete-account-modal" class="button red d-inline-block px-3 py-1">
                                 <i class="fas fa-trash mr-2"></i>Delete Account
-                            </a>
+                            </div>
                         </div>
                     </form>
                     <div class="mt-5">
                         <a href="{{ url_for('account', username=session['user_email_address']) }}" class="button green d-md-inline px-3 py-1">
                             <i class="fas fa-user mr-2"></i>Back To Account
                         </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Delete Booking Modal -->
+    <div id="delete-account-modal" class="my-modal">
+        <div class="container py-4">
+            <div class="card m-md-5 p-4">
+                <div class="card-body">
+                    <div class="row text-center">
+                        <div class="col-10 offset-1">
+                            <h4 class="mb-3">Are you sure you wish to delete your account?</h4>
+                            <h6 class="mb-4">Any smart meter installation bookings will also be cancelled.</h6>
+                            <form method="POST" action="{{ url_for('delete_account', username=session['user_email_address']) }}">
+                                <div class="form-group form-row">
+                                    <label for="password" class="col-form-label col-form-label-sm col-12 col-md-8 offset-md-2 col-lg-6 offset-lg-3">Confirm password to proceed:</label>
+                                    <div class="col-12 col-md-8 offset-md-2 col-lg-6 offset-lg-3">
+                                        <input type="password" class="form-control form-control-sm text-center" id="password" name="password" placeholder="Confirm password (required)" required>
+                                    </div>
+                                </div>
+                                <div class="mt-5">
+                                    <div class="mb-4">
+                                        <button type="submit" class="button red px-3 py-1">
+                                            <i class="fas fa-trash mr-2"></i>Yes - Delete My Account
+                                        </button>
+                                    </div>
+                                    <div id="close-delete-account-modal" class="button orange px-3 py-1 d-inline-block">
+                                        <i class="fas fa-edit mr-2"></i>No - Do Not Delete
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
                     </div>
                 </div>
             </div>

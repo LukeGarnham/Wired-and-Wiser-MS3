@@ -33,7 +33,7 @@ def register():
             {"user_email_address": request.form.get(
                 "email").lower()})
 
-        # If it doesn't, display a flash message informing user that an account already exists for this email address.
+        # If it does, display a flash message informing user that an account already exists for this email address.
         if existing_user:
             flash("Account already exists for this email address.")
             return redirect(url_for("register"))
@@ -269,29 +269,40 @@ def update_account(username):
         # Check that the password the user has entered matches the users password in the users collection.
         if check_password_hash(
             user["password"], request.form.get("password")):
-            # If so, create update_user dict containing the updated details.  Password will be the existing hashed password.
+            # Create update_user dict containing the updated details.  Password will be the existing hashed password.
             update_user = {
                 "first_name": request.form.get("first-name").lower(),
                 "last_name": request.form.get("last-name").lower(),
                 "user_email_address": request.form.get("email").lower(),
                 "password": user["password"]
             }
+            # Check if the user has changed their email address.
+            if user["user_email_address"] != request.form.get("email").lower():
+                # Check if email address exists in db
+                existing_user = mongo.db.users.find_one(
+                    {"user_email_address": request.form.get(
+                        "email").lower()})
+                # If it does, display a flash message informing user that an account already exists for this email address.
+                if existing_user:
+                    flash("Another account already exists for the email address you entered")
+                    return redirect(url_for("update_account", username=username))
+                else:
+                    # Else if email address has changed but is still unique in collection:
+                    # Use the update_many method to find all meter_installs records with old email address and update to the new email address.
+                    # Solution reached referring to:  https://www.w3schools.com/python/python_mongodb_update.asp
+                    mongo.db.meter_installs.update_many({
+                        "user_email_address": user["user_email_address"]
+                        }, {
+                            "$set": {
+                                "user_email_address": update_user["user_email_address"]
+                            },
+                        }
+                    )
+                    # Update the users details in the users collection when the user has changed their email address.
+                    session["user_email_address"] = update_user["user_email_address"].lower()
+
             # Update the existing record using the user id.
             mongo.db.users.update({"_id": ObjectId(user["_id"])}, update_user)
-            # Check whether the user has updated their email address:
-            if user["user_email_address"] != update_user["user_email_address"]:
-                # If so, use the update_many method to find all meter_installs records with old email address and update to the new email address.
-                # Solution reached referring to:  https://www.w3schools.com/python/python_mongodb_update.asp
-                mongo.db.meter_installs.update_many({
-                    "user_email_address": user["user_email_address"]
-                    }, {
-                        "$set": {
-                            "user_email_address": update_user["user_email_address"]
-                        },
-                    }
-                )
-                # Update the users details in the users collection when the user has changed their email address.
-                session["user_email_address"] = update_user["user_email_address"].lower()
             # Display flash message informing user that account details have been successfully updated.
             flash("Account details updated")
             # Redirect to account(username) function where username is the users email address.
@@ -325,9 +336,10 @@ def delete_account(username):
         # Solution reached referring to: https://www.w3schools.com/python/python_mongodb_delete.asp
         mongo.db.meter_installs.delete_many({
             "user_email_address": username})
-        # Find the users record in the users collection and delete it.  There will only be one record with corresponding email address so use delete_one method.
+        # Find the users record in the users collection and delete it.  
+        # There will only be one record with corresponding email address but use the id anyway.
         mongo.db.users.delete_one({
-            "user_email_address": username})
+            "_id": ObjectId(user["_id"])})
         # Delete the users email address out of session storage.
         session.pop("user_email_address")
         # Redirect user to the registration page and display flash message informing them that account and bookings have been deleted.

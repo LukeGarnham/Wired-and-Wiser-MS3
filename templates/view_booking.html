@@ -93,10 +93,11 @@
                             <div class="col-form-label col-form-label-sm col-12 col-md-6">{{ booking.install_date.strftime('%d/%m/%Y') }}</div>
                         </div>
                         <div class="mt-5">
-                            <a href="{{ url_for('update_booking', booking_id=booking._id) }}" class="button orange px-3 py-1 d-inline-block d-md-inline mx-auto mb-4 mb-md-0 mr-md-4">
-                                <i class="fas fa-edit mr-2"></i>Update Booking
-                            </a>
-                            <div class="d-md-none"></div>
+                            <div class="d-block d-md-inline mb-4 mb-md-0 mr-md-4">
+                                <a href="{{ url_for('update_booking', booking_id=booking._id) }}" class="button orange px-3 py-1">
+                                    <i class="fas fa-edit mr-2"></i>Update Booking
+                                </a>
+                            </div>
                             <div id="launch-delete-modal" class="button red d-inline-block px-3 py-1">
                                 <i class="fas fa-trash mr-2"></i>Delete Booking
                             </div>
