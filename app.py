@@ -276,6 +276,8 @@ def update_account(username):
                 "user_email_address": request.form.get("email").lower(),
                 "password": user["password"]
             }
+            # Update the existing record using the user id.
+            mongo.db.users.update({"_id": ObjectId(user["_id"])}, update_user)
             # Check whether the user has updated their email address:
             if user["user_email_address"] != update_user["user_email_address"]:
                 # If so, use the update_many method to find all meter_installs records with old email address and update to the new email address.
@@ -288,18 +290,17 @@ def update_account(username):
                         },
                     }
                 )
-            # Update the existing record using the user id.
-            mongo.db.users.update({"_id": ObjectId(user["_id"])}, update_user)
-            # Update the users details in the users collection in case the user has changed their email address.
-            session["user_email_address"] = update_user["user_email_address"].lower()
+                # Update the users details in the users collection when the user has changed their email address.
+                session["user_email_address"] = update_user["user_email_address"].lower()
             # Display flash message informing user that account details have been successfully updated.
             flash("Account details updated")
             # Redirect to account(username) function where username is the users email address.
             return redirect(url_for(
                 "account", username=session["user_email_address"]))
         else:
-            # If password doesn't match, display flash message informing the user and ask them to try again.
+            # If password doesn't match, display flash message informing the user and ask them to try again.  Redirect user back to update_account page.
             flash("Incorrect password - try again")
+            return redirect(url_for("update_account", username=username))
     else:
         # Remove the users password.  Even though it is hashed, I don't want to pass this through for security reasons.
         user.pop("password")
@@ -311,6 +312,33 @@ def update_account(username):
                 user=user)
         # If there is no user email address saved in session variable, redirect user to sign in page.
         return redirect(url_for("signin"))
+
+
+@app.route("/delete_account/<username>", methods=["POST"])
+def delete_account(username):
+    user = mongo.db.users.find_one({
+        "username": username
+    })
+    # Check whether the user has provided the correct password.
+    if check_password_hash(
+            user["password"], request.form.get("password")):
+        # If so, find bookings in meter_installs collection with corresponding user email address and delete them all.
+        # Solution reached referring to: https://www.w3schools.com/python/python_mongodb_delete.asp
+        mongo.db.meter_installs.delete_many({
+            "user_email_address": username})
+        # Find the users record in the users collection and delete it.  There will only be one record with corresponding email address so use delete_one method.
+        mongo.db.users.delete_one({
+            "user_email_address": username})
+        # Delete the users email address out of session storage.
+        session.pop("user_email_address")
+        # Redirect user to the registration page and display flash message informing them that account and bookings have been deleted.
+        flash("Your account and all meter install bookings have been deleted")
+        return redirect(url_for(
+            "register"))
+    else:
+        flash("Incorrect password - try again")
+        return redirect(url_for(
+                "account", username=session["user_email_address"]))
 
 
 if __name__ == "__main__":

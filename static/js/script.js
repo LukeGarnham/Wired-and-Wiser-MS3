@@ -42,8 +42,19 @@ $(document).ready(function() {
         $("#update-booking-modal").fadeOut();
     });
 
+    // ------------------------------------------------Delete Account Modal
+    // Open Delete Account modal when button with id launch-delete-account-modal is clicked.
+    $("#launch-delete-account-modal").click(function() {
+        $("#delete-account-modal").fadeIn();
+    });
+    // Close Delete Booking modal when icon with id close-delete-modal is clicked.
+    $("#close-delete-account-modal").click(function() {
+        $("#delete-account-modal").fadeOut();
+    });
+
     // ----------------------------------------------------------------------------------------------------------Form authorisation
     // Enable and disable the submit form button when the user checks/unchecks the authorisation checkbox.
+    // Used on both the book.html and update_booking.html pages.
     // Below solution reached with the aid of:  https://stackoverflow.com/questions/7031226/jquery-checkbox-change-and-click-event
     $("#supplier_authorisation").change(function() {
         if ($("#supplier_authorisation").is(":checked")) {
