@@ -30,7 +30,13 @@ a:hover {
     color: #F3A712;
 }
 
-/*------------------------------------------------Jumbotron*/
+.flashes {
+    border: 1px solid #fff;
+    border-radius: 0.25rem;
+}
+
+
+/*----------------------------------------------------------------------------------------------------------Jumbotron*/
 
 .jumbotron {
     min-height: 90vh;
@@ -59,7 +65,7 @@ a:hover {
     transform: translate(-50%, 0);
 }
 
-/*------------------------------------------------Button styles & colour themes*/
+/*----------------------------------------------------------------------------------------------------------Button styles & colour themes*/
 
 .button {
     text-align: center;
@@ -109,7 +115,7 @@ a:hover {
     cursor: not-allowed;
 }
 
-/*------------------------------------------------Cards*/
+/*----------------------------------------------------------------------------------------------------------Cards*/
 
 .card {
     border: 1px solid #fff;
@@ -137,22 +143,7 @@ footer {
     font-size: xx-large;
 }
 
-/*----------------------------------------------------------------------------------------------------------Home Page*/
-#home-background {
-    background-image: url('https://raw.githubusercontent.com/LukeGarnham/Wired-and-Wiser-MS3/master/static/images/jumbotron-image.jpg');
-}
-
-.display-4 {
-    font-weight: 100;
-}
-
-/*------------------------------------------------Icons*/
-
-#icons i {
-    font-size: 600%;
-}
-
-/*------------------------------------------------Images*/
+/*----------------------------------------------------------------------------------------------------------Images*/
 
 .image-tile {
     min-height: 50vh;
@@ -199,6 +190,21 @@ footer {
 
 #view-background {
     background-image: url('https://raw.githubusercontent.com/LukeGarnham/Wired-and-Wiser-MS3/master/static/images/wind-turbines-2.jpg');
+}
+
+/*----------------------------------------------------------------------------------------------------------Home Page*/
+#home-background {
+    background-image: url('https://raw.githubusercontent.com/LukeGarnham/Wired-and-Wiser-MS3/master/static/images/jumbotron-image.jpg');
+}
+
+.display-4 {
+    font-weight: 100;
+}
+
+/*------------------------------------------------Icons*/
+
+#icons i {
+    font-size: 600%;
 }
 
 /*----------------------------------------------------------------------------------------------------------Account Page*/

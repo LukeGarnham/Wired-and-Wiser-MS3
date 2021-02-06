@@ -10,8 +10,8 @@
             {% with messages = get_flashed_messages() %}
                 {% if messages %}
                     {% for message in messages %}
-                    <div class="flashes position-relative">
-                        <h4 class="my-5">{{ message }}</h4>
+                    <div class="flashes position-relative slate mx-md-5 my-5">
+                        <h4 class="p-3 m-0">{{ message }}</h4>
                     </div>
                     {% endfor %}
                 {% endif %}
@@ -91,6 +91,10 @@
                         <div class="row mb-3">
                             <div class="col-form-label col-form-label-sm col-12 col-md-6 font-weight-bold">Installation Date:</div>
                             <div class="col-form-label col-form-label-sm col-12 col-md-6">{{ booking.install_date.strftime('%d/%m/%Y') }}</div>
+                        </div>
+                        <div class="row mb-3">
+                            <div class="col-form-label col-form-label-sm col-12 col-md-6 font-weight-bold">Application Date:</div>
+                            <div class="col-form-label col-form-label-sm col-12 col-md-6">{{ booking.application_date.strftime('%d/%m/%Y') }}</div>
                         </div>
                         <div class="mt-5">
                             <div class="d-block d-md-inline mb-4 mb-md-0 mr-md-4">

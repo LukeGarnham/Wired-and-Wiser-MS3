@@ -10,8 +10,8 @@
             {% with messages = get_flashed_messages() %}
                 {% if messages %}
                     {% for message in messages %}
-                    <div class="flashes position-relative">
-                        <h4 class="my-5">{{ message }}</h4>
+                    <div class="flashes position-relative slate mx-md-5 my-5">
+                        <h4 class="p-3 m-0">{{ message }}</h4>
                     </div>
                     {% endfor %}
                 {% endif %}
