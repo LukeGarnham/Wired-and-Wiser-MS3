@@ -32,18 +32,6 @@
                     <li class="nav-item {% if active_page=='home' %}active{% endif %}">
                         <a class="nav-link px-3" href="{{ url_for('home') }}">Home</a>
                     </li>
-                    <!-- <li class="nav-item">
-                        <a class="nav-link px-3" href="#">About</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link px-3" href="#" >What</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link px-3" href="#" >Why</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link px-3" href="#" >How</a>
-                    </li> -->
                     {% if session.user_email_address %}
                         <li class="nav-item {% if active_page=='account' %}active{% endif %}">
                             <a class="nav-link px-3" href="{{ url_for('account', username=session['user_email_address']) }}" >Account</a>
