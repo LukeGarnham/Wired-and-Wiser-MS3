@@ -192,6 +192,15 @@ footer {
     background-image: url('https://raw.githubusercontent.com/LukeGarnham/Wired-and-Wiser-MS3/master/static/images/wind-turbines-2.jpg');
 }
 
+#update-account-background {
+    background-image: url('https://raw.githubusercontent.com/LukeGarnham/Wired-and-Wiser-MS3/master/static/images/wind-turbines-6.jpg');
+}
+
+#update-booking-background {
+    background-image: url('https://raw.githubusercontent.com/LukeGarnham/Wired-and-Wiser-MS3/master/static/images/wind-turbines-7.jpg');
+}
+
+
 /*----------------------------------------------------------------------------------------------------------Home Page*/
 #home-background {
     background-image: url('https://raw.githubusercontent.com/LukeGarnham/Wired-and-Wiser-MS3/master/static/images/jumbotron-image.jpg');
@@ -218,6 +227,29 @@ footer {
     background-color: #FDFFFC;
     color: #272B30;
 }
+
+.nav-tabs .nav-link:not(.active):hover {
+    color: #F3A712;
+}
+
+/* Copied the Bootstrap style using Chrome inspect tool.  Reversed the styles around so that the active and colour scheme mirrors header nav bar. */
+.nav-tabs .nav-link:not([disabled]):not(.disabled):hover, .nav-tabs .nav-link:not([disabled]):not(.disabled):focus, .nav-tabs .nav-link:not([disabled]):not(.disabled):active, .nav-tabs .nav-link:not([disabled]):not(.disabled).active {
+    background-image: -webkit-gradient(linear, left top, left bottom, from(#101112), color-stop(40%, #17191b), to(#1b1e20));
+    background-image: linear-gradient(#101112, #17191b 40%, #1b1e20);
+    background-repeat: no-repeat;
+    -webkit-filter: none;
+    filter: none;
+    border: 1px solid rgba(0,0,0,0.6);
+}
+
+.nav-tabs .nav-link {
+    background-image: -webkit-gradient(linear, left top, left bottom, from(#484e55), color-stop(60%, #3a3f44), to(#313539));
+    background-image: linear-gradient(#484e55, #3a3f44 60%, #313539);
+    background-repeat: no-repeat;
+    -webkit-filter: none;
+    filter: none;
+}
+
 
 /*----------------------------------------------------------------------------------------------------------Booking form*/
 

@@ -29,7 +29,7 @@
             <!-- Navigation list (center) -->
             <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
                 <ul class="navbar-nav mx-auto mt-2 mt-lg-0">
-                    <li class="nav-item active">
+                    <li class="nav-item {% if active_page=='home' %}active{% endif %}">
                         <a class="nav-link px-3" href="{{ url_for('home') }}">Home</a>
                     </li>
                     <li class="nav-item">
@@ -45,10 +45,10 @@
                         <a class="nav-link px-3" href="#" >How</a>
                     </li>
                     {% if session.user_email_address %}
-                        <li class="nav-item">
+                        <li class="nav-item {% if active_page=='account' %}active{% endif %}">
                             <a class="nav-link px-3" href="{{ url_for('account', username=session['user_email_address']) }}" >Account</a>
                         </li>
-                        <li class="nav-item d-lg-none">
+                        <li class="nav-item d-lg-none {% if active_page=='account' %}active{% endif %}">
                             <a class="nav-link px-3" href="{{ url_for('book') }}" >Book Install</a>
                         </li>
                         <li class="nav-item d-lg-none">
