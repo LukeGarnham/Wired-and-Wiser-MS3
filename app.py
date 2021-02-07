@@ -58,7 +58,7 @@ def register():
         return redirect(url_for(
             "account", username=session["user_email_address"]))
 
-    # If method is not POST (i.e. GET) render register.html template.
+    # If method is not POST (i.e. GET), render register.html template.
     return render_template("register.html")
 
 

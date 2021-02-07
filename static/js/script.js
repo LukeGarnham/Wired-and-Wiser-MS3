@@ -1,5 +1,4 @@
 $(document).ready(function() {
-
     // ----------------------------------------------------------------------------------------------------------Modals
     // ------------------------------------------------Meter ID Modal
     // Open Meter ID modal when icons with class launch-meter-id-modal are clicked.

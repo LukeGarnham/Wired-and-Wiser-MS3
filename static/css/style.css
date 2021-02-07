@@ -11,17 +11,6 @@ body {
     font-family: 'Open Sans', sans-serif;
 }
 
-#home-scrollspy {
-    top: 56px;
-    height: 32px;
-}
-
-#scrollspy-content {
-    position: relative;
-    height: auto;
-    overflow-y: scroll;
-}
-
 h1,h2,h3,h4,h5,h6 {
     font-family: 'Noto Sans JP', sans-serif;
     font-weight: 300;
@@ -134,14 +123,14 @@ a:hover {
 
 /*----------------------------------------------------------------------------------------------------------Header*/
 
-#header {
+.navbar {
+    border-bottom: 1px solid #fff;
     height: 56px;
 }
 
-.navbar {
+#navbarToggler {
     border-bottom: 1px solid #fff;
 }
-
 .navbar-brand i {
     color: #F3A712;
 }
