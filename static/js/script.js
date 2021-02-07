@@ -1,7 +1,6 @@
-// ----------------------------------------------------------------------------------------------------------Modals
-
 $(document).ready(function() {
 
+    // ----------------------------------------------------------------------------------------------------------Modals
     // ------------------------------------------------Meter ID Modal
     // Open Meter ID modal when icons with class launch-meter-id-modal are clicked.
     $(".launch-meter-id-modal").click(function() {
@@ -78,5 +77,5 @@ $(document).ready(function() {
             return [(day != 0)];
         }
     });
-    
+
 });

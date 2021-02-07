@@ -18,7 +18,7 @@
 <body>
     <header>
         <!-- The original code for the below navbar was copied from: https://getbootstrap.com/docs/4.5/components/navbar/#toggler -->
-        <nav class="navbar navbar-expand-lg fixed-top slate p-0">
+        <nav id="header" class="navbar navbar-expand-lg fixed-top slate p-0">
             <a class="navbar-brand ml-3" href="{{ url_for('home') }}">
                 <i class="fas fa-lightbulb mr-2"></i>Wired & Wiser
             </a>
@@ -32,7 +32,7 @@
                     <li class="nav-item {% if active_page=='home' %}active{% endif %}">
                         <a class="nav-link px-3" href="{{ url_for('home') }}">Home</a>
                     </li>
-                    <li class="nav-item">
+                    <!-- <li class="nav-item">
                         <a class="nav-link px-3" href="#">About</a>
                     </li>
                     <li class="nav-item">
@@ -43,7 +43,7 @@
                     </li>
                     <li class="nav-item">
                         <a class="nav-link px-3" href="#" >How</a>
-                    </li>
+                    </li> -->
                     {% if session.user_email_address %}
                         <li class="nav-item {% if active_page=='account' %}active{% endif %}">
                             <a class="nav-link px-3" href="{{ url_for('account', username=session['user_email_address']) }}" >Account</a>
