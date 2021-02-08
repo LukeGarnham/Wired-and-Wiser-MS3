@@ -205,7 +205,21 @@ I imported two fonts from [Google Fonts](https://fonts.google.com/) to overwrite
 
 #### NavBar
 
+The original code for my **nav** element was copied from [Bootstrap](https://getbootstrap.com/docs/4.5/components/navbar/#toggler).  I modified this code to achieve the final result present in my project.  The first change I made was to keep the background colour consistent with the slate background colour in the body.  I made the text white as well to ensure strong contrast between text and background colour.  These changes were achieved simply by removing the “navbar-light” and “bg-light” Bootstrap class names from the **nav** element.  This created a problem with the navbar toggler icon; the default icon image did not contrast well with the slate background: 
 
+![Navbar toggle icon not very visible](static/images/readme-images/toggle-icon-1.png)
+
+To resolve this I replaced the Bootstrap navbar-toggler-icon with the [Font Awesome bars](https://fontawesome.com/icons/bars?style=solid) icon.  I applied white font and also a white border to the toggle icon.  Finally I wrote some custom CSS to apply a white border to the bottom to achieve this final result:
+
+![Navbar toggle icon now fixed](static/images/readme-images/toggle-icon-2.png)
+
+When setting up the links in the navbar, I wanted to have some links which appear as call to action buttons on the right side on large screens.  To achieve this I used the [Bootstrap display properties](https://getbootstrap.com/docs/4.5/utilities/display/) so that the call to action buttons are hidden until the screen size is large (992 pixels width upwards) at which point the navigation links are hidden from the unordered list in the collapsible navigation menu.  This results in the following view on screen sizes up to 992 pixels wide:
+
+![Navigation links on small & medium screens](static/images/readme-images/navigation-links-1.png)
+
+And this was the result on large screen sizes (992 pixels width upwards):
+
+![Navigation links on larger screens](static/images/readme-images/navigation-links-2.png)
 
 
 
