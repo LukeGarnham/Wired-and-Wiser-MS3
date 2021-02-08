@@ -83,11 +83,11 @@
                         </div>
                         <div class="row mb-3">
                             <div class="col-form-label col-form-label-sm col-12 col-md-6 font-weight-bold">Meter Read (Register 1):</div>
-                            <div class="col-form-label col-form-label-sm col-12 col-md-6">{{ booking.meter_read_reg_1 }}</div>
+                            <div class="col-form-label col-form-label-sm col-12 col-md-6">{% if booking.meter_read_reg_1 != None %}{{ booking.meter_read_reg_1 }}{% endif %}</div>
                         </div>
                         <div class="row mb-3">
                             <div class="col-form-label col-form-label-sm col-12 col-md-6 font-weight-bold">Meter Read (Register 2):</div>
-                            <div class="col-form-label col-form-label-sm col-12 col-md-6">{{ booking.meter_read_reg_2 }}</div>
+                            <div class="col-form-label col-form-label-sm col-12 col-md-6">{% if booking.meter_read_reg_2 != None %}{{ booking.meter_read_reg_2 }}{% endif %}</div>
                         </div>
                         <div class="row mb-3">
                             <div class="col-form-label col-form-label-sm col-12 col-md-6 font-weight-bold">Installation Date:</div>

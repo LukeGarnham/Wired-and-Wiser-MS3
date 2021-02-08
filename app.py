@@ -164,7 +164,7 @@ def book():
                 "supplier_authorisation") == "on" else False
             booking = {
                 "user_email_address": session["user_email_address"],
-                "meter_id": request.form.get("meter_id"),
+                "meter_id": int(request.form.get("meter_id")),
                 "meter_serial_number": request.form.get("meter_serial_number"),
                 "first_address_line": request.form.get("first_address_line"),
                 "second_address_line": request.form.get("second_address_line"),
@@ -178,13 +178,14 @@ def book():
                 "property_type": request.form.get("property_type"),
                 "supplier": request.form.get("supplier"),
                 "supplier_acc_no": request.form.get("supplier_acc_no"),
-                "meter_read_reg_1": request.form.get("meter_read_reg_1"),
-                "meter_read_reg_2": request.form.get("meter_read_reg_2"),
+                "meter_read_reg_1": int(request.form.get("meter_read_reg_1"))
+                if request.form.get("meter_read_reg_1") else "",
+                "meter_read_reg_2": int(request.form.get("meter_read_reg_2"))
+                if request.form.get("meter_read_reg_2") else "",
                 "install_date": datetime.strptime(
                     request.form.get("install_date"), "%d/%m/%Y"),
                 "supplier_authorisation": authorised,
-                "application_date": datetime.now(),
-                "installation_complete": False
+                "application_date": datetime.now()
             }
             # Insert the booking dictionary into the meter_installs collection.
             mongo.db.meter_installs.insert_one(booking)
@@ -234,7 +235,7 @@ def update_booking(booking_id):
         # Asign form elements to keys in update dict.
         update = {
             "user_email_address": session["user_email_address"],
-            "meter_id": request.form.get("meter_id"),
+            "meter_id": int(request.form.get("meter_id")),
             "meter_serial_number": request.form.get("meter_serial_number"),
             "first_address_line": request.form.get("first_address_line"),
             "second_address_line": request.form.get("second_address_line"),
@@ -248,13 +249,14 @@ def update_booking(booking_id):
             "property_type": request.form.get("property_type"),
             "supplier": request.form.get("supplier"),
             "supplier_acc_no": request.form.get("supplier_acc_no"),
-            "meter_read_reg_1": request.form.get("meter_read_reg_1"),
-            "meter_read_reg_2": request.form.get("meter_read_reg_2"),
+            "meter_read_reg_1": int(request.form.get("meter_read_reg_1"))
+            if request.form.get("meter_read_reg_1") else None,
+            "meter_read_reg_2": int(request.form.get("meter_read_reg_2"))
+            if request.form.get("meter_read_reg_2") else None,
             "install_date": datetime.strptime(
                 request.form.get("install_date"), "%d/%m/%Y"),
             "supplier_authorisation": authorised,
-            "application_date": original_booking["application_date"],
-            "installation_complete": False
+            "application_date": original_booking["application_date"]
         }
         # Check whether the meter_id has changed.
         if original_booking["meter_id"] != update["meter_id"]:

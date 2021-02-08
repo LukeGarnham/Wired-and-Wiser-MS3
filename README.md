@@ -37,6 +37,8 @@ I wanted to keep my project simple and manageable and the steps mentioned above 
 
 ![Database plan](static/images/readme-images/ms3-db-plan.png)
 
+Whilst both collections have an "_id" field which is unique for each record, the user_email_address must also be unique within the *users* collection and the meter_id record in the *meter_installs* collection.  Users will use their email address to sign into the website and will be used to distinguish between users hence why this should be unique.  Each meter point has a unique meter ID (known as an MPAN in the energy industry) and since I don't want to have more than one meter installation booking for the same meter, I want the meter to be unique in the *meter_installs* collection.
+
 ## Features
 
 ### Existing Features
@@ -221,8 +223,81 @@ And this was the result on large screen sizes (992 pixels width upwards):
 
 ![Navigation links on larger screens](static/images/readme-images/navigation-links-2.png)
 
+Later in the project I opted to rename Sign Up to Register.  I felt that the Sign Up and Sign In options were quite similar and I wanted to distinguish their purposes.  I felt that "Register" would better inform users that the purpose of that button/call-to-action is to register with the website and thus their interest in getting a smart meter.
+
+I also subsequently removed the About, What, Why and How links since these are all sections on the Home page.  I also used Jinja template language to hide and display the Sign In, Register, Account, Booking Install and Sign Out links according to whether the user is signed in or not; I checked whether their email address is saved in the session variable to achieve this.
+
+I decided to fix the navbar to the top of the page using the Bootstrap “fixed-top” class.  This caused all of the elements on the page to overlap with the navbar.  To solve this, I added a custom CCS rule “padding-top: 56px” to the <body> in order to shift all other elements down the page below the navbar.  The navbar is 56px in height on large screens (992px width and greater) but dropped to 54px in height on smaller screens when the navigation elements dropped behind the navigation toggler.  I added a custom CSS rule to the navbar of “height:56px” to ensure there was never any gaps between the navbar and content.  I also had to apply a background-color to the navbar since this was transparent by default meaning content could be seen behind it when scrolled.  I did this by adding the custom class ‘slate’.
+
+#### NavBar - Active Class
+
+Another issue I noticed as I was developing my project was that the active class was assigned to the index (home) page and was not updating when I clicked on different pages.  This was because the header bar is defined within the base.html template and is extended to all other pages.  Within the base template, the active class was assigned to the Home nav-item.  I turned to Google for a solution and found [this one](https://stackoverflow.com/questions/55895502/dynamically-setting-active-class-with-flask-and-jinja2).  Using a Jinja if statement in the class list for the nav-items, I can dynamically change the active status by setting the active_page variable on each of the html pages.
+
+#### JumboTron
+
+I wanted the jumbotron to have an overlay, so I created a custom class called ‘mask’.  To ensure that the mask overlays the entire jumbotron at all times, I applied “position:relative” to the jumbotron and “position:absolute” to the mask.  The ‘mask’ class is used on most images throughout my project.
+
+The call-to-action is to encourage users to sign-up to the website.  When I created the call-to-action content for the jumbotron, I initially created this within the mask **div**.  The result was that the call-to-action was also overlayed by the mask:
+
+![JumboTron with mask overlaying call to action](static/images/readme-images/jumbotron-call-to-action.png)
+
+To overcome this, I applied the Bootstrap class “position-relative” to the container **div**.  This brought the call to action in front of the overlay:
+
+![JumboTron with call to action on top of mask ](static/images/readme-images/jumbotron-1.png)
+
+I also wanted to have a sign in button for users who had already registered but I wanted to separate this from the register button.  I used custom CSS to position it how I wanted and achieve the final result.  For the sign-in **div** with class name “.jumbo-bottom”, I applied “position:absolute” and “bottom:10px” to move the sign-in button to the bottom.  To center the **div**, I referenced a solution provided on [this website](https://medium.com/front-end-weekly/absolute-centering-in-css-ea3a9d0ad72e).  This is the end result:
+
+![JumboTron with call to action on top of mask ](static/images/readme-images/jumbotron-2.png)
+
+#### Python Date Format
+
+As I was linking the frontend booking form to the backend MongoDB database, I came up against an issue with the format of the dates.  The booking form passes two dates to the *meter_installs* collection.
+
+The installation date is selected by the user in the form.  This was being passed to the backend as a string in the format “yyyy-mm-dd” (although once I deployed the datepicker, I was able to change the format to “dd/mm/yyyy”).  I also pass on the application date.  This uses the datetime.now() function which I imported from the datetime module (**from datetime import datetime**).  This was being passed to the backend in a datetime format.  MongoDB recognised that the installation date field is a string but the application date was recognised as a date type:
+
+![Database showing the original format of the date records](static/images/readme-images/db-date-formats.png)
+
+I decided I wanted any fields with a date in them to be formatted as the same type.  Therefore, I opted to change the installation date into a date type.  Within my (Python) book function, I changed the format of the installation date that is passed to the *meter_installs* collection.  I did this using **strptime** method which I [read about here](https://www.programiz.com/python-programming/datetime/strptime).
+
+Another reason I wanted to ensure the installation dates are all stored as the same type is that they are sorted in install date order when they are passed to the Account page.  If the installation dates were stored as string, I don't know whether the sort would have worked correctly.
+
+Having achieved consistency across the dates being entered into my backend, I now noticed another issue.  The installation dates are returned to the Account page under the Manage Bookings tab.  These were now being returned in there full datetime format rather than my preferred format of “dd/mm/yyyy”.  To correct this, I used a method to change the date type into a string type and into my preferred format.  I used the **strftime** method which I [read about here](https://www.programiz.com/python-programming/datetime/strftime).  I could have changed the date format before passing the bookings through to the Account template however, I decided a better solution was to simply change the format when the data is unpacked using Jinja.
+
+The result is that the installation and application dates are stored as dates in my *meter_installs* collection.  The bookings are sorted correctly using the installation dates but are then converted to strings as they are unpacked and formatted to “dd/mm/yyyy” on the Account page.
+
+#### Python integers
+
+I decided I wanted to hold the meter ID and meter reads as integers rather than strings in the *meter_installs* collection.  Using HTML5 attributes on the inputs I restrict users to only being able to enter numbers.  However, these were converted to strings when they were passed onto the backend.  Whilst there is no benefit to my project as it stands today in holding these data inputs as integers, I felt it was best practice to do so.  Furthermore, if in future development work, I wanted to perform some type of calculation on the meter reads or meter ID, it would be beneficial having these stored as integers rather than strings.
+
+To achieve this, when builing the dictionary to insert or update the record in the *meter_installs* collection, I inserted the value into the **int** method.  This converts the string into an integer.  The meter ID and meter reads are now stored as integers.
+
+However, as I was testing this change, I encountered an issue.  Since the meter read input fields are not required, the user is able to submit the form with nothing in these fields.  When this happened, the **int** method has no string value to convert to an integer which caused an error.  To overcome this, I wrote a ternary expression when building the dictionary.  The value paired against the meter read key is the users input converted to an integer if an input has been provided else the None value is entered.  This prevents the errors.
+
+I made two further changes when I fixed the above bug.  On the View Booking page, using Jinja I only unpack the meter reads if the value is not None.  On the Update Booking page, I changed the if statement so that if the value is None, the placeholder text is displayed, otherwise the value is displayed in the input field.
+
+#### Datepicker
+
+Another issue I encountered was that despite limiting the range of dates available in the datepicker widget, users were still able to overwrite the dates in the field itself.  I set the datepicker up to only accept dates no sooner than 30 days from today, no later than 2 years from today and not on Sundays.  Users had the ability to select a date within these limits but they then were able to overwrite the date in the input field.  I conducted a test on 01/02/2021; the earliest available date in the datepicker was 03/03/2021 but I then overwrote this with 01/01/2021 and was able to successfully submit the form.  Obviously I don’t want user to pick a date in the past, in fact I want to limit the dates available to those defined in the datepicker.  To achieve this, I set the **readonly** attribute to true for the input element.  This prevents the user from typing anything into the input field meaning only dates from the datepicker can be submitted.  I then wrote some custom CSS to overrule the Bootstrap CSS which coloured the readonly field with a grey background colour.
+
+#### Update Booking
+
+When the Update Booking form is submitted, I want to update the document in the *meter_installs* collection.  However, I also want to ensure that users can’t submit a meter installation booking for a meter ID which already has a booking in my *meter_installs* collection.
+
+On the Booking form, since a new record is being created, I simply check whether a record already exists in my *meter_installs* collection with the same meter ID.  If so, I prevent the record from being added and display a flash message to the user.  Otherwise, the record gets inserted.
+
+For the (Python) update_booking function, the check is a little more complex.  If I used the same checks as in my (Python) book function, the user would be prevented from updating their meter installation details unless they changed the meter ID.  The database would already contain a record with that meter ID (itself) and would therefore display the flash message and prevent the record from being updated.
+
+Instead, I changed the code in the update_booking function.  The first check it does is to compare the original meter ID to the one in the form the user has submitted.  If the meter ID’s are the same, then we don’t need to check for another record since it will still be a unique record in the *meter_installs* collection.  I let the user update their record.  However, if the meter ID’s are not the same, this means the user has updated the meter ID.  I therefore check the *meter_installs* collection to see if there are any existing records with that meter ID.  If so, I display a flash message informing the user that they cannot update to the collection since a booking has already been made for that meter ID.  If there are no records in the *meter_installs* collection with the updated meter ID, then I allow the user to update the record in the collection.
+
+To test this, I updated an existing record 3 times.  In the first instance, I updated the meter serial number only.  I was able to successfully update my meter installation booking and the record in the *meter_installs* collection updated accordingly.  I checked this by refreshing the collection on MongoDB.  Next, I updated the meter ID to another one which was also unique within my collection.  Again, I was able to successfully update the record.  Finally, I tried to update the meter ID to one which was already in my *meter_installs* collection.  This time, when I submitted the form, the flash message appeared informing me that a booking already exists for that meter ID and the record was not updated.
 
 
+
+
+
+
+
+### Testing process
 
 In this section, you need to convince the assessor that you have conducted enough testing to legitimately believe that the site works well. Essentially, in this part you will want to go over all of your user stories from the UX section and ensure that they all work as intended, with the project providing an easy and straightforward way for the users to achieve their goals.
 
@@ -241,6 +316,27 @@ In addition, you should mention in this section how your project looks and works
 You should also mention in this section any interesting bugs or problems you discovered during your testing, even if you haven't addressed them yet.
 
 If this section grows too long, you may want to split it off into a separate file and link to it from here.
+
+
+
+
+
+
+### Database Schema
+
+I decided to store the meter ID and meter reads as integers since only numbers can be entered into these fields.  The supplier authorisation field didn't necessarily need to be stored in the *meter_installs* collection since the user has to tick this input before they are able to submit the form and thus insert or update the record into the collection.  However, I chose to store this as a value in the collection anyway as a boolean value.
+
+Where fields aren't required, empty strings are passed through to the collections with the exception of the meter read values which are entered as None if no value is provided.
+
+As mentioned previously, despite the "_id" fields being unique, the user_email_address is a unique field in the *users* collection and the meter_id is a unique field in the *meter_installs* collection.
+
+![Database schema](static/images/readme-images/database-schema.png)
+
+
+
+
+
+
 
 ## Deployment
 
