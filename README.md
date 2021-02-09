@@ -332,32 +332,123 @@ As mentioned previously, despite the "_id" fields being unique, the user_email_a
 
 ![Database schema](static/images/readme-images/database-schema.png)
 
-
-
-
-
-
-
 ## Deployment
 
-This section should describe the process you went through to deploy the project to a hosting platform (e.g. GitHub Pages or Heroku).
+### Setting Up The Database
 
-In particular, you should provide all details of the differences between the deployed version and the development version, if any, including:
-- Different values for environment variables (Heroku Config Vars)?
-- Different configuration files?
-- Separate git branch?
+My database is hosted my MongoDB which is a document-based (rather than table-based) database service (aka NoSQL).  I signed up for a free account and created a cluster called myFirstCluster.  Within this I created a database called *wired_and_wiser*.  Within this database I created two collections: *users* and *meter_installs*.  The users email address is the primary key in the *users* collection and the meter id is the primary key in the meter_installs collection.  It is worth noting that MongoDB also automatically generates a unique id for each document in the collections with a key of “_id”.
 
-In addition, if it is not obvious, you should also describe how to run your code locally.
+### GitPod Environment
 
+I used the [Code Institute GitPod](https://github.com/Code-Institute-Org/gitpod-full-template) template to create [my GitHub repository](https://github.com/LukeGarnham/Wired-and-Wiser-MS3) which I called “Wired-and-Wiser-MS3”.  I opened my repository up in GitPod to start building my project.
+
+The first thing I did to set up my GitPod environment was install Flask in the command terminal using the command **pip3 install Flask**.  Next I created a file called app.py for my Python app (**touch app.py**).  Then, I created a Python file to contain my environment variables called env.py (**touch env.py**).
+
+The file called env.py is used to store confidential data so this must not be pushed to GitHub.  To ensure a file is not pushed to GitHub, list the file name in a file called .gitignore.  The Code Institute template already contains a .gitignore file with env.py and __pycache__ listed within it.  If the .gitignore file didn’t exist I would have created it (**touch .gitignore**) and listed both env.py and __pycache__ within it.
+
+![Screenshot showing the Gitignore file](static/images/readme-images/gitignore.png)
+
+Within the env.py file, I **import os** and set my environment variables: IP (0.0.0.0), PORT (5000), SECRET_KEY, MONGO_URI and MONGO_DBNAME (wired_and_wiser).
+
+For the MONGO_URI variable, I went to the Overview tab within the MongoDB cluster dashboard.  I clicked on Connect and then in the modal, clicked the Connect your application button:
+
+![Screenshot showing how I obtained the MONGO_URI variable step 1](static/images/readme-images/mongodb-connect-to-cluster-1.png)
+
+From here, ensuring that the selected driver is Python, I copied the application code:
+
+![Screenshot showing how I obtained the MONGO_URI variable step 2](static/images/readme-images/mongodb-connect-to-cluster-2.png)
+
+I pasted this code into the env.py file such that it is the value to the MONGO_URI key.  Within the pasted code, I replaced the < password > placeholder text with the password for my cluster and replaced the < dbname > placeholder text with the database name (*wired_and_wiser*).
+
+### Create the Flask Application
+
+Within the app.py file I **import os** and **from flask import Flask**.  When the app is running in GitPod, the environment variables must be imported from the env.py file.  I create an instance of Flask in a variable called app within the app.py file.
+
+### Deploy Application to Heroku
+
+In order for Heroku to run the Flask application, it needs to know what dependencies the app has.  The requirements.txt file is created to list the dependencies using the command **pip3 freeze –local > requirements.txt**.
+
+Heroku also needs to know which file runs the app.  To do this, a Procfile is created using the command **echo web: python app.py > Procfile**.  Any blank lines at the bottom of the Procfile should be deleted.
+
+I signed up for a free account at [Heroku.com](https://www.heroku.com/).  Once logged in, I created a new app which I named wired-and-wiser.  In the Deploy screen, I selected GitHub and found my “Wired-and-Wiser-MS3” repository:
+
+![Screenshot showing how I connected my GitHub repo to Heroku step 1](static/images/readme-images/heroku-deployment-method.png)
+
+Next, within the Settings section on Heroku, I created the Config Vars.  These were the same key-value pairs I set up as environment variables within the env.py file.  Since the env.py file is not pushed to GitHub, they must be set up as Config Vars as Heroku still needs to know the environment variables.
+
+Back in GitPod, each of the files that have been created above within the GitPod environment were pushed to the GitHub repository except for those listed in the .gitignore file.  Then back within the Heroku app dashboard, I enabled automatic deploys.  This means that any time I update my project in GitPod and push the changes to GitHub, Heroku will automatically deploy the most recent update.  Finally, I deployed the Master Branch.  After a few moments I received the message “Your app was successfully deployed.”  The deployed site is now available and can be accessed via https://wired-and-wiser.herokuapp.com/.
+
+![Screenshot showing how I connected my GitHub repo to Heroku step 2](static/images/readme-images/heroku-deployment.png)
+
+### Connecting Flask Application to MongoDB Database
+
+Next, I connected my MongoDB database to my Flask application.  In GitPod, I installed flask-pymongo library (**pip3 install flask-pymongo**).  Then I installed a package called dnspython (**pip3 install dnspython**).  Each of these packages need to be added to the requirements.txt file so that Heroku knows which packages to install (**pip3 freeze –local > requirements.txt**).
+
+Within the app.py file, I imported **from flask_pymongo import PyMongo** and **from bson.objectid import ObjectId**.
+
+Next I configured my app so that the app variables MONGO_DBNAME, MONGO_URI and SECRET_KEY are equal to the environment variables.  Then I created an instance of the PyMongo app.
+
+#### Using Flask Template Inheritance
+
+Within the GitPod environment, I created a folder called templates.  Flask looks in this folder to build the webpages using the render_templates function.  I created a base.html file which contains content which remains consistent across the website such as the header and footer.  The other pages use this template but inject different content depending on the purpose of each page.
 
 ## Credits
 
 ### Content
-- The text for section Y was copied from the [Wikipedia article Z](https://en.wikipedia.org/wiki/Z)
+
+A portion of the content on the home page was copied from the [Which? guide to smart meters](https://www.which.co.uk/reviews/smart-meters/article/smart-meters-explained/what-is-a-smart-meter).  I used this website to inform some of the content I wrote myself.  I put a link to this guide into my home page because I think users of my website might find the extra reading useful.  The link opens the Which? guide in a new tab.
+
+I also inserted a link on my home page to the [Energy Saving Trust’s energy saving tips webpage](https://energysavingtrust.org.uk/hub/quick-tips-to-save-energy/) as I think this would be useful additional reading for visitors to my website.  The link opens the webpage in a new window so that users are not navigated away from my website.
 
 ### Media
-- The photos used in this site were obtained from ...
+
+[FontAwesome](https://fontawesome.com/) – I used the icons available on Font Awesome to improve UX.
+
+#### Images
+
+Jumbotron image – The image I used for the jumbotron on the home page was sourced from [Unsplash.com](https://unsplash.com/photos/yETqkLnhsUI).
+
+Home page images – The images used on the homepage were taken from various free sources:
+- The image of an energy meter on the home page was sourced on pixabay.com.  [Here is the image source](https://pixabay.com/photos/meter-electrical-meter-power-3410068/).
+- The image of the Earth on the home page was sourced on unsplash.com.  [Here is the image source](https://unsplash.com/photos/Q1p7bh3SHj8).
+- The image of the solar panels on the home page was sourced on pexels.com.  [Here is the image source](https://www.pexels.com/photo/black-and-silver-solar-panels-159397/).
+- The image of the light bulb on the home page was sourced on pexels.com.  [Here is the image source](https://www.pexels.com/photo/clear-light-bulb-planter-on-gray-rock-1108572/).
+
+The background image on the Register page shows wind turbines and was sourced on unsplash.com.  [Here is the image source](https://unsplash.com/photos/0w-uTa0Xz7w).
+
+The background image on the Sign In page shows wind turbines and was sourced on pexels.com.  [Here is the image source](https://www.pexels.com/photo/afterglow-backlit-dawn-dusk-290527/).
+
+The background image on the Account page shows electricity pylons and was sourced on pexels.com.  [Here is the image source](https://www.pexels.com/photo/sky-sunset-sun-twilight-46169/).
+
+The background image on the Book Meter Install page shows a wind turbine and was sourced on unsplash.com.  [Here is the image source](https://unsplash.com/photos/9HEY1URQIQY).
+
+The background image on the View Booking page shows a wind turbine and was sourced on pexels.com.  [Here is the image source](https://www.pexels.com/photo/backlit-clouds-dark-dawn-210267/).
+
+The background image on the Update Booking page shows a wind turbine and was sourced on pexels.com.  [Here is the image source](https://www.pexels.com/photo/wind-turbines-during-golden-hour-2673471/).
+
+The background image on the Update Account page shows a wind turbine and was sourced on pexels.com.  [Here is the image source](https://www.pexels.com/photo/20-fenchurch-street-backlit-clouds-dawn-358092/).
+
+On the Meter ID modal, there are two images:
+- The image of the Meter ID was found using Google and taken from [this website](https://lookaftermybills.com/blog/how-do-i-find-my-mpan-number/).
+-	The map of the Distribution Network Operators was also found using Google and was taken from [Ofgem’s website](https://www.ofgem.gov.uk/key-term-explained/map-who-operates-electricity-distribution-network).
+
+The Meter Serial Number modal contains an image which I found on [this website](https://www.nabuhenergy.co.uk/meter-serial-number/) via a Google search.
+
+##### Reducing File Size of Images
+
+Tinyjpg.com – In order to optimise the loading times on my website, I reduced the original file size of my images using www.tinyjpg.com.  In total, this reduced the file size of the images on my website by 6MB, a 58% reduction:
+
+![Screenshot of the image file size reduction gained from using tinyjpg.com](static/images/readme-images/tinyjpg-screenshot.png)
 
 ### Acknowledgements
 
-- I received inspiration for this project from X
+NavBar – The HTML code for the **nav** element was initially copied from [Bootstrap](https://getbootstrap.com/docs/4.5/components/navbar/#toggler).  This gave me the basis of a navigation bar which contained navbar links behind a toggle button which is positioned to the right but on large-devices (992 pixels width upwards), the navbar links then all appear positioned to the left.  I significantly modified this copied code to achieve the navigation result in my final project.
+
+Jumbotron – The code for the jumbotron was initially copied from [Bootstrap](https://getbootstrap.com/docs/4.5/components/jumbotron/) although the code was altered and added to significantly to achieve the final result in the project.  A background image was applied with a mask over the top to help the text I overlaid on the image standout better.  To help me position the Sign In button to the bottom of the jumbotron I referenced [this solution](https://medium.com/front-end-weekly/absolute-centering-in-css-ea3a9d0ad72e).
+
+I used jQuery to configure the authorisation button on the Booking and Update Booking forms such that the submit form button is disabled unless the user ticks the authorisation option. To achieve this I referenced [this solution](https://stackoverflow.com/questions/7031226/jquery-checkbox-change-and-click-event).
+
+On the Booking and Update Booking forms, I included a datepicker widget which I got from [jQuery UI](https://api.jqueryui.com/datepicker/).  I referenced [this solution](https://stackoverflow.com/questions/31770976/disable-specific-days-in-jquery-ui-datepicker) to disable Sunday's and prevent users selecting them as an installation date.
+
+
+
