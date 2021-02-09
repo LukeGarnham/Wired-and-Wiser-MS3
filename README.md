@@ -33,7 +33,17 @@ As the website owner, I want to:
 
 Having worked in the energy industry, I am aware that there are many interconnected processes and chains of information passed via numerous parties.  I could have made my project a lot more complex as there are many other parts to the process of a meter installation which I could have included.  For example, if my fictitious company were real, they would have a team of qualified engineers who would need to be assigned to each meter installation booking.  Each engineer would have rotas with certain availability and cover certain regions within Britain.  These would need to be considered if users were to be given the choice to select their installation date.  Once meters are installed, the next step for my fictitious company would be to inform the supplier perhaps via an automated email being sent with information about the meter installation such as date of meter exchange, final meter read, new meter serial number.
 
-I wanted to keep my project simple and manageable and the steps mentioned above could be future developments.  I have opted to focus on the exchange of information between customers and my fictional meter installation company, Wired and Wiser.  For this, two collections are required in my database: one for storing user information and one for storing meter installation booking information.  The users email address will act as a primary key in the *users* collection and will be used to link users to their records in the *meter_installs* collection.  I have allowed users of my website to select an installation date that suits them.  I drew the plan for my database using [app.diagrams.net](app.diagrams.net) – the plan is below:
+I wanted to keep my project simple and manageable and the steps mentioned above could be future developments.  I have opted to focus on the exchange of information between customers and my fictional meter installation company, Wired and Wiser.  My project consists of:
+- Home page:  This provides users with information about smart meters and hopefully entices them in to booking an appointment to have one installed.
+- Register page:  Users can register with my website.
+- Sign In page:  Registered users can sign themselves in.
+- Account page:  This is the page users a directed to when they sign in and it shows them any booking and account information.
+- Booking page:  Signed in users can book their smart meter installation appointments.
+- View Booking page:  Users with a booking can view the details about it.
+- Update Booking page:  Users can amend booking details and delete/cancel the booking.
+- Update Account page:  Users can amend their account details and delete their account which also deletes/cancels any bookings they've made.
+
+For this, two collections are required in my database: one for storing user information and one for storing meter installation booking information.  The users email address will act as a primary key in the *users* collection and will be used to link users to their records in the *meter_installs* collection.  I have allowed users of my website to select an installation date that suits them.  I drew the plan for my database using [app.diagrams.net](app.diagrams.net) – the plan is below:
 
 ![Database plan](static/images/readme-images/ms3-db-plan.png)
 
@@ -169,6 +179,20 @@ From both the Account and Update Account pages, I have included a Delete Account
 When the user does this, the (Python) delete_account function is called.  This uses werkzeug’s **check_password_hash** method to check that the password entered by the user matches the hashed one stored in the *users* collection.  If not, then the user is returned to the Account page and a flash message informs them that the password they have entered is incorrect.  If the user enters the correct password, then it deletes both the users record in the *users* collection and all bookings in the *meter_installs* collection with the users email address.  Since there could be multiple bookings made by the user, I use the **delete_many** method which I read about on [this website](https://www.w3schools.com/python/python_mongodb_delete.asp).  To delete the user from the *users* collection, I use the **delete_one** method and use the users id to find and delete the correct record.  I could have used the users email address since this is also unique in the *users* collection but opted to use the id.  Finally, I also remove the users email address from session storage.  The user is then directed back to the Register page.
 
 ### Features Left to Implement
+
+#### Scrollspy
+
+During development, I attempted to add a scrollspy on the home page which had links to the About, What, Why & How sections.  I placed it below the jumbotron but applied a sticky position rule to it so that it sat beneath the nav bar when the user scrolled down the page.  This created a problem on small and medium screens (up to 992 pixels width) since the nav items sit behind a collapsible button; when the button was clicked and the nav items expand down, the scrollspy stayed stuck below the navbar and overlapped with the nav items.  I decided to remove this since it was not an essential part of my project and I didn't have the time to find a solution.
+
+#### Address Finder
+
+Another feature I would like to implement is an address finder.  I found [this API](https://getaddress.io/) which would allow users to enter their postcode and then returns a list of addresses associated with it for the user to select from.
+
+#### Reset Password
+
+Another feature I didn't have time to implement was to enable users to reset their password.  On the Update Account page, I would like to add an option for users to edit their account.
+
+### Known Issues
 
 
 
@@ -450,5 +474,6 @@ I used jQuery to configure the authorisation button on the Booking and Update Bo
 
 On the Booking and Update Booking forms, I included a datepicker widget which I got from [jQuery UI](https://api.jqueryui.com/datepicker/).  I referenced [this solution](https://stackoverflow.com/questions/31770976/disable-specific-days-in-jquery-ui-datepicker) to disable Sunday's and prevent users selecting them as an installation date.
 
+On the Account page, the code for tabs was originally copied from [Bootstrap](https://getbootstrap.com/docs/4.5/components/navs/#javascript-behavior).
 
-
+When a user updates their account details, if they change their email address I need to update their email address for all meter install records they've booked in the *meter_installs* collection.  To do this, I referenced [this solution](https://www.w3schools.com/python/python_mongodb_update.asp).
