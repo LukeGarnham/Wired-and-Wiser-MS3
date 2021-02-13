@@ -58,9 +58,9 @@ def register():
         return redirect(url_for(
             "account", username=session["user_email_address"]))
 
-    # If method is not POST (i.e. GET), check whether there is
-    # a user_email_address in the session variable
-    if session["user_email_address"] != "":
+    # If method is not POST (i.e. GET), first check whether
+    # the user_email_address exists in the session variable.
+    if session.get("user_email_address"):
         # If so, redirect user back to their Account page
         # and display flash message.
         flash("No need to register again")
