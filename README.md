@@ -229,6 +229,8 @@ I imported two fonts from [Google Fonts](https://fonts.google.com/) to overwrite
 
 ### Bugs / Problems Encountered During Development
 
+During development, I frequently manually tested the project, especially after implementing something new.  Below are problems I encountered and fixed during the development of the project.
+
 #### NavBar
 
 The original code for my **nav** element was copied from [Bootstrap](https://getbootstrap.com/docs/4.5/components/navbar/#toggler).  I modified this code to achieve the final result present in my project.  The first change I made was to keep the background colour consistent with the slate background colour in the body.  I made the text white as well to ensure strong contrast between text and background colour.  These changes were achieved simply by removing the “navbar-light” and “bg-light” Bootstrap class names from the **nav** element.  This created a problem with the navbar toggler icon; the default icon image did not contrast well with the slate background: 
@@ -322,6 +324,74 @@ To test this, I updated an existing record 3 times.  In the first instance, I up
 
 
 ### Testing process
+
+At the time of writing, I am about to start testing my project.  Here are the manual test procedures to assess functionality, usability, responsiveness and data management that I plan to undertake:
+- **Links**:  Test all links and buttons in each webpage to ensure that they direct the user as expected.
+- **Access to pages**:  Can users access pages they're supposed to and prevented from accessing pages they're not supposed to access depending on whether they are signed in or not.
+- **Forms**:  Do forms behave as desired?  Is data validated before being passed to the database?  Is defensive design sufficient?
+- **User Stories**:  Test each of my user stories i.e. does my finished project enable users to achieve what I set out for them to achieve?
+- **Valid Code**:  I will run my code through validators to check for any issues.
+- **Google Lighthouse Tool**:  I will use the Google Lighthouse tool to check for any improvements that can be made.
+All tests will be conducted on the deployed version of the website hosted by Heroku rather than within the GitHub environment.  This is because the final deployed site is what users will see and so it is important to ensure the behaviour of this is as desired.
+
+#### Links
+
+Aim: All external links should open in a new tab/window so users are not redirected away from my website.  Internal links should all work and not lead to any errors or redirect to an incorrect page.
+
+Method:  I tested all links on each of the 8 pages within my project to ensure that they work as expected.  On some pages, some of the links change depending on whether a user is signed in or not so I tested the links twice; once prior to signing in and once after signing in. I also tested navigation links on a medium screen and large screen since the navigation links change according to the screen size.
+
+Results:
+- **Home Page**: I noticed that the social media links in the footer opened in a new tab but rather than open the social media page, they opened my home page up.  I realised I had not assigned an **href** attribute to the **anchor** tags in my base.html template.  This was a quick fix and I did a separate commit to solve this.  All external links open in a new tab/window as expected.  Internal links all work as expected.
+- **Sign In Page**:  This page should only be accessed if a user is not signed in so I only tested the links when I was signed out.  I will test the form behaviour in a later section so I have not checked the form submit button ("Sign In").  The Cancel button redirects users back to the Home page as expected.  All links/buttons work as expected.
+- **Register Page**:  Again this page should only be accessed if a user is not signed in so I only tested the links when I was signed out.  I will test the form submission later.  The Cancel button redirects users back to the Home page as expected.  All other links/buttons work as expected.
+- **Account Page**:  This page should only be accessed by users who have signed in.  The "Delete Account" button opens a modal which requires a form submission which I will test later on.  The modal can be closed by clicking the "No - Do Not Delete" button.  All links/buttons work on the Account page as expected.
+- **Booking Page**:  This page should only be accessed by users who have signed in.  The Booking page consists of a form which I will test in a later section.  The navigation links work as expected.  There are two information icons which launch modals - both work as expected.  The modals can be closed by clicking the window close icon in the top right corner.  The "Cancel" button redirects users back to the Account page as expected.  All links/buttons work as expected.
+- **View Booking Page**:  This page should only be accessed by users who have signed in.  The "Delete Booking" button opens a modal which requires a form submission which I will test later on.  The modal can be closed by clicking the "No - Do Not Delete" button. 
+- **Update Booking Page**:  The Update Booking page should only be accessed by users who have signed in.  Like the Booking page, there are two information icons which launch modals when clicked.  Both modals can be closed by clicking the window close icon in the top right of the page.  The "Delete Booking" button opens a modal which can be closed by clicking the "No - Do Not Cancel" button.  I will test the functionality of the "Yes - Cancel My Booking" button in a later section.  The "Save Changes" button also opens a modal which can then be closed by clicking the "No - Continue Editing" button.  I will test the functionality of the "Yes - Update My Booking" button in a later section.  All links/buttons on this page work as expected.
+- **Update Account Page**:  This page should only be accessed by users who have signed in.  The "Delete Account" button opens a modal which can be closed by clicking the "No - Do Not Delete" button.  I will test the functionality of the "Yes - Delete My Account" button in a later section.  I will test the "Update Details" button in a later section since this button submits the form.  All links/buttons in this page work as expected.
+
+It is worth mentioning that in the navigation bar, I chose to show the Account page as the active page when a user is on the Update Account, Update Booking or View Booking page.  Each of these pages have unique routes depending on the account/booking the user is viewing, therefore there is no navigation link for these pages.  However, I chose to show the Account page as being the active page when a user navigates to these pages since they will likely have used the Account page to naviagate to them.
+
+#### Access to pages
+
+Users can access pages on my website by utilising the links/buttons.  When they do so, they can only navigate pages that I want them to see.  However, clicking links isn't the only way to navigate to a page.  Directly entering the URL path can also invoke the GET method and thus I want to test whether the behaviour of each of my pages is as expected.
+
+Aim:  Users who are **not** signed in should only be able to access these pages:
+- Home
+- Register
+- Sign In
+
+Users who are signed in should only be able to access these pages:
+- Home
+- Account - specifically the URL with their account details i.e. the URL suffix will consist of "/account/user_email_address".
+- Booking
+- View Booking - specifically only bookings that they have made with the URL suffix "/view_booking/booking_id".
+- Update Booking - again, only bookings that they have made with the URL suffix "/update_booking/booking_id".
+- Update Account - only the users details should be displayed i.e. the URL suffix "/update_account/user_email_address".
+
+Method:  I will test the URL's by manually typing in a variety of filepaths to see if the behaviour of each page is as expected.
+
+Results:
+- **Home Page**:  The URL "http://wired-and-wiser.herokuapp.com/" is accessible for users regardless of whether they are signed in or not and the Home page loads as expected.
+- **Register Page**:  When not signed in, this page loads as expected.  However, when signed in to the website and then redirecting to [this URL](http://wired-and-wiser.herokuapp.com/register), the page still loads.  This is not the behaviour I was wanting.  I do not want a user who has already registered and signed in to be able to view the Register page.
+
+![Gif showing what happened when a signed in user tries to access the Register page before a fix was deployed](static/images/readme-images/register-page-before.gif)
+
+Submitting the Registration form when already signed in redirects the user to the Account page with the new account details so at least this doesn't result in an error -  the original user email address is replaced in the session variable by the new email address the user submits in the Register form.  However, this is not good for user experience; if a user is signed in and is able to reach the Register page, it could lead to a user inadvertently creating a second account with a different email address.  To solve this, I added an if statement to the **GET** method within the app.py file.  I check whether the user_email_address exists within the session variable - if so then I redirect the user to their Account page and display a flash message.  Otherwise the Register page is rendered.  I referenced [this solution](https://stackoverflow.com/questions/28925602/how-can-i-detect-whether-a-variable-exists-in-flask-session) I found following a Google search.  Users who are not signed in can still access the Register page.
+
+![Gif showing what happened when a signed in user tries to access the Register page before a fix was deployed](static/images/readme-images/register-page-after.gif)
+
+
+When a user enters the URL with an unexpected suffix, then no webpage result is found.  For example, entering "http://wired-and-wiser.herokuapp.com/test" results in this page being displayed:
+
+![Screenshot of the result when a page is not found](static/images/readme-images/page-not-found.png)
+
+This filepath is not one which I have built an **@app.route** for and thus there is no template to load.
+
+
+
+
+
 
 In this section, you need to convince the assessor that you have conducted enough testing to legitimately believe that the site works well. Essentially, in this part you will want to go over all of your user stories from the UX section and ensure that they all work as intended, with the project providing an easy and straightforward way for the users to achieve their goals.
 
