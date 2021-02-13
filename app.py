@@ -438,6 +438,13 @@ def delete_account(username):
                     "account", username=session["user_email_address"]))
 
 
+@app.errorhandler(404)
+def page_not_found(e):
+    # This function handles 404 (page not found errors)
+    # Solution copied from: https://flask.palletsprojects.com/en/master/errorhandling/
+    return render_template('404.html'), 404
+
+
 if __name__ == "__main__":
     app.run(host=os.environ.get("IP"),
             port=int(os.environ.get("PORT")),

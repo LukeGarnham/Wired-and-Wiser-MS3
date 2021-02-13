@@ -381,12 +381,26 @@ Submitting the Registration form when already signed in redirects the user to th
 
 ![Gif showing what happened when a signed in user tries to access the Register page before a fix was deployed](static/images/readme-images/register-page-after.gif)
 
+- **Sign In Page**:  The Sign In page had the same problem as the Register page; a user could sign in and still type in [this URL](http://wired-and-wiser.herokuapp.com/signin) and the Sign In page would load.  Once a user is signed in, they should not be able to return to the Sign In page.  Like with the Register page, if a signed in user signs in again, either with the same credentials or a different set of credentials, they are redirected to the Account page accordingly so no error occurs.  However, this is not good user experience.  I deployed the same solution to the (Python) signin function as I did to the register function.  Now when a signed in user tries to navigate to the signed in page, they are redirected back to the Account page and a flash message advises them that there is "No need to sign in again".
+- **Account Page**:  
 
-When a user enters the URL with an unexpected suffix, then no webpage result is found.  For example, entering "http://wired-and-wiser.herokuapp.com/test" results in this page being displayed:
+
+
+
+
+
+
+
+
+
+
+When a user enters the URL with an unexpected suffix, then no webpage result is found.  For example, entering "http://wired-and-wiser.herokuapp.com/test" doesn't render any templates.  Originally, this resulted in the below page being displayed:
 
 ![Screenshot of the result when a page is not found](static/images/readme-images/page-not-found.png)
 
-This filepath is not one which I have built an **@app.route** for and thus there is no template to load.
+There are infinite suffixes a user can type which will result in no page being found on my website, known as a 404 error.  By referencing the [Flask documentation](https://flask.palletsprojects.com/en/master/errorhandling/), I found a solution which handles 404 errors and instead directs users to a page I have created and thus have control over.  I created the template 404.html file and added an errorhandler(404) function in my app.py file.  Now, anytime a user tries to load a page which doesn't exist, they are redirected to my 404.html page which informs them that something went wrong and suggests they return to my Home page:
+
+![Screenshot of the result when a page is not found after errorhandler 404 was set up](static/images/readme-images/page-not-found-after.png)
 
 
 

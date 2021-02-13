@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+    <!-- Jumbrotron/background -->
+    <div class="jumbotron jumbotron-fluid text-center text-white p-0 mb-0" id="error-background">
+        <div class="mask"></div>
+        <div class="container py-4">
+            <!-- Flash messages -->
+            {% with messages = get_flashed_messages() %}
+                {% if messages %}
+                    {% for message in messages %}
+                    <div class="flashes position-relative slate mx-md-5 my-5">
+                        <h4 class="p-3 m-0">{{ message }}</h4>
+                    </div>
+                    {% endfor %}
+                {% endif %}
+            {% endwith %}
+            <!-- Card containing log in form -->
+            <div class="card m-md-5 p-4">
+                <div class="card-body">
+                    <div>
+                        <h1 class="display-4 mb-3"><i class="fas fa-exclamation-triangle mr-2"></i>Oops, something went wrong</h1>
+                        <h4 class="mb-5">Something's not been wired correctly - that page couldn't be found</h4>
+                    </div>
+                    <div class="mt-5">
+                        <p class="d-md-inline mb-2 mb-md-0 mr-md-2">Let's get you back home</p>
+                        <a href="{{ url_for('home') }}" class="button green px-3 py-1">
+                            <i class="fas fa-home mr-2"></i>Home
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

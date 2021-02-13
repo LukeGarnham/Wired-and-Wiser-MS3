@@ -203,6 +203,9 @@ footer {
     background-image: url('https://raw.githubusercontent.com/LukeGarnham/Wired-and-Wiser-MS3/master/static/images/wind-turbines-7.jpg');
 }
 
+#error-background {
+    background-image: url('https://raw.githubusercontent.com/LukeGarnham/Wired-and-Wiser-MS3/master/static/images/transformer.jpg');
+}
 
 /*----------------------------------------------------------------------------------------------------------Home Page*/
 #home-background {
