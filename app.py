@@ -1,4 +1,5 @@
 import os
+import re
 from datetime import datetime
 from flask import (
     Flask, flash, render_template,
@@ -110,7 +111,8 @@ def signin():
     if session.get("user_email_address"):
         # If so, redirect user back to their Account page
         # and display flash message.
-        flash("No need to sign in again")
+        flash("You are already signed in as " +
+              session["user_email_address"])
         return redirect(url_for(
             "account", username=session["user_email_address"]))
     # Else, render signin.html template.
@@ -119,31 +121,63 @@ def signin():
 
 @app.route("/account/<username>")
 def account(username):
-    # Use email address passed through in username variable
-    # to search users collection.  Asign results to user variable.
-    user = mongo.db.users.find_one(
-        {"user_email_address": username})
-    # Remove the users password.
-    # Even though it is hashed, I don't want to pass this through.
-    user.pop("password")
-    # Use email address passed through in username variable
-    # to search meter_installs collection.
-    # Asign results to bookings.  Sort by install date and then address.
-    bookings = list(mongo.db.meter_installs.find(
-        {"user_email_address": username}).sort(
-            [("install_date", 1), ("first_address_line", 1)]))
-    # Check if there is a user email address saved
-    # in session variable. If so render account page.
-    if session["user_email_address"]:
-        # Render account.html template.  Pass through the
-        # user and bookings variables defined above.
-        return render_template(
-            "account.html",
-            user=user,
-            bookings=bookings)
-    # If there is no user email address saved in session
-    # variable, redirect user to sign in page.
+    # Check whether the user_email_address exists in the session variable.
+    if session.get("user_email_address"):
+        # If so, ensure that any variable passed through is all lower case.
+        username = username.lower()
+        # Check whether the username is a valid email address.
+        if validate_email(username):
+            # Check whether the username passed through matches
+            # the user email address in the session variable.
+            if username == session["user_email_address"]:
+                # Use email address passed through in username variable
+                # to search users collection.  Asign results to user variable.
+                user = mongo.db.users.find_one(
+                    {"user_email_address": username})
+                # Check whether any result is returned.
+                if user:
+                    # Remove the users password.
+                    # Even though it is hashed, I don't
+                    # want to pass this through.
+                    user.pop("password")
+                    # Use email address passed through in username variable
+                    # to search meter_installs collection.
+                    # Asign results to bookings.
+                    # Sort by install date and then address.
+                    bookings = list(mongo.db.meter_installs.find(
+                        {"user_email_address": username}).sort(
+                            [("install_date", 1), ("first_address_line", 1)]))
+                    return render_template(
+                            "account.html",
+                            user=user,
+                            bookings=bookings)
+                # If email address is in session storage but no results found
+                # in users collection, something must have gone wrong.
+                # Redirect user to signout function.
+                return redirect(url_for("signout"))
+            # If username passed through differs from one in session variable
+            # then redirect user to Account page using email address from
+            # session variable.
+            flash("You are already signed in as " +
+                  session["user_email_address"])
+            return redirect(url_for(
+                "account", username=session["user_email_address"]))
+        # If username is not valid, redirect user to Account page
+        # using email address from session variable.
+        flash("You are already signed in as " +
+              session["user_email_address"])
+        return redirect(url_for(
+            "account", username=session["user_email_address"]))
+    # If there is no user email address in session variable
+    # redirect the user to the Sign In page.
     return redirect(url_for("signin"))
+
+
+def validate_email(email):
+    # Check whether a string matches the email regex.
+    # Regex solution sourced from here:
+    # https://www.geeksforgeeks.org/check-if-email-address-valid-or-not-in-python/
+    return re.search("^[a-z0-9]+[\._]?[a-z0-9]+[@]\w+[.]\w{2,3}$", email)
 
 
 @app.route("/signout")
