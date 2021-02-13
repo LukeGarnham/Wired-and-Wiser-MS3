@@ -105,7 +105,15 @@ def signin():
             flash("Incorrect Email Address and/or Password")
             return redirect(url_for("signin"))
 
-    # If method is not POST (i.e. GET) render register.html template.
+    # If method is not POST (i.e. GET), first check whether
+    # the user_email_address exists in the session variable.
+    if session.get("user_email_address"):
+        # If so, redirect user back to their Account page
+        # and display flash message.
+        flash("No need to sign in again")
+        return redirect(url_for(
+            "account", username=session["user_email_address"]))
+    # Else, render signin.html template.
     return render_template("signin.html")
 
 
