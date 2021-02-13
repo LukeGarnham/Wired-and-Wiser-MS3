@@ -193,61 +193,66 @@ def signout():
 
 @app.route("/book", methods=["GET", "POST"])
 def book():
-    # If method is POST (i.e. form submitted),
-    # add form data to meter installs collection.
-    if request.method == "POST":
-        # Check whether there is a meter install
-        # already booked for this meter ID.
-        existing_booking = mongo.db.meter_installs.find_one(
-            {"meter_id": request.form.get("meter_id")})
-        # If a record (booking) already exists for this meter ID,
-        # display a flash message to the user.
-        if existing_booking:
-            flash("A smart meter installation has already been"
-                  " booked for Meter ID " + request.form.get("meter_id"))
-        # Else extract data from form and assign
-        # to keys in the booking dictionary.
-        else:
-            # Check whether the supplier authorisation is
-            # selected and asign True if so, False if not.
-            authorised = True if request.form.get(
-                "supplier_authorisation") == "on" else False
-            booking = {
-                "user_email_address": session["user_email_address"],
-                "meter_id": int(request.form.get("meter_id")),
-                "meter_serial_number": request.form.get("meter_serial_number"),
-                "first_address_line": request.form.get("first_address_line"),
-                "second_address_line": request.form.get("second_address_line"),
-                "third_address_line": request.form.get("third_address_line"),
-                "town": request.form.get("town"),
-                "county": request.form.get("county"),
-                "postcode": request.form.get("postcode"),
-                "meter_location": request.form.get("meter_location"),
-                "access_instructions": request.form.get("access_instructions"),
-                "parking_on_site": request.form.get("parking_on_site"),
-                "property_type": request.form.get("property_type"),
-                "supplier": request.form.get("supplier"),
-                "supplier_acc_no": request.form.get("supplier_acc_no"),
-                "meter_read_reg_1": int(request.form.get("meter_read_reg_1"))
-                if request.form.get("meter_read_reg_1") else "",
-                "meter_read_reg_2": int(request.form.get("meter_read_reg_2"))
-                if request.form.get("meter_read_reg_2") else "",
-                "install_date": datetime.strptime(
-                    request.form.get("install_date"), "%d/%m/%Y"),
-                "supplier_authorisation": authorised,
-                "application_date": datetime.now()
-            }
-            # Insert the booking dictionary into the meter_installs collection.
-            mongo.db.meter_installs.insert_one(booking)
-            # Display a flash message informing user
-            # that booking has been successful.
-            flash("Meter install successfully booked")
-            # Redirect to account(username) function where
-            # username is the users email address.
-            return redirect(url_for(
-                "account", username=session["user_email_address"]))
-
-    return render_template("book.html")
+    # Check whether the user_email_address exists in the session variable.
+    if session.get("user_email_address"):
+        # If method is POST (i.e. form submitted),
+        # add form data to meter installs collection.
+        if request.method == "POST":
+            # Check whether there is a meter install
+            # already booked for this meter ID.
+            existing_booking = mongo.db.meter_installs.find_one(
+                {"meter_id": request.form.get("meter_id")})
+            # If a record (booking) already exists for this meter ID,
+            # display a flash message to the user.
+            if existing_booking:
+                flash("A smart meter installation has already been"
+                    " booked for Meter ID " + request.form.get("meter_id"))
+            # Else extract data from form and assign
+            # to keys in the booking dictionary.
+            else:
+                # Check whether the supplier authorisation is
+                # selected and asign True if so, False if not.
+                authorised = True if request.form.get(
+                    "supplier_authorisation") == "on" else False
+                booking = {
+                    "user_email_address": session["user_email_address"],
+                    "meter_id": int(request.form.get("meter_id")),
+                    "meter_serial_number": request.form.get("meter_serial_number"),
+                    "first_address_line": request.form.get("first_address_line"),
+                    "second_address_line": request.form.get("second_address_line"),
+                    "third_address_line": request.form.get("third_address_line"),
+                    "town": request.form.get("town"),
+                    "county": request.form.get("county"),
+                    "postcode": request.form.get("postcode"),
+                    "meter_location": request.form.get("meter_location"),
+                    "access_instructions": request.form.get("access_instructions"),
+                    "parking_on_site": request.form.get("parking_on_site"),
+                    "property_type": request.form.get("property_type"),
+                    "supplier": request.form.get("supplier"),
+                    "supplier_acc_no": request.form.get("supplier_acc_no"),
+                    "meter_read_reg_1": int(request.form.get("meter_read_reg_1"))
+                    if request.form.get("meter_read_reg_1") else "",
+                    "meter_read_reg_2": int(request.form.get("meter_read_reg_2"))
+                    if request.form.get("meter_read_reg_2") else "",
+                    "install_date": datetime.strptime(
+                        request.form.get("install_date"), "%d/%m/%Y"),
+                    "supplier_authorisation": authorised,
+                    "application_date": datetime.now()
+                }
+                # Insert the booking dictionary into the meter_installs collection.
+                mongo.db.meter_installs.insert_one(booking)
+                # Display a flash message informing user
+                # that booking has been successful.
+                flash("Meter install successfully booked")
+                # Redirect to account(username) function where
+                # username is the users email address.
+                return redirect(url_for(
+                    "account", username=session["user_email_address"]))
+        # If mehod is GET, render the Booking page.
+        return render_template("book.html")
+    # If the user is not signed in, redirect them to the Sign In page.
+    flash("Please sign in before trying to book a smart meter install")
+    return redirect(url_for("signin"))
 
 
 @app.route("/view_booking/<booking_id>")
