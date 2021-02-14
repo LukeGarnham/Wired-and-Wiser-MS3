@@ -434,11 +434,59 @@ There are infinite suffixes a user can type which will result in no page being f
 
 ![Screenshot of the result when a page is not found after errorhandler 404 was set up](static/images/readme-images/page-not-found-after.png)
 
-
-
 #### Forms
+
+Aim:  All forms should work as expected - namely the **POST** methods in my Python functions pass valid data to the database.  Users should not be able to submit forms with invalid data in fields or required fields missing.
+
+Methodology:  I will test each form in turn to ensure that users cannot submit invalid data and that when the website handles situations where users attempt to submit invalid data.  To do this, I will isolate each field in turn by ensuring valid data is entered in all other fields.  I will also review the backend (Python) code in my app.py file.  Up to now, I have utilised the front end (HTML5) to apply data restrictions to the input fields.  However, from conversations with my mentor, I understand that these can be easily bypassed thus it is critical that backend validation of data takes place.
+
+The following pages have forms which **POST** data:
+- Register Page
+- Sign In Page
+- Booking Page
+- Update Booking Page
+- Update Account Page
+
+Furthermore, I will test that the Delete Booking and Delete Account functions work correctly.  These fucntions do not **POST** data to my database but they do delete data from it so it is equally important I validate them.
+
+Results:
+- **Register Page**:  I added some checks in the **POST** method of the (Python) register function.  This function now validates the data the user submits to ensure it matches the format requested.  The first and last names are passed to the validate_name function and the email address is passed to the validate_email function.  If any of these results in a False result being returned, then the user is redirected to the Register page and a flash message informs them what invalid data they have entered.  I have applied the same validation attributes to the input fields in the HTML5 code so the Python checks will only trigger if the user bypasses the frontend validation rules.  The following inputs result in the form not being submitted:
+    - First or last name containing any numbers or special characters aside from a hyphen (-).
+    - First or last name being longer than 30 characters.
+    - Invalid email format.
+    - Email address already exists in *users* collection.
+    - Password shorter than 6 characters or longer than 15 characters.
+
+If all fields validate, a record is inserted into the *users* collection and the user is redirected to the Account page.
+
+If a user is already signed in, they cannot access the Register page and are instead redirected to their Account page.
+
+- **Sign In Page**:  The email address and password fields are validated by both the frontend (HTML5) and backend (Python) signin function.  The following inputs result in the form not being submitted:
+    - Invalid email format.
+    - Password shorter than 6 characters or longer than 15 characters.
+    - Email address doesn't exists in *users* collection.
+    - The password doesn't match the corresponding record in the *users* collection.
+
+If both fields validate, the user is signed in.  Their email address is stored in the session variable.  The user is redirected to the Account page.
+
+If a user is already signed in but tries to access the Sign In page, they are redirected to the Account page.
+    
+- **Booking Page**:
+
+
+
+
+
+
+
+- Update Booking Page
+- Update Account Page
+
+
 #### User Stories
+
 #### Valid Code
+
 #### Google Lighthouse Tool
 
 

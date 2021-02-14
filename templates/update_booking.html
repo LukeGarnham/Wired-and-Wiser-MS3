@@ -56,7 +56,7 @@
                                     Meter <span class="d-md-none d-lg-inline">Serial </span>Number:
                                 </label>
                                 <div class="col-12 col-md-7">
-                                    <input type="text" class="form-control form-control-sm text-center text-md-left" id="meter_serial_number" name="meter_serial_number" aria-describedby="msnHelpBlock" maxlength="12" 
+                                    <input type="text" class="form-control form-control-sm text-center text-md-left" id="meter_serial_number" name="meter_serial_number" aria-describedby="msnHelpBlock" maxlength="12" pattern="^[A-z0-9]{0,12}$"
                                     {% if booking.meter_serial_number == ""%}
                                         placeholder="Meter serial number"
                                     {% else %}
@@ -74,19 +74,19 @@
                             <div class="form-group form-row">
                                 <label for="first_address_line" class="col-form-label col-form-label-sm col-12 col-lg-3 offset-md-1 text-md-left font-weight-bold">First Address Line: *</label>
                                 <div class="col-12 col-md-10 offset-md-1 col-lg-7 offset-lg-0">
-                                    <input type="text" class="form-control form-control-sm text-center text-md-left" id="first_address_line" name="first_address_line" maxlength="50" value="{{ booking.first_address_line }}" required>
+                                    <input type="text" class="form-control form-control-sm text-center text-md-left" id="first_address_line" name="first_address_line" maxlength="50" pattern="^[A-z0-9 ]{0,50}$" value="{{ booking.first_address_line }}" required>
                                 </div>
                             </div>
                             <div class="form-group form-row">
                                 <label for="second_address_line" class="col-form-label col-form-label-sm col-12 col-lg-3 offset-md-1 text-md-left font-weight-bold">Second Address Line:</label>
                                 <div class="col-12 col-md-10 offset-md-1 col-lg-7 offset-lg-0">
-                                    <input type="text" class="form-control form-control-sm text-center text-md-left" id="second_address_line" name="second_address_line" maxlength="50" value="{{ booking.second_address_line }}">
+                                    <input type="text" class="form-control form-control-sm text-center text-md-left" id="second_address_line" name="second_address_line" maxlength="50" pattern="^[A-z0-9 ]{0,50}$" value="{{ booking.second_address_line }}">
                                 </div>
                             </div>
                             <div class="form-group form-row">
                                 <label for="third_address_line" class="col-form-label col-form-label-sm col-12 col-lg-3 offset-md-1 text-md-left font-weight-bold">Third Address Line:</label>
                                 <div class="col-12 col-md-10 offset-md-1 col-lg-7 offset-lg-0">
-                                    <input type="text" class="form-control form-control-sm text-center text-md-left" id="third_address_line" name="third_address_line" maxlength="50" value="{{ booking.third_address_line }}">
+                                    <input type="text" class="form-control form-control-sm text-center text-md-left" id="third_address_line" name="third_address_line" maxlength="50" pattern="^[A-z0-9 ]{0,50}$" value="{{ booking.third_address_line }}">
                                 </div>
                             </div>
                             <div class="form-group form-row">

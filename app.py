@@ -12,6 +12,57 @@ if os.path.exists("env.py"):
     import env
 
 
+# Validation functions
+def validate_email(email):
+    # Check whether a string matches the email regex.
+    # Regex solution sourced from here:
+    # https://www.geeksforgeeks.org/check-if-email-address-valid-or-not-in-python/
+    return re.search("^[a-z0-9]+[\._]?[a-z0-9]+[@]\w+[.]\w{2,3}$", email)
+
+
+def validate_id(id):
+    # Validate if id is in right format for MongoDB object.
+    # Solution from:
+    # https://stackoverflow.com/questions/28774526/how-to-check-that-mongo-objectid-is-valid-in-python
+    return bson.objectid.ObjectId.is_valid(id)
+
+
+def validate_name(name):
+    # Validates users first & last names.
+    # Only allow letters and hyphens.  No spaces.
+    return re.match("^[a-zA-Z-]{0,30}$", name)
+
+
+def validate_pw(pw):
+    # Validate users passwords.
+    # Allow any characters, length 6-15 characters only.
+    return re.match("^.{6,15}$", pw)
+
+
+def validate_meter_id(id):
+    # Validation meter id.
+    # Allow only numbers, no spaces, must be length of 13 characters.
+    return re.match("^[0-9]{13}$", id)
+
+
+def validate_MSN(msn):
+    # Validate meter serial number.
+    # Allow only number and letters, no spaces, length 0-12 characters.
+    return re.match("^[a-zA-Z0-9]{0,12}$", msn)
+
+
+def validate_address(address):
+    # Validate address lines (1st, 2nd & 3rd)
+    # Allow only numbers, letters and spaces, max length 50 characters.
+    return re.match("^[a-zA-Z0-9 ]{0,50}$", address)
+
+
+def validate_text(text):
+    # Validate text inputs.
+    # Allow only letter and spaces.
+    return re.search("[a-zA-Z ]+$", text)
+
+
 app = Flask(__name__)
 
 app.config["MONGO_DBNAME"] = os.environ.get("MONGO_DBNAME")
@@ -30,6 +81,24 @@ def home():
 def register():
     # Check if the message is POST
     if request.method == "POST":
+        # Validate the data the user has provided is correct.
+        if request.form.get("first-name") == "" or not validate_name(
+           request.form.get("first-name").lower()):
+            flash("First name contains invalid character.")
+            return redirect(url_for("register"))
+        if request.form.get("last-name") == "" or not validate_name(
+           request.form.get("last-name").lower()):
+            flash("Last name contains invalid character.")
+            return redirect(url_for("register"))
+        if request.form.get("email") == "" or not validate_email(
+           request.form.get("email").lower()):
+            flash("Please enter a valid email address.")
+            return redirect(url_for("register"))
+        if request.form.get("password") == "" or not validate_pw(
+           request.form.get("password")):
+            flash("Please enter a valid password.")
+            return redirect(url_for("register"))
+
         # Check if email address exists in db
         existing_user = mongo.db.users.find_one(
             {"user_email_address": request.form.get(
@@ -41,7 +110,7 @@ def register():
             flash("Account already exists for this email address.")
             return redirect(url_for("register"))
 
-        # Otherwise, assign form inputs (values) to keys and
+        # Assign form inputs (values) to keys and
         # insert record into users collection.
         record = {
             "first_name": request.form.get("first-name").lower(),
@@ -74,12 +143,29 @@ def register():
 
 @app.route("/signin", methods=["GET", "POST"])
 def signin():
-    # Check if the message is POST
+    # First check whether the user_email_address
+    # exists in the session variable.
+    if session.get("user_email_address"):
+        # If so, redirect user back to their Account page
+        # and display flash message.
+        flash("You are already signed in as " +
+              session["user_email_address"])
+        return redirect(url_for(
+            "account", username=session["user_email_address"]))
+    # Else, check if the method is POST
     if request.method == "POST":
+        # Validate the data the user has provided is correct.
+        if request.form.get("email") == "" or not validate_email(
+           request.form.get("email").lower()):
+            flash("Please enter a valid email address.")
+            return redirect(url_for("signin"))
+        if request.form.get("password") == "" or not validate_pw(
+           request.form.get("password")):
+            flash("Please enter a valid password.")
+            return redirect(url_for("signin"))
         # Check if username exists in db
         existing_user = mongo.db.users.find_one(
             {"user_email_address": request.form.get("email").lower()})
-
         # If user exists in database:
         if existing_user:
             # Ensure hashed password matches password input by user.
@@ -100,23 +186,12 @@ def signin():
                 # the user and return them to a blank sign in page.
                 flash("Incorrect Email Address and/or Password")
                 return redirect(url_for("signin"))
-
         # If  email address doesn't exist in db, display flash message
         # informing the user and return them to a blank sign in page.
         else:
             flash("Incorrect Email Address and/or Password")
             return redirect(url_for("signin"))
-
-    # If method is not POST (i.e. GET), first check whether
-    # the user_email_address exists in the session variable.
-    if session.get("user_email_address"):
-        # If so, redirect user back to their Account page
-        # and display flash message.
-        flash("You are already signed in as " +
-              session["user_email_address"])
-        return redirect(url_for(
-            "account", username=session["user_email_address"]))
-    # Else, render signin.html template.
+    # If method is not POST (i.e. GET), render signin.html template.
     return render_template("signin.html")
 
 
@@ -174,13 +249,6 @@ def account(username):
     return redirect(url_for("signin"))
 
 
-def validate_email(email):
-    # Check whether a string matches the email regex.
-    # Regex solution sourced from here:
-    # https://www.geeksforgeeks.org/check-if-email-address-valid-or-not-in-python/
-    return re.search("^[a-z0-9]+[\._]?[a-z0-9]+[@]\w+[.]\w{2,3}$", email)
-
-
 @app.route("/signout")
 def signout():
     # Check if there is a user email address saved
@@ -199,6 +267,34 @@ def book():
         # If method is POST (i.e. form submitted),
         # add form data to meter installs collection.
         if request.method == "POST":
+            # Validate the data the user has provided is correct.
+            if request.form.get("meter_id") == "" or not validate_meter_id(
+               request.form.get("meter_id")):
+                flash("Invalid meter ID provided")
+                return render_template("book.html")
+            if request.form.get("meter_serial_number") != "":
+                if not validate_MSN(request.form.get("meter_serial_number")):
+                    flash("Invalid meter serial number provided")
+                    return render_template("book.html")
+            if request.form.get(
+                "first_address_line") == "" or not validate_address(
+                    request.form.get("first_address_line")):
+                flash("Invalid address provided")
+                return render_template("book.html")
+            if request.form.get("second_address_line") != "":
+                if not validate_address(request.form.get(
+                                        "second_address_line")):
+                    flash("Invalid address provided")
+                    return render_template("book.html")
+            if request.form.get("third_address_line") != "":
+                if not validate_address(request.form.get(
+                                        "third_address_line")):
+                    flash("Invalid address provided")
+                    return render_template("book.html")
+            if request.form.get("town") == "" or not validate_text(
+               request.form.get("town")):
+                flash("Invalid town/city provided")
+                return render_template("book.html")
             # Check whether there is a meter install
             # already booked for this meter ID.
             existing_booking = mongo.db.meter_installs.find_one(
@@ -208,6 +304,7 @@ def book():
             if existing_booking:
                 flash("A smart meter installation has already been"
                       " booked for Meter ID " + request.form.get("meter_id"))
+                return render_template("book.html")
             # Else extract data from form and assign
             # to keys in the booking dictionary.
             else:
@@ -257,7 +354,7 @@ def book():
                 # username is the users email address.
                 return redirect(url_for(
                     "account", username=session["user_email_address"]))
-        # If mehod is GET, render the Booking page.
+        # If method is GET, render the Booking page.
         return render_template("book.html")
     # If the user is not signed in, redirect them to the Sign In page.
     flash("Please sign in before trying to book a smart meter install")
@@ -289,13 +386,6 @@ def view_booking(booking_id):
     flash("Please sign in before trying to view a"
           " smart meter installation booking")
     return redirect(url_for("signin"))
-
-
-def validate_id(id):
-    # Validate if id is in right format for MongoDB object.
-    # Solution from:
-    # https://stackoverflow.com/questions/28774526/how-to-check-that-mongo-objectid-is-valid-in-python
-    return bson.objectid.ObjectId.is_valid(id)
 
 
 @app.route("/delete_booking/<booking_id>")
