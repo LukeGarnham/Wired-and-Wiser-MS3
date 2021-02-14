@@ -292,6 +292,9 @@ def view_booking(booking_id):
 
 
 def validate_id(id):
+    # Validate if id is in right format for MongoDB object.
+    # Solution from:
+    # https://stackoverflow.com/questions/28774526/how-to-check-that-mongo-objectid-is-valid-in-python
     return bson.objectid.ObjectId.is_valid(id)
 
 
@@ -565,7 +568,8 @@ def delete_account(username):
 @app.errorhandler(404)
 def page_not_found(e):
     # This function handles 404 (page not found errors)
-    # Solution copied from: https://flask.palletsprojects.com/en/master/errorhandling/
+    # Solution copied from:
+    # https://flask.palletsprojects.com/en/master/errorhandling/
     return render_template('404.html'), 404
 
 

@@ -317,12 +317,6 @@ Instead, I changed the code in the update_booking function.  The first check it 
 
 To test this, I updated an existing record 3 times.  In the first instance, I updated the meter serial number only.  I was able to successfully update my meter installation booking and the record in the *meter_installs* collection updated accordingly.  I checked this by refreshing the collection on MongoDB.  Next, I updated the meter ID to another one which was also unique within my collection.  Again, I was able to successfully update the record.  Finally, I tried to update the meter ID to one which was already in my *meter_installs* collection.  This time, when I submitted the form, the flash message appeared informing me that a booking already exists for that meter ID and the record was not updated.
 
-
-
-
-
-
-
 ### Testing process
 
 At the time of writing, I am about to start testing my project.  Here are the manual test procedures to assess functionality, usability, responsiveness and data management that I plan to undertake:
@@ -428,17 +422,9 @@ I deployed the same steps on the (Python) update_booking function as I detailed 
 
 I addded a check to see whether the user is signed in and if not, redirect them to the Sign In page along with a flash message.  Next I use the validate_email function to validate whether an email address has been passed to the update_account function.  If not then I redirect the user to their Account page along with a flash message.  Next, I search the *users* collection for a record with a user_email_address corresponding to the username that has been passed through.  Finally, I check whether a record is found **and** whether the user_email_address in the record matches the one saved in the session variable.  If not, then again the user is redirected to the Account page with a flash message.  This prevents users from reaching the Update Account page with another users email address passed through as the variable:
 
+![Gif showing the Update Account page after fixes have been deployed](static/images/readme-images/update-account-after.gif)
 
-
-
-
-
-
-
-
-
-
-When a user enters the URL with an unexpected suffix, then no webpage result is found.  For example, entering "http://wired-and-wiser.herokuapp.com/test" doesn't render any templates.  Originally, this resulted in the below page being displayed:
+- **Page Not Found**:  When a user enters the URL with an unexpected suffix, then no webpage result is found.  For example, entering "http://wired-and-wiser.herokuapp.com/test" doesn't render any templates.  Originally, this resulted in the below page being displayed:
 
 ![Screenshot of the result when a page is not found](static/images/readme-images/page-not-found.png)
 
@@ -448,7 +434,10 @@ There are infinite suffixes a user can type which will result in no page being f
 
 
 
-
+#### Forms
+#### User Stories
+#### Valid Code
+#### Google Lighthouse Tool
 
 
 
