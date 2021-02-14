@@ -77,4 +77,12 @@ $(document).ready(function() {
         }
     });
 
+    // This prevents users typing or pasting values into the install date field meaning input is limited to datepicker ranges.
+    // This solution was needed since readonly and required attributes can't both be set on one input fied.
+    // This essentially makes the installation date input a readonly since the only way to input into the field is to select an available date from the datepicker.
+    // Solution from: https://stackoverflow.com/questions/12777751/html-required-readonly-input-in-form
+    $("#install_date" ).on('keydown paste', function(e) {
+        e.preventDefault();
+    });
+
 });

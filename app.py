@@ -59,8 +59,14 @@ def validate_address(address):
 
 def validate_text(text):
     # Validate text inputs.
-    # Allow only letter and spaces.
+    # Allow only letters and spaces.
     return re.search("[a-zA-Z ]+$", text)
+
+
+def validate_alphanumeric(alphanumeric):
+    # Validate text inputs.
+    # Allow only numbers, letters and spaces.
+    return re.search("[a-zA-Z0-9 ]+$", alphanumeric)
 
 
 app = Flask(__name__)
@@ -295,10 +301,11 @@ def book():
                request.form.get("town")):
                 flash("Invalid town/city provided")
                 return render_template("book.html")
+
             # Check whether there is a meter install
             # already booked for this meter ID.
             existing_booking = mongo.db.meter_installs.find_one(
-                {"meter_id": request.form.get("meter_id")})
+                {"meter_id": int(request.form.get("meter_id"))})
             # If a record (booking) already exists for this meter ID,
             # display a flash message to the user.
             if existing_booking:
