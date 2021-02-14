@@ -412,6 +412,17 @@ Next, I validate whether the booking_id variable passed to the view_booking func
 
 I use the **find_one** to find a record in the *meter_installs* collection with the corresponding booking_id.  Finally, I check whether a record is returned **and** whether the user_email_address in the record matches the one saved in the session variable.  This ensures that users can only view their own bookings and not another users.  If either no record is found in the *meter_installs* collection or the user_email_address differs from the one in the session variable, the user is redirected to their Account page along with a flash message informing them "The booking ID you are trying to find is not valid".
 
+![Gif showing the View Booking page after fixes have been deployed](static/images/readme-images/view-booking-after.gif)
+
+- **Update Booking Page**:  When I tested the Update Booking page, the same issues existed as they did with the View Booking page.  Users who are signed out can access the page, users can access the Update Booking page for bookings which aren't theirs and if an invalid booking_id is passed through to the (Python) update_booking function, then an error occurs:
+
+![Gif showing the errors on the Update Booking page when I initially tested it](static/images/readme-images/update-booking-before.gif)
+
+
+
+
+
+
 
 
 
