@@ -1,5 +1,6 @@
 import os
 import re
+import bson
 from datetime import datetime
 from flask import (
     Flask, flash, render_template,
@@ -206,7 +207,7 @@ def book():
             # display a flash message to the user.
             if existing_booking:
                 flash("A smart meter installation has already been"
-                    " booked for Meter ID " + request.form.get("meter_id"))
+                      " booked for Meter ID " + request.form.get("meter_id"))
             # Else extract data from form and assign
             # to keys in the booking dictionary.
             else:
@@ -217,29 +218,37 @@ def book():
                 booking = {
                     "user_email_address": session["user_email_address"],
                     "meter_id": int(request.form.get("meter_id")),
-                    "meter_serial_number": request.form.get("meter_serial_number"),
-                    "first_address_line": request.form.get("first_address_line"),
-                    "second_address_line": request.form.get("second_address_line"),
-                    "third_address_line": request.form.get("third_address_line"),
+                    "meter_serial_number": request.form.get(
+                        "meter_serial_number"),
+                    "first_address_line": request.form.get(
+                        "first_address_line"),
+                    "second_address_line": request.form.get(
+                        "second_address_line"),
+                    "third_address_line": request.form.get(
+                        "third_address_line"),
                     "town": request.form.get("town"),
                     "county": request.form.get("county"),
                     "postcode": request.form.get("postcode"),
                     "meter_location": request.form.get("meter_location"),
-                    "access_instructions": request.form.get("access_instructions"),
+                    "access_instructions": request.form.get(
+                        "access_instructions"),
                     "parking_on_site": request.form.get("parking_on_site"),
                     "property_type": request.form.get("property_type"),
                     "supplier": request.form.get("supplier"),
                     "supplier_acc_no": request.form.get("supplier_acc_no"),
-                    "meter_read_reg_1": int(request.form.get("meter_read_reg_1"))
+                    "meter_read_reg_1": int(request.form.get(
+                        "meter_read_reg_1"))
                     if request.form.get("meter_read_reg_1") else "",
-                    "meter_read_reg_2": int(request.form.get("meter_read_reg_2"))
+                    "meter_read_reg_2": int(request.form.get(
+                        "meter_read_reg_2"))
                     if request.form.get("meter_read_reg_2") else "",
                     "install_date": datetime.strptime(
                         request.form.get("install_date"), "%d/%m/%Y"),
                     "supplier_authorisation": authorised,
                     "application_date": datetime.now()
                 }
-                # Insert the booking dictionary into the meter_installs collection.
+                # Insert the booking dictionary into
+                # the meter_installs collection.
                 mongo.db.meter_installs.insert_one(booking)
                 # Display a flash message informing user
                 # that booking has been successful.
@@ -257,10 +266,33 @@ def book():
 
 @app.route("/view_booking/<booking_id>")
 def view_booking(booking_id):
-    # Find the record with the corresponding
-    # booking ID in the meter_installs collection.
-    booking = mongo.db.meter_installs.find_one({"_id": ObjectId(booking_id)})
-    return render_template("view_booking.html", booking=booking)
+    # Check whether the user_email_address exists in the session variable.
+    if session.get("user_email_address"):
+        # Check whether the booking_id is valid
+        if validate_id(booking_id):
+            # Find the record with the corresponding
+            # booking ID in the meter_installs collection.
+            booking = mongo.db.meter_installs.find_one(
+                {"_id": ObjectId(booking_id)})
+            # Check if booking exists and that the user_email_address
+            # matches the one in the session variable.
+            if booking and booking["user_email_address"] == session[
+               "user_email_address"]:
+                # If so, render the view_booking.html template.
+                return render_template("view_booking.html", booking=booking)
+        # If the booking_id entered is not valid
+        # return user to Account page with flash message.
+        flash("The booking ID you are trying to find is not valid")
+        return redirect(url_for(
+                    "account", username=session["user_email_address"]))
+    # If the user is not signed in, redirect them to the Sign In page.
+    flash("Please sign in before trying to view a"
+          " smart meter installation booking")
+    return redirect(url_for("signin"))
+
+
+def validate_id(id):
+    return bson.objectid.ObjectId.is_valid(id)
 
 
 @app.route("/delete_booking/<booking_id>")
