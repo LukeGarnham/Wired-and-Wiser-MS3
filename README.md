@@ -196,7 +196,8 @@ Another feature I didn't have time to implement was to enable users to reset the
 
 ### Known Issues
 
-
+- The FavIcon does not appear on the Account, Update Account, View Booking & Update Booking pages.  I'm not sure of the reason for this.  This is a minor issue and doesn't have an overall impact on the user experience or functionality of my website in my opinion.  I will try to deploy a fix in future.
+- When a user enters invalid data into a form (such as trying to book a meter installation for a meter ID which already exists in the *meter_installs*collection) a flash message informs the user of the issue and the form is reloaded.  As a result, this means that any data the user had input is lost.  This is not good user experience and I would like in future to identify a solution which does not result in the form data being reset.
 
 
 
