@@ -2,6 +2,8 @@
 
 ## Introduction
 
+![My project seen on various screen sizes](static/images/readme-images/my-project.png)
+
 My website is aimed at users curious about Smart Meters.  Smart meters are electricity meters which automatically send consumption data to suppliers to allow accurate billing while providing customers with an in-home display allowing them to monitor consumption in real time.  My website provides people who are curious about smart meters with information on what they are and how they work.  My goal is to encourage visitors, both residential and commercial, to my website to book a smart meter installation with my fictional company “Wired and Wiser”.
 
 The website allows users to sign up with a few personal details.  Once signed up and signed in, users can then book a smart meter installation by providing details of their electricity meter.  From the Account page which users see when they sign in, they can create new bookings and view, update and delete existing bookings.  They can also update and delete their account details.
@@ -530,6 +532,7 @@ I also inserted a link on my home page to the [Energy Saving Trust’s energy sa
 ### Media
 
 [FontAwesome](https://fontawesome.com/) – I used the icons available on Font Awesome to improve UX.
+[FavIcon Generator](https://www.favicon-generator.org/) - I used this website to generate the FavIcon files and links.
 
 #### Images
 
