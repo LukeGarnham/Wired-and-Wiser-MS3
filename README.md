@@ -418,6 +418,15 @@ I use the **find_one** to find a record in the *meter_installs* collection with 
 
 ![Gif showing the errors on the Update Booking page when I initially tested it](static/images/readme-images/update-booking-before.gif)
 
+I deployed the same steps on the (Python) update_booking function as I detailed above on the view_booking function.  The end result is demonstrated below and is as desired:
+
+![Gif showing the Update Booking page after fixes have been deployed](static/images/readme-images/update-booking-after.gif)
+
+- **Update Account Page**:  The (Python) update_account function takes a vavriable called username as an argument - this is expected to be a users email address.  This is also apended to the URL.  If a user is not signed in, then trying to reach the Update Account page by typing in the URL results in an error, regardless of whether a valid email address is passed through.  When signed in, if an invalid email address is passed through, an error also occurs.  However, if a valid email address is passed through, the Update Account page loads, regardless of whether the email address is the users or not.  Therefore, one user could sign in and then access the Update Account page of another user.  None of these things should happen:
+
+![Gif showing the errors on the Update Account page when I initially tested it](static/images/readme-images/update-account-before.gif)
+
+I addded a check to see whether the user is signed in and if not, redirect them to the Sign In page along with a flash message.  Next I use the validate_email function to validate whether an email address has been passed to the update_account function.  If not then I redirect the user to their Account page along with a flash message.  Next, I search the *users* collection for a record with a user_email_address corresponding to the username that has been passed through.  Finally, I check whether a record is found **and** whether the user_email_address in the record matches the one saved in the session variable.  If not, then again the user is redirected to the Account page with a flash message.  This prevents users from reaching the Update Account page with another users email address passed through as the variable:
 
 
 

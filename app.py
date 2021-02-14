@@ -411,86 +411,118 @@ def update_booking(booking_id):
 
 @app.route("/update_account/<username>", methods=["GET", "POST"])
 def update_account(username):
-    # Use email address that's been passed through
-    # to search users collection.  Asign results to user.
-    user = mongo.db.users.find_one(
-        {"user_email_address": username})
-    # If method is POST (i.e. form submitted),
-    # update the data in the meter_installs collection.
-    if request.method == "POST":
-        # Check that the password the user has entered
-        # matches the users password in the users collection.
-        if check_password_hash(user["password"],
-                               request.form.get("password")):
-            # Create update_user dict containing the updated details.
-            # Password will be the existing hashed password.
-            update_user = {
-                "first_name": request.form.get("first-name").lower(),
-                "last_name": request.form.get("last-name").lower(),
-                "user_email_address": request.form.get("email").lower(),
-                "password": user["password"]
-            }
-            # Check if the user has changed their email address.
-            if user["user_email_address"] != request.form.get("email").lower():
-                # If so, check if new email address exists in db.
-                existing_user = mongo.db.users.find_one(
-                    {"user_email_address": request.form.get(
-                        "email").lower()})
-                # If it does, display a flash message informing user that
-                # an account already exists for this email address.
-                if existing_user:
-                    flash("Another account already exists for the "
-                          "email address you entered")
-                    # Redirect user to update_account page.
-                    return redirect(url_for(
-                        "update_account", username=username))
-                # Else, email address has changed but is unique in collection:
-                else:
-                    # Use the update_many method to find all meter_installs
-                    # records with old email address and
-                    # update to the new email address.
-                    # Solution reached referring to:
-                    # https://www.w3schools.com/python/python_mongodb_update.asp
-                    mongo.db.meter_installs.update_many({
-                        "user_email_address": user["user_email_address"]
-                        }, {
-                            "$set": {
-                                "user_email_address": update_user[
-                                    "user_email_address"]
-                            },
+    # Check whether the user_email_address exists in the session variable.
+    if session.get("user_email_address"):
+        # If so, ensure that any variable passed through is all lower case.
+        username = username.lower()
+        # Check whether the username is a valid email address.
+        if validate_email(username):
+            # Use email address that's been passed through
+            # to search users collection.  Asign results to user.
+            user = mongo.db.users.find_one(
+                {"user_email_address": username})
+            # Check that a record is found and if so, that
+            # the user email address matches the one in the session variable.
+            if user and user["user_email_address"] == session[
+                             "user_email_address"]:
+                # If method is POST (i.e. form submitted),
+                # update the data in the meter_installs collection.
+                if request.method == "POST":
+                    # Check that the password the user has entered
+                    # matches the users password in the users collection.
+                    if check_password_hash(user["password"],
+                                           request.form.get("password")):
+                        # Create update_user dict containing
+                        # the updated details.
+                        # Password will be the existing hashed password.
+                        update_user = {
+                            "first_name": request.form.get(
+                                "first-name").lower(),
+                            "last_name": request.form.get(
+                                "last-name").lower(),
+                            "user_email_address": request.form.get(
+                                "email").lower(),
+                            "password": user["password"]
                         }
-                    )
-                    # Update the users details in the users collection
-                    # when the user has changed their email address.
-                    session["user_email_address"] = update_user[
-                        "user_email_address"].lower()
-
-            # Update the existing record using the user id.
-            mongo.db.users.update({"_id": ObjectId(user["_id"])}, update_user)
-            # Display flash message informing user that account
-            # details have been successfully updated.
-            flash("Account details updated")
-            # Redirect to account(username) function where
-            # username is the users email address.
-            return redirect(url_for(
-                "account", username=session["user_email_address"]))
-        else:
-            # If password doesn't match, display flash message
-            # informing the user and ask them to try again.
-            flash("Incorrect password - try again")
-            # Redirect user back to update_account page.
-            return redirect(url_for("update_account", username=username))
-
-    # Remove the users password.  Even though it is hashed,
-    # I don't want to pass this through for security reasons.
-    user.pop("password")
-    # Check if there is a user email address saved
-    # in session variable, if so render update_account page.
-    if session["user_email_address"]:
-        # Pass through the user variable defined above.
-        return render_template("update_account.html", user=user)
-    # If there is no user email address saved in session variable,
-    # redirect user to sign in page.
+                        # Check if the user has changed their email address.
+                        if user["user_email_address"] != request.form.get(
+                           "email").lower():
+                            # If so, check if new email address exists in db.
+                            existing_user = mongo.db.users.find_one(
+                                {"user_email_address": request.form.get(
+                                    "email").lower()})
+                            # If it does, display a flash message
+                            # informing user that
+                            # an account already exists for this email address.
+                            if existing_user:
+                                flash("Another account already exists for the "
+                                      "email address you entered")
+                                # Redirect user to update_account page.
+                                return redirect(url_for(
+                                    "update_account", username=username))
+                            # Else, email address has changed
+                            # but is unique in collection:
+                            else:
+                                # Use the update_many method to
+                                # find all meter_installs
+                                # records with old email address and
+                                # update to the new email address.
+                                # Solution reached referring to:
+                                # https://www.w3schools.com/python/python_mongodb_update.asp
+                                mongo.db.meter_installs.update_many({
+                                    "user_email_address": user[
+                                        "user_email_address"]
+                                    }, {
+                                        "$set": {
+                                            "user_email_address": update_user[
+                                                "user_email_address"]
+                                        },
+                                    }
+                                )
+                                # Update the users details in
+                                # the users collection
+                                # when the user has changed
+                                # their email address.
+                                session["user_email_address"] = update_user[
+                                    "user_email_address"].lower()
+                        # Update the existing record using the user id.
+                        mongo.db.users.update(
+                            {"_id": ObjectId(user["_id"])}, update_user)
+                        # Display flash message informing user that account
+                        # details have been successfully updated.
+                        flash("Account details updated")
+                        # Redirect to account(username) function where
+                        # username is the users email address.
+                        return redirect(url_for(
+                            "account", username=session["user_email_address"]))
+                    else:
+                        # If password doesn't match, display flash message
+                        # informing the user and ask them to try again.
+                        flash("Incorrect password - try again")
+                        # Redirect user back to update_account page.
+                        return redirect(url_for(
+                            "update_account", username=username))
+                # If method is GET, remove the users password.
+                # Even though it is hashed, I don't want to pass
+                # this through for security reasons.
+                user.pop("password")
+                # Check if there is a user email address saved
+                # in session variable, if so render update_account page.
+                if session["user_email_address"]:
+                    # Pass through the user variable defined above.
+                    return render_template("update_account.html", user=user)
+                # If there is no user email address saved in session variable,
+                # redirect user to sign in page.
+                return redirect(url_for("signin"))
+        # If username is not valid, redirect user to Account page
+        # using email address from session variable.
+        flash("You are already signed in as " +
+              session["user_email_address"])
+        return redirect(url_for(
+            "account", username=session["user_email_address"]))
+    # If the user is not signed in, redirect them to the Sign In page.
+    flash("Please sign in before trying to update "
+          "account details")
     return redirect(url_for("signin"))
 
 
