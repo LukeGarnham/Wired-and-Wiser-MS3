@@ -451,7 +451,8 @@ The following pages have forms which **POST** data:
 Furthermore, I will test that the Delete Booking and Delete Account functions work correctly.  These fucntions do not **POST** data to my database but they do delete data from it so it is equally important I validate them.
 
 Results:
-- **Register Page**:  I added some checks in the **POST** method of the (Python) register function.  This function now validates the data the user submits to ensure it matches the format requested.  The first and last names are passed to the validate_name function and the email address is passed to the validate_email function.  If any of these results in a False result being returned, then the user is redirected to the Register page and a flash message informs them what invalid data they have entered.  I have applied the same validation attributes to the input fields in the HTML5 code so the Python checks will only trigger if the user bypasses the frontend validation rules.  The following inputs result in the form not being submitted:
+- **Register Page**:  I added some checks in the **POST** method of the (Python) register function.  This function now validates the data the user submits to ensure it matches the format requested.  The first and last names are passed to the validate_name function and the email address is passed to the validate_email function.  The password is passed to the validate_pw function - I only check the length of the password and do not restrict characters that the user can input since the password is hashed before it is passed to my database removing the risk on any malicious code being inserted into my database.  If any of these validation tests results in a False result being returned, then the user is redirected to the Register page and a flash message informs them what invalid data they have entered.  I have applied the same validation attributes to the input fields in the HTML5 code so the Python checks will only trigger if the user bypasses the frontend validation rules.  The following inputs result in the form not being submitted:
+    - Leaving any required field blank.
     - First or last name containing any numbers or special characters aside from a hyphen (-).
     - First or last name being longer than 30 characters.
     - Invalid email format.
@@ -463,6 +464,7 @@ If all fields validate, a record is inserted into the *users* collection and the
 If a user is already signed in, they cannot access the Register page and are instead redirected to their Account page.
 
 - **Sign In Page**:  The email address and password fields are validated by both the frontend (HTML5) and backend (Python) signin function.  The following inputs result in the form not being submitted:
+    - Leaving any required field blank.
     - Invalid email format.
     - Password shorter than 6 characters or longer than 15 characters.
     - Email address doesn't exists in *users* collection.
@@ -476,15 +478,41 @@ If a user is already signed in but tries to access the Sign In page, they are re
 
 I also perform several checks on the data which has been input.  Where I have a **required** attribute set on an input field in the HTML5, I check whether there is a value and whether it passes a validation check (I have several validation functions to check for different types of input).  Despite several of the frontend (HTML5) input fields having the **required** attribute set, I understand that this can be bypassed.  Therefore, I perform a check in the backend (Python) function to ensure that there is actually a value in the form that is submitted.  Not all fields are required so for those, I check whether there is a value and if so, then check it by calling the appropriate validation function.
 
+The textarea input fields for the meter location and access instructions cannot have a **pattern** attribute applied to them to validate the input data.  Therefore there is only backend data validation which permits letters, numbers, spaces and full stops.
+
+Entering any of the following will prevent the form from being submitted:
+- Leaving any required field blank.
+- Entering anything other than a 13 digit number in the meter ID field.
+- Entering a meter ID which already exists in the *meter_installs* collection.
+- Any non-alphanumeric characters in the meter serial number input or a string of length greater than 12 characters.
+- Any non-alphanumeric characters in the address first, second or third line inputs or a string of length greater than 50 characters.  Spaces are allowed.
+- Any non-alphanumeric characters in the town or county inputs, spaces are allowed.
+- Any non-alphanumeric characters in the postcode input.  Spaces are allowed.  Lengths shorter than 6 characters or longer than 8 characters will be rejected.
+- Any non-alphanumeric characters in the meter location and access instruction inputs.  Spaces and full stops are accepted.
+- Any string/input other than "yes" or "no" in the parking_on_site input is rejected.
+- Any string/input other than "residential" or "commercial" in the property_type input is rejected.
+- Any non-alphanumeric characters in the supplier inputs or a string of length greater than 30 characters.  Spaces are allowed.
+- Any non-alphanumeric characters in the supplier account number inputs or a string of length greater than 20 characters.  Spaces and forward slashes (/)are the only non-alphanumeric characters permitted.
+- Only numbers are permitted in either of the meter read inputs with a maximum length of 8 digits.
+- Only numbers and forward slashes (/) are allowed in the installation date input.  The length must be 10 characters.  Using the datepicker as mentioned above limits what can be input.
+
+If an invalidate input is provided, the Booking page is reloaded and a flash message informs the user what the issue was.
+
+If all fields validate, a record is inserted in the *meter_installs* collection.  The user is redirected back to their Account page.
+
+If a user is not signed in but tries to access the Booking page, they are redirected to the Sign In page.
+
+- **Update Booking Page**:  The Update Booking form has the same validation applied to it as the Booking page.  Since it is possible that a user tries to change the meter ID for their booking, I reject the form if the new meter ID already exists as a record in the *meter_installs* collection.
+
+If an invalidate input is provided, the Update Booking page is reloaded and a flash message informs the user what the issue was.
+
+If all fields validate, the record is updated in the *meter_installs* collection.  The user is redirected back to their Account page.
+
+If a user is not signed in but tries to access the Update Booking page, they are redirected to the Sign In page.  If a user is signed in but tries to access the Update Booking page for a booking which isn't on of theirs, they are redirected to the Account page.
 
 
 
 
-
-
-
-
-- Update Booking Page
 - Update Account Page
 
 

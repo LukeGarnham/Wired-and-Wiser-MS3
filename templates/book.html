@@ -55,7 +55,7 @@
                                     Meter <span class="d-md-none d-lg-inline">Serial </span>Number:
                                 </label>
                                 <div class="col-12 col-md-7">
-                                    <input type="text" class="form-control form-control-sm text-center text-md-left" id="meter_serial_number" name="meter_serial_number" aria-describedby="msnHelpBlock" maxlength="12" pattern="^[A-z0-9]{0,12}$" placeholder="Meter serial number">
+                                    <input type="text" class="form-control form-control-sm text-center text-md-left" id="meter_serial_number" name="meter_serial_number" aria-describedby="msnHelpBlock" maxlength="12" pattern="^[a-zA-Z0-9]{0,12}$" placeholder="Meter serial number">
                                     <small id="msnHelpBlock" class="form-text text-muted text-md-left">
                                         Please provide if known.
                                     </small>
@@ -67,19 +67,19 @@
                             <div class="form-group form-row">
                                 <label for="first_address_line" class="col-form-label col-form-label-sm col-12 col-lg-3 offset-md-1 text-md-left font-weight-bold">First Address Line: *</label>
                                 <div class="col-12 col-md-10 offset-md-1 col-lg-7 offset-lg-0">
-                                    <input type="text" class="form-control form-control-sm text-center text-md-left" id="first_address_line" name="first_address_line" maxlength="50" pattern="^[A-z0-9 ]{0,50}$" required>
+                                    <input type="text" class="form-control form-control-sm text-center text-md-left" id="first_address_line" name="first_address_line" maxlength="50" pattern="^[a-zA-Z0-9 ]{0,50}$" required>
                                 </div>
                             </div>
                             <div class="form-group form-row">
                                 <label for="second_address_line" class="col-form-label col-form-label-sm col-12 col-lg-3 offset-md-1 text-md-left font-weight-bold">Second Address Line:</label>
                                 <div class="col-12 col-md-10 offset-md-1 col-lg-7 offset-lg-0">
-                                    <input type="text" class="form-control form-control-sm text-center text-md-left" id="second_address_line" name="second_address_line" maxlength="50" pattern="^[A-z0-9 ]{0,50}$">
+                                    <input type="text" class="form-control form-control-sm text-center text-md-left" id="second_address_line" name="second_address_line" maxlength="50" pattern="^[a-zA-Z0-9 ]{0,50}$">
                                 </div>
                             </div>
                             <div class="form-group form-row">
                                 <label for="third_address_line" class="col-form-label col-form-label-sm col-12 col-lg-3 offset-md-1 text-md-left font-weight-bold">Third Address Line:</label>
                                 <div class="col-12 col-md-10 offset-md-1 col-lg-7 offset-lg-0">
-                                    <input type="text" class="form-control form-control-sm text-center text-md-left" id="third_address_line" name="third_address_line" maxlength="50" pattern="^[A-z0-9 ]{0,50}$">
+                                    <input type="text" class="form-control form-control-sm text-center text-md-left" id="third_address_line" name="third_address_line" maxlength="50" pattern="^[a-zA-Z0-9 ]{0,50}$">
                                 </div>
                             </div>
                             <div class="form-group form-row">
@@ -97,19 +97,25 @@
                             <div class="form-group form-row">
                                 <label for="postcode" class="col-form-label col-form-label-sm col-12 col-md-3 offset-md-1 text-md-left font-weight-bold">Postcode: *</label>
                                 <div class="col-12 col-md-7">
-                                    <input type="text" class="form-control form-control-sm text-center text-md-left" id="postcode" name="postcode" minlength="6" maxlength="8" required>
+                                    <input type="text" class="form-control form-control-sm text-center text-md-left" id="postcode" name="postcode" minlength="6" maxlength="8" pattern="^[a-zA-Z0-9 ]{6,8}$" required>
                                 </div>
                             </div>
                             <div class="form-group form-row">
                                 <label for="meter_location" class="col-form-label col-form-label-sm col-12 col-md-10 offset-md-1 text-md-left font-weight-bold">Meter Location: *</label>
                                 <div class="col-12 col-md-10 offset-md-1">
-                                    <textarea class="form-control form-control-sm text-left" id="meter_location" name="meter_location" cols="30" rows="2" placeholder="Where in the property is the meter located? (required)" required></textarea>
+                                    <textarea class="form-control form-control-sm text-left" id="meter_location" name="meter_location" aria-describedby="meterLocationHelpBlock" cols="30" rows="2" placeholder="Where in the property is the meter located? (required)" required></textarea>
+                                    <small id="meterLocationHelpBlock" class="form-text text-muted text-md-left">
+                                        Location: Only letters and numbers permitted.
+                                    </small>
                                 </div>
                             </div>
                             <div class="form-group form-row">
                                 <label for="access_instructions" class="col-form-label col-form-label-sm col-12 col-md-10 offset-md-1 text-md-left font-weight-bold">Access Instructions (if applicable):</label>
                                 <div class="col-12 col-md-10 offset-md-1">
-                                    <textarea class="form-control form-control-sm text-left" id="access_instructions" name="access_instructions" cols="30" rows="2" placeholder="Are there any instructions for accessing the property?"></textarea>
+                                    <textarea class="form-control form-control-sm text-left" id="access_instructions" name="access_instructions" aria-describedby="accessInfoHelpBlock" cols="30" rows="2" placeholder="Are there any instructions for accessing the property?"></textarea>
+                                    <small id="accessInfoHelpBlock" class="form-text text-muted text-md-left">
+                                        Location: Only letters and numbers permitted.
+                                    </small>
                                 </div>
                             </div>
                             <div class="form-group form-row">
@@ -138,13 +144,13 @@
                             <div class="form-group form-row">
                                 <label for="supplier" class="col-form-label col-form-label-sm col-12 col-md-3 offset-md-1 text-md-left font-weight-bold">Supplier: *</label>
                                 <div class="col-12 col-md-7">
-                                    <input type="text" class="form-control form-control-sm text-center text-md-left" id="supplier" name="supplier" maxlength="30" placeholder="Name of current supplier" required>
+                                    <input type="text" class="form-control form-control-sm text-center text-md-left" id="supplier" name="supplier" maxlength="30" pattern="^[a-zA-Z0-9 ]{0,30}$" placeholder="Name of current supplier" required>
                                 </div>
                             </div>
                             <div class="form-group form-row">
                                 <label for="supplier_acc_no" class="col-form-label col-form-label-sm col-12 col-md-5 offset-md-1 text-md-left font-weight-bold">Supplier Account Number:</label>
                                 <div class="col-12 col-md-5">
-                                    <input type="text" class="form-control form-control-sm text-center text-md-left" id="supplier_acc_no" name="supplier_acc_no" maxlength="20" placeholder="Account number (if known)">
+                                    <input type="text" class="form-control form-control-sm text-center text-md-left" id="supplier_acc_no" name="supplier_acc_no" maxlength="20" pattern="^[a-zA-Z0-9 /]{0,20}$" placeholder="Account number (if known)">
                                 </div>
                             </div>
                             <div class="form-group form-row">
@@ -156,13 +162,13 @@
                             <div class="form-group form-row">
                                 <label for="meter_read_reg_2" class="col-form-label col-form-label-sm col-12 col-md-5 offset-md-1 text-md-left font-weight-bold">Meter Read (Register 2):</label>
                                 <div class="col-12 col-md-5">
-                                    <input type="text" class="form-control form-control-sm text-center text-md-left" id="meter_read_reg_2" name="meter_read_reg_2" maxlength="8"  pattern="^[0-9]{0,8}$" placeholder="Register 2 read (if known)">
+                                    <input type="text" class="form-control form-control-sm text-center text-md-left" id="meter_read_reg_2" name="meter_read_reg_2" maxlength="8" pattern="^[0-9]{0,8}$" placeholder="Register 2 read (if known)">
                                 </div>
                             </div>
                             <div class="form-group form-row">
                                 <label for="install_date" class="col-form-label col-form-label-sm col-12 col-md-5 offset-md-1 text-md-left font-weight-bold">Installation Date: *</label>
                                 <div class="col-12 col-md-5">
-                                    <input type="text" class="form-control form-control-sm text-center text-md-left" id="install_date" name="install_date" aria-describedby="dateHelpBlock" placeholder="dd/mm/yyyy" required>
+                                    <input type="text" class="form-control form-control-sm text-center text-md-left" id="install_date" name="install_date" aria-describedby="dateHelpBlock" pattern="^[0-9/]{10}$" placeholder="dd/mm/yyyy" required>
                                     <small id="dateHelpBlock" class="form-text text-muted text-md-left">
                                         Earliest installation date must be 30 days from today.
                                     </small>

@@ -57,16 +57,58 @@ def validate_address(address):
     return re.match("^[a-zA-Z0-9 ]{0,50}$", address)
 
 
+def validate_postcode(postcode):
+    # Validate postcodes.
+    # Allow only numbers, letters and spaces, length 6-8 characters.
+    return re.match("^[a-zA-Z0-9 ]{6,8}$", postcode)
+
+
 def validate_text(text):
     # Validate text inputs.
     # Allow only letters and spaces.
-    return re.search("[a-zA-Z ]+$", text)
+    return re.match("[a-zA-Z ]+$", text)
 
 
-def validate_alphanumeric(alphanumeric):
+def validate_alphanumeric(text):
     # Validate text inputs.
-    # Allow only numbers, letters and spaces.
-    return re.search("[a-zA-Z0-9 ]+$", alphanumeric)
+    # Allow only numbers, letters, spaces and full stops.
+    return re.match("[a-zA-Z0-9 .]+$", text)
+
+
+def validate_yes_no(text):
+    # Validate that the input is eiter yes or no.
+    return text == "yes" or text == "no"
+
+
+def validate_property_type(text):
+    # Validate that the input is eiter residential or commercial.
+    return text == "residential" or text == "commercial"
+
+
+def validate_supplier(text):
+    # Validate supplier input.
+    # Allow only numbers, letters and spaces, max length 30 characters.
+    return re.match("^[a-zA-Z0-9 ]{0,30}$", text)
+
+
+def validate_account(text):
+    # Validate supplier account number input.
+    # Account numbers may have letters and forward slashes.
+    # Allow only numbers, letters, spaces and
+    # forward slashes, max length 20 characters.
+    return re.match("^[a-zA-Z0-9 /]{0,20}$", text)
+
+
+def validate_meter_read(read):
+    # Validate meter read inputs.
+    # Allow only numbers, length 0-8 characters.
+    return re.match("^[0-9]{0,8}$", read)
+
+
+def validate_date(date):
+    # Validate date inputs.
+    # Allow only numbers and for slashes, must be length of 8 characters.
+    return re.match("^[0-9/]{10}$", date)
 
 
 app = Flask(__name__)
@@ -301,6 +343,63 @@ def book():
                request.form.get("town")):
                 flash("Invalid town/city provided")
                 return render_template("book.html")
+            if request.form.get("county") == "" or not validate_text(
+               request.form.get("county")):
+                flash("Invalid county provided")
+                return render_template("book.html")
+            if request.form.get("postcode") == "" or not validate_postcode(
+               request.form.get("postcode")):
+                flash("Invalid postcode provided")
+                return render_template("book.html")
+            if request.form.get(
+               "meter_location") == "" or not validate_alphanumeric(
+               request.form.get("meter_location")):
+                flash("Invalid meter location provided")
+                return render_template("book.html")
+            if request.form.get("access_instructions") != "":
+                if not validate_alphanumeric(request.form.get(
+                                             "access_instructions")):
+                    flash("Invalid access instructions provided")
+                    return render_template("book.html")
+            if request.form.get(
+               "parking_on_site") == "" or not validate_yes_no(
+               request.form.get("parking_on_site")):
+                flash("Please indicate if parking is available on site")
+                return render_template("book.html")
+            if request.form.get(
+               "property_type") == "" or not validate_property_type(
+               request.form.get("property_type")):
+                flash("Please indicate the property type")
+                return render_template("book.html")
+            if request.form.get(
+               "supplier") == "" or not validate_supplier(
+               request.form.get("supplier")):
+                flash("Invalid supplier provided")
+                return render_template("book.html")
+            if request.form.get("supplier_acc_no") != "":
+                if not validate_account(
+                       request.form.get("supplier_acc_no")):
+                    flash("Invalid supplier account number provided")
+                    return render_template("book.html")
+            if request.form.get("meter_read_reg_1") != "":
+                if not validate_meter_read(
+                       request.form.get("meter_read_reg_1")):
+                    flash("Invalid meter read provided")
+                    return render_template("book.html")
+            if request.form.get("meter_read_reg_2") != "":
+                if not validate_meter_read(
+                       request.form.get("meter_read_reg_2")):
+                    flash("Invalid meter read provided")
+                    return render_template("book.html")
+            if request.form.get(
+               "install_date") == "" or not validate_date(
+               request.form.get("install_date")):
+                flash("Invalid installation date provided")
+                return render_template("book.html")
+            if request.form.get("supplier_authorisation") != "on":
+                flash("Please tick the supplier "
+                      "authorisation at the bottom of the form")
+                return render_template("book.html")
 
             # Check whether there is a meter install
             # already booked for this meter ID.
@@ -417,6 +516,110 @@ def update_booking(booking_id):
             # Retrieve the original booking from the meter_installs collection.
             original_booking = mongo.db.meter_installs.find_one(
                 {"_id": ObjectId(booking_id)})
+            # Validate the data the user has provided is correct.
+            if request.form.get("meter_id") == "" or not validate_meter_id(
+               request.form.get("meter_id")):
+                flash("Invalid meter ID provided")
+                return render_template("update_booking.html",
+                                       booking=original_booking)
+            if request.form.get("meter_serial_number") != "":
+                if not validate_MSN(request.form.get("meter_serial_number")):
+                    flash("Invalid meter serial number provided")
+                    return render_template("update_booking.html",
+                                           booking=original_booking)
+            if request.form.get(
+                "first_address_line") == "" or not validate_address(
+                    request.form.get("first_address_line")):
+                flash("Invalid address provided")
+                return render_template("update_booking.html",
+                                       booking=original_booking)
+            if request.form.get("second_address_line") != "":
+                if not validate_address(request.form.get(
+                                        "second_address_line")):
+                    flash("Invalid address provided")
+                    return render_template("update_booking.html",
+                                           booking=original_booking)
+            if request.form.get("third_address_line") != "":
+                if not validate_address(request.form.get(
+                                        "third_address_line")):
+                    flash("Invalid address provided")
+                    return render_template("update_booking.html",
+                                           booking=original_booking)
+            if request.form.get("town") == "" or not validate_text(
+               request.form.get("town")):
+                flash("Invalid town/city provided")
+                return render_template("update_booking.html",
+                                       booking=original_booking)
+            if request.form.get("county") == "" or not validate_text(
+               request.form.get("county")):
+                flash("Invalid county provided")
+                return render_template("update_booking.html",
+                                       booking=original_booking)
+            if request.form.get("postcode") == "" or not validate_postcode(
+               request.form.get("postcode")):
+                flash("Invalid postcode provided")
+                return render_template("update_booking.html",
+                                       booking=original_booking)
+            if request.form.get(
+               "meter_location") == "" or not validate_alphanumeric(
+               request.form.get("meter_location")):
+                flash("Invalid meter location provided")
+                return render_template("update_booking.html",
+                                       booking=original_booking)
+            if request.form.get("access_instructions") != "":
+                if not validate_alphanumeric(request.form.get(
+                                             "access_instructions")):
+                    flash("Invalid access instructions provided")
+                    return render_template("update_booking.html",
+                                           booking=original_booking)
+            if request.form.get(
+               "parking_on_site") == "" or not validate_yes_no(
+               request.form.get("parking_on_site")):
+                flash("Please indicate if parking is available on site")
+                return render_template("update_booking.html",
+                                       booking=original_booking)
+            if request.form.get(
+               "property_type") == "" or not validate_property_type(
+               request.form.get("property_type")):
+                flash("Please indicate the property type")
+                return render_template("update_booking.html",
+                                       booking=original_booking)
+            if request.form.get(
+               "supplier") == "" or not validate_supplier(
+               request.form.get("supplier")):
+                flash("Invalid supplier provided")
+                return render_template("update_booking.html",
+                                       booking=original_booking)
+            if request.form.get("supplier_acc_no") != "":
+                if not validate_account(
+                       request.form.get("supplier_acc_no")):
+                    flash("Invalid supplier account number provided")
+                    return render_template("update_booking.html",
+                                           booking=original_booking)
+            if request.form.get("meter_read_reg_1") != "":
+                if not validate_meter_read(
+                       request.form.get("meter_read_reg_1")):
+                    flash("Invalid meter read provided")
+                    return render_template("update_booking.html",
+                                           booking=original_booking)
+            if request.form.get("meter_read_reg_2") != "":
+                if not validate_meter_read(
+                       request.form.get("meter_read_reg_2")):
+                    flash("Invalid meter read provided")
+                    return render_template("update_booking.html",
+                                           booking=original_booking)
+            if request.form.get(
+               "install_date") == "" or not validate_date(
+               request.form.get("install_date")):
+                flash("Invalid installation date provided")
+                return render_template("update_booking.html",
+                                       booking=original_booking)
+            if request.form.get("supplier_authorisation") != "on":
+                flash("Please tick the supplier "
+                      "authorisation at the bottom of the form")
+                return render_template("update_booking.html",
+                                       booking=original_booking)
+
             # Check whether the supplier authorisation is selected
             # and asign True if so, False if not.
             authorised = True if request.form.get(
