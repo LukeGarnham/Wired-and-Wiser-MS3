@@ -496,12 +496,26 @@ def view_booking(booking_id):
 
 @app.route("/delete_booking/<booking_id>")
 def delete_booking(booking_id):
-    # Find the booking in the meter_installs collection
-    # with the booking id that's been passed through and delete it.
-    mongo.db.meter_installs.delete_one({"_id": ObjectId(booking_id)})
-    # Display a flash message informing user that the booking has been deleted.
-    flash("Your meter install booking has been deleted")
-    # Redirect the user back to the account page.
+    # Check whether the booking_id is valid
+    if validate_id(booking_id):
+        # Check whether there is a record in the
+        # meter_installs collection for that booking_id.
+        booking = mongo.db.meter_installs.find_one(
+            {"_id": ObjectId(booking_id)})
+        if booking:
+            # Find the booking in the meter_installs collection
+            # with the booking id that's been passed through and delete it.
+            mongo.db.meter_installs.delete_one({"_id": ObjectId(booking_id)})
+            # Display a flash message informing user
+            # that the booking has been deleted.
+            flash("Your meter install booking has been deleted")
+            # Redirect the user back to the account page.
+            return redirect(url_for(
+                "account", username=session["user_email_address"]))
+
+    # If there is no booking found with the booking_id passed through
+    # return user to account page along with flash message.
+    flash("Your booking has already been deleted")
     return redirect(url_for(
         "account", username=session["user_email_address"]))
 
