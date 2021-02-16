@@ -731,6 +731,32 @@ def update_account(username):
                 # If method is POST (i.e. form submitted),
                 # update the data in the meter_installs collection.
                 if request.method == "POST":
+                    # Validate the data the user has provided is correct.
+                    if request.form.get(
+                        "first-name") == "" or not validate_name(
+                            request.form.get("first-name").lower()):
+                        flash("First name contains invalid character.")
+                        return redirect(url_for(
+                            "update_account", username=username))
+                    if request.form.get(
+                        "last-name") == "" or not validate_name(
+                            request.form.get("last-name").lower()):
+                        flash("Last name contains invalid character.")
+                        return redirect(url_for(
+                            "update_account", username=username))
+                    if request.form.get(
+                        "email") == "" or not validate_email(
+                            request.form.get("email").lower()):
+                        flash("Please enter a valid email address.")
+                        return redirect(url_for(
+                            "update_account", username=username))
+                    if request.form.get(
+                        "password") == "" or not validate_pw(
+                            request.form.get("password")):
+                        flash("Please enter a valid password.")
+                        return redirect(url_for(
+                            "update_account", username=username))
+
                     # Check that the password the user has entered
                     # matches the users password in the users collection.
                     if check_password_hash(user["password"],

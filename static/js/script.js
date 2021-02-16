@@ -35,8 +35,14 @@ $(document).ready(function() {
     $("#submit-button").click(function() {
         $("#update-booking-modal").fadeIn();
     });
-    // Close Update Booking modal when icon with id close-update-modal is clicked.
+    // Close Update Booking modal when button with id close-update-modal is clicked.
     $("#close-update-modal").click(function() {
+        $("#update-booking-modal").fadeOut();
+    });
+
+    // Close Update Booking modal when button with id submit-update is clicked.
+    // The form should be submitted at this stage but if there is invalid data in the field I don't want modal to cover it.
+    $("#submit-update").click(function() {
         $("#update-booking-modal").fadeOut();
     });
 

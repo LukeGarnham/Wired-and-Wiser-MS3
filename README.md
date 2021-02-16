@@ -481,20 +481,20 @@ I also perform several checks on the data which has been input.  Where I have a 
 The textarea input fields for the meter location and access instructions cannot have a **pattern** attribute applied to them to validate the input data.  Therefore there is only backend data validation which permits letters, numbers, spaces and full stops.
 
 Entering any of the following will prevent the form from being submitted:
-- Leaving any required field blank.
-- Entering anything other than a 13 digit number in the meter ID field.
-- Entering a meter ID which already exists in the *meter_installs* collection.
-- Any non-alphanumeric characters in the meter serial number input or a string of length greater than 12 characters.
-- Any non-alphanumeric characters in the address first, second or third line inputs or a string of length greater than 50 characters.  Spaces are allowed.
-- Any non-alphanumeric characters in the town or county inputs, spaces are allowed.
-- Any non-alphanumeric characters in the postcode input.  Spaces are allowed.  Lengths shorter than 6 characters or longer than 8 characters will be rejected.
-- Any non-alphanumeric characters in the meter location and access instruction inputs.  Spaces and full stops are accepted.
-- Any string/input other than "yes" or "no" in the parking_on_site input is rejected.
-- Any string/input other than "residential" or "commercial" in the property_type input is rejected.
-- Any non-alphanumeric characters in the supplier inputs or a string of length greater than 30 characters.  Spaces are allowed.
-- Any non-alphanumeric characters in the supplier account number inputs or a string of length greater than 20 characters.  Spaces and forward slashes (/)are the only non-alphanumeric characters permitted.
-- Only numbers are permitted in either of the meter read inputs with a maximum length of 8 digits.
-- Only numbers and forward slashes (/) are allowed in the installation date input.  The length must be 10 characters.  Using the datepicker as mentioned above limits what can be input.
+    - Leaving any required field blank.
+    - Entering anything other than a 13 digit number in the meter ID field.
+    - Entering a meter ID which already exists in the *meter_installs* collection.
+    - Any non-alphanumeric characters in the meter serial number input or a string of length greater than 12 characters.
+    - Any non-alphanumeric characters in the address first, second or third line inputs or a string of length greater than 50 characters.  Spaces are allowed.
+    - Any non-alphanumeric characters in the town or county inputs, spaces are allowed.
+    - Any non-alphanumeric characters in the postcode input.  Spaces are allowed.  Lengths shorter than 6 characters or longer than 8 characters will be rejected.
+    - Any non-alphanumeric characters in the meter location and access instruction inputs.  Spaces and full stops are accepted.
+    - Any string/input other than "yes" or "no" in the parking_on_site input is rejected.
+    - Any string/input other than "residential" or "commercial" in the property_type input is rejected.
+    - Any non-alphanumeric characters in the supplier inputs or a string of length greater than 30 characters.  Spaces are allowed.
+    - Any non-alphanumeric characters in the supplier account number inputs or a string of length greater than 20 characters.  Spaces and forward slashes (/)are the only non-alphanumeric characters permitted.
+    - Only numbers are permitted in either of the meter read inputs with a maximum length of 8 digits.
+    - Only numbers and forward slashes (/) are allowed in the installation date input.  The length must be 10 characters.  Using the datepicker as mentioned above limits what can be input.
 
 If an invalidate input is provided, the Booking page is reloaded and a flash message informs the user what the issue was.
 
@@ -504,17 +504,29 @@ If a user is not signed in but tries to access the Booking page, they are redire
 
 - **Update Booking Page**:  The Update Booking form has the same validation applied to it as the Booking page.  Since it is possible that a user tries to change the meter ID for their booking, I reject the form if the new meter ID already exists as a record in the *meter_installs* collection.
 
-If an invalidate input is provided, the Update Booking page is reloaded and a flash message informs the user what the issue was.
+One change I did make as I was testing the Update Booking page was to the behavious of the Update Booking modal.  Previously, if the user tried to submit the form with data which doesn't pass the HTML5 validation, then a warning appears in screen.  However, the Update Booking modal still remained on screen partially obscuring the view of the form and warning message.  I added some jQuery to close the modal when the user clicks the "Yes - Update My Booking" button.
+
+If an invalid input is provided to the backend, the data validation checks will prevent this being passed to the database - the Update Booking page is reloaded and a flash message informs the user what the issue was.
 
 If all fields validate, the record is updated in the *meter_installs* collection.  The user is redirected back to their Account page.
 
 If a user is not signed in but tries to access the Update Booking page, they are redirected to the Sign In page.  If a user is signed in but tries to access the Update Booking page for a booking which isn't on of theirs, they are redirected to the Account page.
 
+- **Update Account Page**:  The Update Account has the some front and backend validation checks performed on user inputs as the Registration page.  The following will result in the form not being submitted:
+    - Leaving any required field blank.
+    - First or last name containing any numbers or special characters aside from a hyphen (-).
+    - First or last name being longer than 30 characters.
+    - Invalid email format.
+    - If the user updates their email address to one which already exists in the *users* collection, the form will be rejected.
+    - Password shorter than 6 characters or longer than 15 characters.
 
+If all fields validate, the users record is updated in the *users* collection.  The user is redirected back to their Account page.
 
+If a user is not signed in but tries to access the Update Account page, they are redirected to the Sign In page.
 
-- Update Account Page
+- **Delete Booking**:  
 
+- **Delete Account**:  
 
 #### User Stories
 
