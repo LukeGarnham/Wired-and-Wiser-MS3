@@ -524,7 +524,11 @@ If all fields validate, the users record is updated in the *users* collection.  
 
 If a user is not signed in but tries to access the Update Account page, they are redirected to the Sign In page.
 
-- **Delete Booking**:  
+- **Delete Booking**:  Upon review, I added a couple of checks to the (Python) delete_booking function.  Firstly, I validate the booking_id that is passed through to the function.  Next, I use the **find_one** method to search the *meter_installs* collection for a record corresponding to that booking_id.  If a result is found then I proceed to delete it.  If either of these validation checks fail then the user is returned to their Account page along with a flash message informing them that the booking has already been deleted.
+
+In theory the last check should never be needed.  The delete_booking function can only be called from the View Booking and Update Booking page within my website.  The corresponding booking_id that is being viewed/updated is passed to the function so a record should always exist in the *meter_installs* collection to then be deleted.  I tested this by creating a booking and then clicking the "View" button from the Account page.  Once the View Booking page had loaded, I then went to MongoDB and manually deleted the booking record from the *meter_installs* collection.  Then back in the View Booking page, I clicked the "Delete Booking" button.  I was successfully returned to the Account page along with the flash message informing me that the booking had already been deleted.
+
+I tested the delete function in the View Booking and Update Booking page - both worked successfully.
 
 - **Delete Account**:  
 
