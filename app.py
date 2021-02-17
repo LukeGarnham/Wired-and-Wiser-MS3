@@ -494,7 +494,7 @@ def view_booking(booking_id):
     return redirect(url_for("signin"))
 
 
-@app.route("/delete_booking/<booking_id>")
+@app.route("/delete_booking/<booking_id>", methods=["POST"])
 def delete_booking(booking_id):
     # Check whether the booking_id is valid
     if validate_id(booking_id):
@@ -871,38 +871,54 @@ def update_account(username):
 
 @app.route("/delete_account/<username>", methods=["POST"])
 def delete_account(username):
-    user = mongo.db.users.find_one(
-        {"user_email_address": username})
-    # Check to ensure user variable exists.
-    if user:
-        # Check whether the user has provided the correct password.
-        if check_password_hash(
-                user["password"], request.form.get("password")):
-            # If so, find bookings in meter_installs collection with
-            # corresponding user email address and delete them all.
-            # Solution reached referring to:
-            # https://www.w3schools.com/python/python_mongodb_delete.asp
-            mongo.db.meter_installs.delete_many({
-                "user_email_address": username})
-            # Find the users record in the users collection and delete it.
-            # There will only be one record with corresponding
-            # email address but use the id anyway.
-            mongo.db.users.delete_one({
-                "_id": ObjectId(user["_id"])})
-            # Delete the users email address out of session storage.
-            session.pop("user_email_address")
-            # Redirect user to the registration page and display flash message
-            # informing them that account and bookings have been deleted.
-            flash("Your account and all meter install "
-                  "bookings have been deleted")
-            return redirect(url_for(
-                "register"))
-        # Else if password user has entered is incorrect.
-        else:
-            # Display flash message and redirect back to account page.
-            flash("Incorrect password - try again")
-            return redirect(url_for(
-                    "account", username=session["user_email_address"]))
+    username = username.lower()
+    # Check whether the username is a valid email address.
+    if validate_email(username):
+        # Find the user account record in the users collection.
+        user = mongo.db.users.find_one(
+            {"user_email_address": username})
+        # Check to ensure user variable exists.
+        if user:
+            # Validate the password that the user has submitted.
+            if request.form.get("password") == "" or not validate_pw(
+               request.form.get("password")):
+                flash("Please enter a valid password.")
+                return redirect(url_for(
+                        "account", username=session["user_email_address"]))
+            # Check whether the user has provided the correct password.
+            if check_password_hash(
+                    user["password"], request.form.get("password")):
+                # If so, find bookings in meter_installs collection with
+                # corresponding user email address and delete them all.
+                # Solution reached referring to:
+                # https://www.w3schools.com/python/python_mongodb_delete.asp
+                mongo.db.meter_installs.delete_many({
+                    "user_email_address": username})
+                # Find the users record in the users collection and delete it.
+                # There will only be one record with corresponding
+                # email address but use the id anyway.
+                mongo.db.users.delete_one({
+                    "_id": ObjectId(user["_id"])})
+                # Delete the users email address out of session storage.
+                session.pop("user_email_address")
+                # Redirect user to the registration page
+                # and display flash message
+                # informing them that account and bookings have been deleted.
+                flash("Your account and all meter install "
+                      "bookings have been deleted")
+                return redirect(url_for(
+                    "register"))
+            # Else if password user has entered is incorrect.
+            else:
+                # Display flash message and redirect back to account page.
+                flash("Incorrect password - try again")
+                return redirect(url_for(
+                        "account", username=session["user_email_address"]))
+    # If email address is not valid or no record found in the users collection
+    # then redirect user to Account page with flash message.
+    session.pop("user_email_address")
+    flash("Your account has already been deleted")
+    return redirect(url_for("register"))
 
 
 @app.errorhandler(404)

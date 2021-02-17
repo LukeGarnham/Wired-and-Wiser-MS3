@@ -197,7 +197,7 @@ Another feature I didn't have time to implement was to enable users to reset the
 ### Known Issues
 
 - The FavIcon does not appear on the Account, Update Account, View Booking & Update Booking pages.  I'm not sure of the reason for this.  This is a minor issue and doesn't have an overall impact on the user experience or functionality of my website in my opinion.  I will try to deploy a fix in future.
-- When a user enters invalid data into a form (such as trying to book a meter installation for a meter ID which already exists in the *meter_installs*collection) a flash message informs the user of the issue and the form is reloaded.  As a result, this means that any data the user had input is lost.  This is not good user experience and I would like in future to identify a solution which does not result in the form data being reset.
+- When a user enters invalid data into a form (such as trying to book a meter installation for a meter ID which already exists in the *meter_installs* collection) a flash message informs the user of the issue and the form is reloaded.  As a result, this means that any data the user had input is lost.  This is not good user experience and I would like in future to identify a solution which does not result in the form data being reset.
 
 
 
@@ -530,7 +530,13 @@ In theory the last check should never be needed.  The delete_booking function ca
 
 I tested the delete function in the View Booking and Update Booking page - both worked successfully.
 
-- **Delete Account**:  
+- **Delete Account**:  I have added some further validation to the (Python) delete_account function just in case.  I firstly validate the username (users_email_address) that gets passed through to the delete_account function.  Next I search the *users* collection for a record with the users_email_address.  If the user_email_address is not valid or no record is found, then the user is redirected to the Register page along with a flash message and the user_email_address is removed (**pop**) from the session variable.  This is a safety net which should never need to be triggered since the username passed through to the function is the user_email_address form the session variable which therefore must be valid and exist in the *users* collection.  To test this, I loaded the Account page and then manually deleted the users record from the *users* collection before clicking the Delete Account button.  This worked successfully.
+
+Assuming the first two checks are passed, the function then validates the password - if an invalid password is entered the user is returned to the Account page along with a flash message.  The frontend validation should prevent an invalid password being submitted but I validate this just in case this is bypassed and a user tries to send something malicious to my database.  Next I use werkzeug’s **check_password_hash** method to validate whether the correct password for the account has been provided by the user.  If not, the user is redirected to their Account page along with a flash message.
+
+Assuming all validation checks are passed, the users account is removed from the *users* collection and all meter installation bookings with a corresponding user_email_address are removed from the *meter_installs* collection.
+
+I tested this by creating an account and a booking.  I then checked MongoDB to ensure these records existed in both the *users* and *meter_installs* collections.  I then clicked the "Delete Account" button.  Refreshing both collections in MongoDB, I could see that the relevant records from both collections had been deleted.
 
 #### User Stories
 
