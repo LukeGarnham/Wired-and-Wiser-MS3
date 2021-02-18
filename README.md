@@ -589,6 +589,18 @@ I made the following changes:
 
 Here is the [Lighthouse report](static/images/readme-images/lighthouse-report.pdf) following the above changes.
 
+#### Responsive design
+
+I utilised Bootstrap's grid system and responsive design classes to ensure my website is responsive.  I loaded my website up on myy mobile phone to ensure that it functions as expected.
+
+I discovered one minor issue as I tested this.  The "Yes - Cancel My Booking" button in the Delete Booking modal on both the View Booking and Update Booking pages was not displaying as I expected:
+
+![Image showing the delete booking button before fix was deployed](static/images/readme-images/cancel-booking-before.png)
+
+This was a simple fix as I simply added the Bootstrap **d-inline-block** class to these **anchor** elements to get the desired appearance:
+
+![Image showing the delete booking button after fix was deployed](static/images/readme-images/cancel-booking-after.png)
+
 ### Database Schema
 
 I decided to store the meter ID and meter reads as integers since only numbers can be entered into these fields.  The supplier authorisation field didn't necessarily need to be stored in the *meter_installs* collection since the user has to tick this input before they are able to submit the form and thus insert or update the record into the collection.  However, I chose to store this as a value in the collection anyway as a boolean value.
