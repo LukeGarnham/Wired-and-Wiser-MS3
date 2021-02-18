@@ -587,14 +587,7 @@ I made the following changes:
 - Added a **rel="noreferrer"** attribute to the social media links in the footer which open in a new window/tab.
 - Added a meta description in the head sections within the base.html template file.
 
-
-
-
-
-
-
-
-
+Here is the [Lighthouse report](static/images/readme-images/lighthouse-report.pdf) following the above changes.
 
 ### Database Schema
 
