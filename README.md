@@ -562,7 +562,7 @@ Method: To validate code I will copy and paste it into online code validators:
 - **HTML**:  HTML code will be validated using [this online tool](https://validator.w3.org/).  Since the project uses Flasks template structure, I will test the full webpage i.e. the base template and any block content injected into each page.  If there are any errors flagged up due to the HTML code containing Jinja code, I will ignore them.
 - **CSS**:  CSS code will be validated using [this online tool](https://jigsaw.w3.org/css-validator/).
 - **JavaScript**:  JavaScript code will be validated using [this online tool](https://jshint.com/).
-- **Python**:  Python code will be validated using [this online tool](http://pep8online.com/).
+- **Python**:  Python code will be validated for PEP8 compliance using [this online tool](http://pep8online.com/).
 
 Results:
 - **HTML**:
@@ -570,11 +570,22 @@ Results:
     - In the Update Account page, I had two elements with the ID "password".  One is in the Update Account form and the other is in the Delete Account modal.  I opted to change the ID of the **input** field in the Delete Account modal.  However, I did not update the name of this input since this is required by the (Python) delete_account function in order to retrieve the user input from the form.  I tested the Delete Account functionality after I made this change and this still function correctly.
     - Also on the Update Account page, the validator identified that for the Last Name input field, I had not correctly identified the aria-describedby attribute.  There was a spelling mistake in the ID name for the **small** element which I corrected so that the aria-describedby attribute worked.  The validator identified the same issue on the Register page which I also rectified.
     - On the Account page, the validator detected that the table **caption** element was incorrectly placed inside the **thead** element instead of being a direct child of the **table** element.  I fixed this issue.
-
-
+- **CSS**:
+    - No errors found.
+- **JavaScript**:
+    - There were a few missing semi-colons reported by the validator which I rectified.
+    - The validator reported a warning for the variable declaration **let** so I changed this to **var**.
+- **Python**:
+    - No errors found.
 
 #### Google Lighthouse Tool
 
+I ran the Google Lighthouse tool to identify further small improvements I can make to my project.
+
+I made the following changes:
+- Amended the aria-controls attribute on the tab headers on the Account page.
+- Added a **rel="noreferrer"** attribute to the social media links in the footer which open in a new window/tab.
+- Added a meta description in the head sections within the base.html template file.
 
 
 

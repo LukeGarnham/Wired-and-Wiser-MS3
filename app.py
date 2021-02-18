@@ -494,7 +494,7 @@ def view_booking(booking_id):
     return redirect(url_for("signin"))
 
 
-@app.route("/delete_booking/<booking_id>", methods=["POST"])
+@app.route("/delete_booking/<booking_id>")
 def delete_booking(booking_id):
     # Check whether the booking_id is valid
     if validate_id(booking_id):
