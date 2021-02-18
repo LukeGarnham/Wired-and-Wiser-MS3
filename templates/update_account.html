@@ -37,7 +37,7 @@
                             <label for="last-name" class="col-form-label col-form-label-sm col-12 col-md-3 offset-md-1 text-md-left">Last Name: *</label>
                             <div class="col-12 col-md-7">
                                 <input type="text" class="form-control form-control-sm text-center text-md-left" id="last-name" name="last-name" aria-describedby="lastNameHelpBlock" value="{{ user.last_name|capitalize }}" maxlength="30" pattern="^[a-zA-Z-]{0,30}$" required>
-                                <small id="lasstNameHelpBlock" class="form-text text-muted text-md-left">
+                                <small id="lastNameHelpBlock" class="form-text text-muted text-md-left">
                                     Last name:  Only letters and hyphens (-) permitted.  Max. 30 characers.
                                 </small>
                             </div>
@@ -76,7 +76,7 @@
         </div>
     </div>
     
-    <!-- Delete Booking Modal -->
+    <!-- Delete Account Modal -->
     <div id="delete-account-modal" class="my-modal">
         <div class="container py-4">
             <div class="card m-md-5 p-4">
@@ -89,7 +89,7 @@
                                 <div class="form-group form-row">
                                     <label for="password" class="col-form-label col-form-label-sm col-12 col-md-8 offset-md-2 col-lg-6 offset-lg-3">Confirm password to proceed:</label>
                                     <div class="col-12 col-md-8 offset-md-2 col-lg-6 offset-lg-3">
-                                        <input type="password" class="form-control form-control-sm text-center" id="password" name="password" placeholder="Confirm password (required)" required>
+                                        <input type="password" class="form-control form-control-sm text-center" id="delete-account-password" name="password" placeholder="Confirm password (required)" required>
                                     </div>
                                 </div>
                                 <div class="mt-5">

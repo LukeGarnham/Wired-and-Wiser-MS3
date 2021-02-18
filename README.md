@@ -24,7 +24,7 @@ I have heard about Smart Meters and I want to:
 -	Book smart meter installation appointments for my electricity meter(s) to be replaced with a Smart Meter(s).
 -	Update my installation booking information.
 -	Cancel my installation booking.
--	Change my account information including my password.
+-	Change my account information.
 -	Delete my account.
 
 As the website owner, I want to:
@@ -540,7 +540,38 @@ I tested this by creating an account and a booking.  I then checked MongoDB to e
 
 #### User Stories
 
+To ensure I have met the user needs, I have revisited the user stories to ensure the website delivers on each:
+
+I have heard about Smart Meters and I want to:
+-	Find out more information about them.  *The home page provides this.*
+-	Book smart meter installation appointments for my electricity meter(s) to be replaced with a Smart Meter(s).  *Users can register and then book a smart meter installation appointment.*
+-	Update my installation booking information.  *Users can update details of any of their bookings.*
+-	Cancel my installation booking.  *Users can delete/cancel an installation booking.*
+-	Change my account information.  *Users can update their account details from the Account page.*
+-	Delete my account.  *Users can delete their account and all bookings from the Account page.*
+
+As the website owner, I want to:
+-	Inform visitors about smart meters.  *The home page informs users of smart meters.*
+-	Attract as many smart meter booking installations as possible.  *I feel the use of high quality images and Bootswatch theme makes my project appealing and draws them in.  I think it is easy to navigate and I have endeavoured to follow good UX principles.  All of this should attract users into booking a smart meter installation.*
+
 #### Valid Code
+
+Aim:  All code should pass validation tools.
+
+Method: To validate code I will copy and paste it into online code validators:
+- **HTML**:  HTML code will be validated using [this online tool](https://validator.w3.org/).  Since the project uses Flasks template structure, I will test the full webpage i.e. the base template and any block content injected into each page.  If there are any errors flagged up due to the HTML code containing Jinja code, I will ignore them.
+- **CSS**:  CSS code will be validated using [this online tool](https://jigsaw.w3.org/css-validator/).
+- **JavaScript**:  JavaScript code will be validated using [this online tool](https://jshint.com/).
+- **Python**:  Python code will be validated using [this online tool](http://pep8online.com/).
+
+Results:
+- **HTML**:
+    - On the Booking and Update Bookings pages, the validator reported that a **div** element is not allowed as a child of a **label** element.  This **div** element contained the information icon for the Meter ID and Meter Serial Number labels.  I changed these to **span** elements to resolve this.
+    - In the Update Account page, I had two elements with the ID "password".  One is in the Update Account form and the other is in the Delete Account modal.  I opted to change the ID of the **input** field in the Delete Account modal.  However, I did not update the name of this input since this is required by the (Python) delete_account function in order to retrieve the user input from the form.  I tested the Delete Account functionality after I made this change and this still function correctly.
+    - Also on the Update Account page, the validator identified that for the Last Name input field, I had not correctly identified the aria-describedby attribute.  There was a spelling mistake in the ID name for the **small** element which I corrected so that the aria-describedby attribute worked.  The validator identified the same issue on the Register page which I also rectified.
+    - On the Account page, the validator detected that the table **caption** element was incorrectly placed inside the **thead** element instead of being a direct child of the **table** element.  I fixed this issue.
+
+
 
 #### Google Lighthouse Tool
 
