@@ -627,7 +627,7 @@ The file called env.py is used to store confidential data so this must not be pu
 
 ![Screenshot showing the Gitignore file](static/images/readme-images/gitignore.png)
 
-Within the env.py file, I **import os** and set my environment variables: IP (0.0.0.0), PORT (5000), SECRET_KEY, MONGO_URI and MONGO_DBNAME (wired_and_wiser).
+Within the env.py file, I **import os** and set up my environment variables: IP (0.0.0.0), PORT (5000), SECRET_KEY, MONGO_URI and MONGO_DBNAME (wired_and_wiser).
 
 For the MONGO_URI variable, I went to the Overview tab within the MongoDB cluster dashboard.  I clicked on Connect and then in the modal, clicked the Connect your application button:
 
