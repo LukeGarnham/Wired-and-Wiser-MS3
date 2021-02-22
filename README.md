@@ -685,6 +685,7 @@ I also inserted a link on my home page to the [Energy Saving Trust’s energy sa
 ### Media
 
 [FontAwesome](https://fontawesome.com/) – I used the icons available on Font Awesome to improve UX.
+
 [FavIcon Generator](https://www.favicon-generator.org/) - I used this website to generate the FavIcon files and links.
 
 #### Images
@@ -738,3 +739,7 @@ On the Booking and Update Booking forms, I included a datepicker widget which I 
 On the Account page, the code for tabs was originally copied from [Bootstrap](https://getbootstrap.com/docs/4.5/components/navs/#javascript-behavior).
 
 When a user updates their account details, if they change their email address I need to update their email address for all meter install records they've booked in the *meter_installs* collection.  To do this, I referenced [this solution](https://www.w3schools.com/python/python_mongodb_update.asp).
+
+The regex for validating email addresses in the (Python) validate_email function was copied from [this website](https://www.geeksforgeeks.org/check-if-email-address-valid-or-not-in-python/).
+
+The solution for using a regex to validate the MongoDB id's in the (Python) validate_id function was reached by referring to [this website](https://stackoverflow.com/questions/28774526/how-to-check-that-mongo-objectid-is-valid-in-python).
