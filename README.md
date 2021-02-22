@@ -517,15 +517,15 @@ Results:
     - If the user updates their email address to one which already exists in the *users* collection, the form will be rejected.
     - Password shorter than 6 characters or longer than 15 characters.
 
-If all fields validate, the users record is updated in the *users* collection.  The user is redirected back to their Account page.
+    If all fields validate, the users record is updated in the *users* collection.  The user is redirected back to their Account page.
 
-If a user is not signed in but tries to access the Update Account page, they are redirected to the Sign In page.
+    If a user is not signed in but tries to access the Update Account page, they are redirected to the Sign In page.
 
 - **Delete Booking**:  Upon review, I added a couple of checks to the (Python) delete_booking function.  Firstly, I validate the booking_id that is passed through to the function.  Next, I use the **find_one** method to search the *meter_installs* collection for a record corresponding to that booking_id.  If a result is found then I proceed to delete it.  If either of these validation checks fail then the user is returned to their Account page along with a flash message informing them that the booking has already been deleted.
 
-In theory the last check should never be needed.  The delete_booking function can only be called from the View Booking and Update Booking page within my website.  The corresponding booking_id that is being viewed/updated is passed to the function so a record should always exist in the *meter_installs* collection to then be deleted.  I tested this by creating a booking and then clicking the "View" button from the Account page.  Once the View Booking page had loaded, I then went to MongoDB and manually deleted the booking record from the *meter_installs* collection.  Then back in the View Booking page, I clicked the "Delete Booking" button.  I was successfully returned to the Account page along with the flash message informing me that the booking had already been deleted.
+    In theory the last check should never be needed.  The delete_booking function can only be called from the View Booking and Update Booking page within my website.  The corresponding booking_id that is being viewed/updated is passed to the function so a record should always exist in the *meter_installs* collection to then be deleted.  I tested this by creating a booking and then clicking the "View" button from the Account page.  Once the View Booking page had loaded, I then went to MongoDB and manually deleted the booking record from the *meter_installs* collection.  Then back in the View Booking page, I clicked the "Delete Booking" button.  I was successfully returned to the Account page along with the flash message informing me that the booking had already been deleted.
 
-I tested the delete function in the View Booking and Update Booking page - both worked successfully.
+    I tested the delete function in the View Booking and Update Booking page - both worked successfully.
 
 - **Delete Account**:  I have added some further validation to the (Python) delete_account function just in case.  I firstly validate the username (users_email_address) that gets passed through to the delete_account function.  Next I search the *users* collection for a record with the users_email_address.  If the user_email_address is not valid or no record is found, then the user is redirected to the Register page along with a flash message and the user_email_address is removed (**pop**) from the session variable.  This is a safety net which should never need to be triggered since the username passed through to the function is the user_email_address form the session variable which therefore must be valid and exist in the *users* collection.  To test this, I loaded the Account page and then manually deleted the users record from the *users* collection before clicking the Delete Account button.  This worked successfully.
 
@@ -564,7 +564,7 @@ Method: To validate code I will copy and paste it into online code validators:
 Results:
 - **HTML**:
     - On the Booking and Update Bookings pages, the validator reported that a **div** element is not allowed as a child of a **label** element.  This **div** element contained the information icon for the Meter ID and Meter Serial Number labels.  I changed these to **span** elements to resolve this.
-    - In the Update Account page, I had two elements with the ID "password".  One is in the Update Account form and the other is in the Delete Account modal.  I opted to change the ID of the **input** field in the Delete Account modal.  However, I did not update the name of this input since this is required by the (Python) delete_account function in order to retrieve the user input from the form.  I tested the Delete Account functionality after I made this change and this still function correctly.
+    - In the Update Account page, I had two elements with the ID "password".  One is in the Update Account form and the other is in the Delete Account modal.  I opted to change the ID of the **input** field in the Delete Account modal.  However, I did not update the name of this input since this is required by the (Python) delete_account function in order to retrieve the user input from the form.  I tested the Delete Account functionality after I made this change and this still functions correctly.
     - Also on the Update Account page, the validator identified that for the Last Name input field, I had not correctly identified the aria-describedby attribute.  There was a spelling mistake in the ID name for the **small** element which I corrected so that the aria-describedby attribute worked.  The validator identified the same issue on the Register page which I also rectified.
     - On the Account page, the validator detected that the table **caption** element was incorrectly placed inside the **thead** element instead of being a direct child of the **table** element.  I fixed this issue.
 - **CSS**:
@@ -588,15 +588,21 @@ Here is the [Lighthouse report](static/images/readme-images/lighthouse-report.pd
 
 #### Responsive design
 
-I utilised Bootstrap's grid system and responsive design classes to ensure my website is responsive.  I loaded my website up on myy mobile phone to ensure that it functions as expected.
+Aim:  For all pages to be responsive; they must look good and function well on various screen sizes.
 
-I discovered one minor issue as I tested this.  The "Yes - Cancel My Booking" button in the Delete Booking modal on both the View Booking and Update Booking pages was not displaying as I expected:
+Method:  I will test all pages on my laptop and my mobile phone to ensure both visual and functionality is as expected.
+
+Results:  I utilised Bootstrap's grid system and responsive design classes to ensure my website is responsive.  Throughout the development of the project, I regularly tested it for responsiveness using Google Chrome's inspection tool to change the screen width and view pages on a mobile device so I was confident in the responsiveness of my website prior to testing it.
+
+However, I did discovere one minor issue as I tested this.  The "Yes - Cancel My Booking" button in the Delete Booking modal on both the View Booking and Update Booking pages was not displaying as I expected:
 
 ![Image showing the delete booking button before fix was deployed](static/images/readme-images/cancel-booking-before.png)
 
 This was a simple fix as I simply added the Bootstrap **d-inline-block** class to these **anchor** elements to get the desired appearance:
 
 ![Image showing the delete booking button after fix was deployed](static/images/readme-images/cancel-booking-after.png)
+
+Other than the above fix, all pages functioned as expected on both my laptop and mobile device; all pages are responsive.
 
 ### Database Schema
 
