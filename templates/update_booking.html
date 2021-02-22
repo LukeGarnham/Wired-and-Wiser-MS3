@@ -167,7 +167,7 @@
                             <div class="form-group form-row">
                                 <label for="supplier_acc_no" class="col-form-label col-form-label-sm col-12 col-md-5 offset-md-1 text-md-left font-weight-bold">Supplier Account Number:</label>
                                 <div class="col-12 col-md-5">
-                                    <input type="text" class="form-control form-control-sm text-center text-md-left" id="supplier_acc_no" name="supplier_acc_no" maxlength="20" pattern="^[a-zA-Z0-9 /]{0,20}$" 
+                                    <input type="text" class="form-control form-control-sm text-center text-md-left" id="supplier_acc_no" name="supplier_acc_no" maxlength="20" pattern="^[a-zA-Z0-9 /-]{0,20}$" 
                                     {% if booking.supplier_acc_no == "" %}
                                         placeholder="Account number (if known)"
                                     {% else %}

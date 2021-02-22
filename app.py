@@ -96,7 +96,7 @@ def validate_account(text):
     # Account numbers may have letters and forward slashes.
     # Allow only numbers, letters, spaces and
     # forward slashes, max length 20 characters.
-    return re.match("^[a-zA-Z0-9 /]{0,20}$", text)
+    return re.match("^[a-zA-Z0-9 /-]{0,20}$", text)
 
 
 def validate_meter_read(read):
